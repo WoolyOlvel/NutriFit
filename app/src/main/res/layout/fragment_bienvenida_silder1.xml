@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.form.BienvenidaPage" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_bienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/section_spacing"
+        android:paddingVertical="@dimen/_20sdp"
+        android:gravity="center_vertical"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/transparent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:contentDescription="TODO"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:src="@drawable/ic_bienvenida1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:textColor="@color/colorVariant"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/inner_spacing"
+            android:textSize="@dimen/text_size_h3"
+            android:text="@string/bienvenida_slider"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:maxLines="2"
+            android:layout_marginHorizontal="@dimen/_50sdp"
+            android:layout_marginVertical="@dimen/inner_spacing"
+            android:textSize="@dimen/text_size_h5"
+            android:text="@string/bienvenida_slider_p"/>
+
+    </LinearLayout>
+
+</layout>

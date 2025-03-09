@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size_h1">@dimen/_32ssp</dimen>
+    <dimen name="text_size_h2">@dimen/_24ssp</dimen>
+    <dimen name="text_size_h3">@dimen/_18ssp</dimen>
+    <dimen name="text_size_h4">@dimen/_15ssp</dimen>
+    <dimen name="text_size_h5">@dimen/_12ssp</dimen>
+    <dimen name="text_size_h6">@dimen/_10ssp</dimen>
+
+    <dimen name="section_spacing">@dimen/_10sdp</dimen>
+    <dimen name="inner_spacing">@dimen/_5sdp</dimen>
+    <dimen name="status_bar_spacing">@dimen/_20sdp</dimen>
+</resources>

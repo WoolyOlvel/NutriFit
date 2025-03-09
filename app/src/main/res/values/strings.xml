@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">NutriFit</string>
+    <string name="bienvenida_slider">¡Bienvenidos a NutriFit Planner!</string>
+    <string name="bienvenida_slider_p">Tu plataforma integral para citas y planes nutricionales.</string>
+    <string name="bienvenida_slider2">NutriFit Planner. Tu aliado en nutrición y bienestar.</string>
+    <string name="bienvenida_slider2_p">Juntos trabajaremos para mejorar tu calidad de vida.</string>
+    <string name="bienvenida_slider3">NutriFit Planner</string>
+    <string name="bienvenida_slider3_p">Nutrición basada en la evidencia.</string>
+    <string name="todo">TODO</string>
+
+</resources>

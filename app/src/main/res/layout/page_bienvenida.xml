@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.form.BienvenidaPage"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_bienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_background"
+
+        >
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_bienvenida"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_button"
+            android:background="@drawable/button_background"/>
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/layout_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:dotsColor="@color/colorVariant"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="10dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="2.5"
+            app:progressMode="true"
+            app:selectedDotColor="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/inner_spacing"
+                    android:layout_weight=".5"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+
+                    android:text="Iniciar Sesión"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:elevation="0dp"
+                    app:strokeColor="@color/white"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/inner_spacing"
+                    android:layout_weight=".5"
+                    app:backgroundTint="@color/white"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+
+                    android:text="Registrate"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:elevation="0dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/section_spacing"
+                android:paddingTop="@dimen/section_spacing"
+                android:text="Al continuar, acepta los términos y \ncondiciones de NutriFit Planner."
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_h5"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:alpha=".1"
+            android:scaleType="fitEnd"
+            android:contentDescription="TODO"
+            android:src="@drawable/bottom_background"/>
+
+
+    </RelativeLayout>
+
+</layout>
