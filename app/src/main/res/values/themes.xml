@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.NutriFit" parent="Base.Theme.NutriFit" />
+
+    <style name="TitleBarTextAppearance" parent="android:TextAppearance">
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">@dimen/text_size_h3</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

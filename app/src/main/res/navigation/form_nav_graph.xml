@@ -12,9 +12,125 @@
         tools:layout="@layout/page_bienvenida"
         android:label="BienvenidaFragment">
 
+        <action
+            android:id="@+id/action_bienvenidaFragment_a_loginFragment"
+            app:destination="@+id/loginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+        <action
+            android:id="@+id/action_bienvenidaFragment_a_registerFragment"
+            app:destination="@+id/registerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
 
 
     </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ascrib.nutrifit.ui.form.LoginFragment"
+        tools:layout="@layout/fragment_login"
+        android:label="LoginFragment"
+        >
+        <action
+            android:id="@+id/action_loginFragment_a_registerFragment"
+            app:destination="@+id/registerFragment"
+            app:popUpTo="@id/bienvenidaFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+        <action
+            android:id="@+id/action_loginFragment_a_olvidoContraFragment"
+            app:destination="@+id/fragmentContraOlvidada"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.ascrib.nutrifit.ui.form.RegisterFragment"
+        tools:layout="@layout/fragment_registrate"
+        android:label="registerFragment"
+        >
+
+        <action
+            android:id="@+id/action_registerFragment_a_loginFragment"
+            app:destination="@+id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+        <action
+            android:id="@+id/action_registerFragment_a_verificacionFragment"
+            app:destination="@+id/verificacionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cambioContraFragment"
+        android:name="com.ascrib.nutrifit.ui.form.ChangePassword"
+        tools:layout="@layout/fragment_cambio_contra"
+        android:label="ChangePasswordFragment">
+
+        <action
+            android:id="@+id/action_cambioContraFragment_a_loginFragment"
+            app:destination="@+id/loginFragment"
+            app:popUpTo="@id/bienvenidaFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentContraOlvidada"
+        android:name="com.ascrib.nutrifit.ui.form.OlvidoContra"
+        tools:layout="@layout/fragment_olvidar_contra"
+        android:label="fragmentContraOlvidada"
+        >
+
+        <action
+            android:id="@+id/action_olvidoContraFragment_a_cambioContraFragment"
+            app:destination="@+id/cambioContraFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/verificacionFragment"
+        android:name="com.ascrib.nutrifit.ui.form.VerifyAccount"
+        tools:layout="@layout/fragment_verificacion"
+        android:label="verifcacionFragment"/>
 
 
 </navigation>

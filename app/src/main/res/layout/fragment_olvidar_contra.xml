@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.form.OlvidoContra" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_bienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_button"
+            android:background="@drawable/button_background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/layout_form"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:contentDescription="TODO"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/inner_spacing"
+                android:text="@string/recuperarContra"
+                android:textColor="@color/colorVariant"
+                android:textSize="@dimen/text_size_h3"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_40sdp"
+                android:layout_marginVertical="@dimen/section_spacing"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:text="@string/metodoRecuperar"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h5"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginBottom="@dimen/inner_spacing"
+                    android:background="@drawable/background_radius"
+                    android:backgroundTint="@color/white"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="@dimen/section_spacing"
+                    android:textColorHint="@color/grey"
+                    android:importantForAutofill="yes"
+                    tools:ignore="LabelFor"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginVertical="@dimen/section_spacing"
+                    android:elevation="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:onClick="@{()->handler.onSubmitClicked()}"
+                    android:text="@string/enviarCorreo"
+                    android:textAllCaps="false"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:elevation="0dp"
+                    app:backgroundTint="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_dark_arrow" />
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/section_spacing"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/requisito"
+                android:textColor="@color/whiteGrey"
+                android:textSize="@dimen/text_size_h5"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentBottom="true"
+            android:alpha=".2"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_background" />
+
+
+    </RelativeLayout>
+
+</layout>

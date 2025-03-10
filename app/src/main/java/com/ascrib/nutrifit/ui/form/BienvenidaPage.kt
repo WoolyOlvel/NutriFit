@@ -38,4 +38,11 @@ class BienvenidaPage: Fragment() {
 
     }
 
+    fun onIniciarSesionClicked(){
+        findNavController().navigate(R.id.action_bienvenidaFragment_a_loginFragment)
+    }
+    fun onRegisterClicked(){
+        findNavController().navigate(R.id.action_bienvenidaFragment_a_registerFragment)
+    }
+
 }

@@ -60,7 +60,7 @@
                     android:layout_weight=".5"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-
+                    android:onClick="@{() ->handler.onIniciarSesionClicked()}"
                     android:text="Iniciar Sesión"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -76,7 +76,7 @@
                     app:backgroundTint="@color/white"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-
+                    android:onClick="@{()->handler.onRegisterClicked()}"
                     android:text="Registrate"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"

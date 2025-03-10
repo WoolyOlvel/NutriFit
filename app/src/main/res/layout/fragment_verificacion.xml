@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.form.VerifyAccount" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_bienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_button"
+            android:background="@drawable/button_background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/layout_form"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:contentDescription="@string/todo"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/inner_spacing"
+                android:text="@string/TitleVerificacion"
+                android:textColor="@color/colorVariant"
+                android:textSize="@dimen/text_size_h3"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:layout_marginVertical="@dimen/inner_spacing"
+                android:gravity="center"
+                android:text="@string/SubTitleVerifiacion"
+                android:textColor="@color/colorVariant"
+                android:textSize="@dimen/text_size_h5"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_40sdp"
+                android:layout_marginVertical="@dimen/inner_spacing"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:text="@string/CodeVerificacion"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h5"/>
+
+                <com.ascrib.nutrifit.util.PinEntryEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:digits="1234567890"
+                    android:focusable="true"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:paddingRight="@dimen/section_spacing"
+                    android:paddingEnd="@dimen/section_spacing"
+                    android:textColor="@color/colorPrimary"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/text_size_h2"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginVertical="@dimen/section_spacing"
+                    android:elevation="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:onClick="@{()->handler.onLoginClicked()}"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:elevation="0dp"
+                    app:backgroundTint="@color/colorPrimary"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_dark_arrow" />
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/textButtomVerifi"
+                android:textColor="@color/whiteGrey"
+                android:textSize="@dimen/text_size_h5" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:alpha=".2"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitEnd"
+            android:src="@drawable/bottom_background" />
+
+    </RelativeLayout>
+
+</layout>
