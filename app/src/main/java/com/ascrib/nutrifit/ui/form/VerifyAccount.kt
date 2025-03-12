@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.ui.form
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentVerificacionBinding
+import com.ascrib.nutrifit.ui.dashboard.DashboardActivity
 import com.ascrib.nutrifit.util.getStatusBarHeight
 
 class VerifyAccount : Fragment() {
@@ -62,6 +64,7 @@ class VerifyAccount : Fragment() {
 
 
     fun onLoginClicked(){
-
+        activity?.finishAffinity()
+        startActivity(Intent(context, DashboardActivity::class.java))
     }
 }

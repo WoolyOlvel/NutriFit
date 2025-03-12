@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_nav_graph"
+        android:title="Inicio"
+        android:icon="@drawable/home"/>
+
+    <item
+        android:id="@+id/nutri_nav_graph"
+        android:title="Horarios"
+        android:icon="@drawable/calendar"/>
+
+    <item
+        android:id="@+id/chat_nav_graph"
+        android:title="Chat"
+        android:icon="@drawable/chat"/>
+
+    <item
+        android:id="@+id/profile_nav_graph"
+        android:title="Perfil"
+        android:icon="@drawable/user"/>
+
+</menu>

@@ -17,6 +17,9 @@ ripplebackground = "1.0.1"
 smoothbottombar = "1.7.8"
 navigation = "2.5.0-alpha04"
 lifecycle = "2.5.0-alpha06"
+circular-progress-view = "0.1.2"
+mpandroidchart = "3.1.0"
+materialcalendarview = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +41,9 @@ smoothbottombar = { module = "com.github.ibrahimsn98:SmoothBottomBar", version.r
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+circular-progress = { module = "com.github.VaibhavLakhera:Circular-Progress-View", version.ref = "circular-progress-view" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
+materialcalendarview = { module = "com.github.prolificinteractive:material-calendarview", version.ref = "materialcalendarview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

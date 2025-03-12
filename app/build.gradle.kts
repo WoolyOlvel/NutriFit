@@ -61,8 +61,9 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.lifecycle.viewmodel)
-
-
+    implementation(libs.circular.progress)
+    implementation(libs.materialcalendarview)
+    implementation(libs.mpandroidchart)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

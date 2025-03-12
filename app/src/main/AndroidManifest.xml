@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.form.FormActivity"/>
+        <activity android:name=".ui.dashboard.DashboardActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:theme="@style/DarkStatusBar"/>
     </application>
 
 </manifest>

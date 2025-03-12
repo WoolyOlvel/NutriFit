@@ -48,4 +48,20 @@
     <string name="textButtomVerifi">Último paso antes de comenzar tu transformación</string>
 
 
+    <string name="mensageWelcome"><b>Hola, Alcyra. ¡Bienvenida!</b>\nEstamos encantados de tenerte aquí</string>
+    <string name="messageH2">Mi progreso</string>
+    <string name="messageH2_">¡Tu salud es la prioridad!</string>
+    <string name="textCard1">Planes Alimenticios</string>
+    <string name="textCard2">Historial Nutricional</string>
+    <string name="textCard3">Consejo Nutricional</string>
+    <string name="textCard4">Perfil De Salud</string>
+
+    <string name="primeryCase">Peso (Kg)</string>
+    <string name="caseTwo">Sin Datos </string>
+    <string name="caseTwoPorcen">201</string>
+    <string name="caseTwoPorcen2">300</string>
+    <string name="caseTwoPorcen3">320</string>
+    <string name="caseTwoPorcen4">420</string>
+
+
 </resources>

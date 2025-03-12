@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.dashboard.HomeFragment" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scrowviellHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/button_background"
+        android:elevation="0dp"
+        android:paddingBottom="@dimen/section_spacing">
+
+        <RelativeLayout
+            android:id="@+id/layout_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_dark_arrow"/>
+
+            <LinearLayout
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/section_spacing"
+                android:paddingVertical="@dimen/inner_spacing">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_12sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:contentDescription="@string/todo"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/perfil_prueba"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/inner_spacing"
+                    android:text="@string/mensageWelcome"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h5"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_header"
+                android:layout_marginStart="@dimen/section_spacing"
+                android:layout_marginTop="@dimen/section_spacing"
+                android:layout_marginEnd="@dimen/section_spacing"
+                android:layout_marginBottom="@dimen/section_spacing"
+                android:background="@drawable/background_radius"
+                android:backgroundTint="@color/white"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@null"
+                app:queryHint="Buscar..."/>
+
+            <RelativeLayout
+                android:id="@+id/layout_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search_view"
+                android:layout_marginHorizontal="@dimen/section_spacing">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    tools:ignore="RelativeOverlap">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/messageH2"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h3"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/messageH2_"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_h5"/>
+
+                </LinearLayout>
+
+                <com.vaibhavlakhera.circularprogressview.CircularProgressView
+                    android:id="@+id/progressView"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_65sdp"
+                    android:layout_alignParentEnd="true"
+                    app:animate="true"
+                    android:onClick="@{()->handler.onMyProgessClicked()}"
+                    app:animateDuration="1000"
+                    app:fillColor="@color/whiteGrey"
+                    app:progressColor="@color/colorPrimary"
+                    app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
+                    app:progressRoundCap="true"
+                    app:progressTextColor="@color/colorPrimary"
+                    app:progressTextEnabled="true"
+                    app:progressTextSize="@dimen/text_size_h3"
+                    app:progressTextType="progress"
+                    app:progressValue="0"
+                    app:progressWidth="@dimen/_10sdp"
+                    app:startAngle="270"
+                    app:totalColor="@color/whiteGrey"
+                    app:totalValue="100"
+                    app:totalWidth="@dimen/_20sdp" />
+
+
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/layout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_progress"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        android:layout_weight=".5"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/inner_spacing"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/plan"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:contentDescription="@string/todo" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:text="@string/textCard1"
+                                android:textColor="@color/grey"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_size_h5" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="@dimen/_2sdp"
+                                android:text="Disponibles"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        android:layout_weight=".5"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/inner_spacing"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:contentDescription="@string/todo"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:src="@drawable/history"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:text="@string/textCard2"
+                                android:textColor="@color/grey"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_size_h5" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="@dimen/_2sdp"
+                                android:text="Disponibles"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        android:layout_weight=".5"
+                        android:clickable="true"
+                        android:focusable="true"
+
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/inner_spacing"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/consejo"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:contentDescription="@string/todo" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:text="@string/textCard3"
+                                android:textColor="@color/grey"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_size_h5" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="@dimen/_2sdp"
+                                android:text="Disponibles"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        android:layout_weight=".5"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="@dimen/inner_spacing"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/registro"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:contentDescription="@string/todo" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/inner_spacing"
+                                android:text="@string/textCard4"
+                                android:textColor="@color/grey"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_size_h5" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="@dimen/_2sdp"
+                                android:text="Seguimiento integral"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</layout>
