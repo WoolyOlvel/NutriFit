@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
     }
 
     fun onHistorialNutriClicked(){
-
+        findNavController().navigate(R.id.action_homeFragment_a_historyNutriListFragment)
     }
 
 
