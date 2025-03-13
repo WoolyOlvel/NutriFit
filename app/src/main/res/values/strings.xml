@@ -63,5 +63,11 @@
     <string name="caseTwoPorcen3">320</string>
     <string name="caseTwoPorcen4">420</string>
 
+    <string name="listAlimen">Lista de tus planes alimenticios</string>
+
+    <string name="consultasAhora">Reservaciones en progreso</string>
+    <string name="consultaProximas">Próximas Reservaciones</string>
+    <string name="consultaPasadas">Reservaciones Anteriores</string>
+    <string name="historialConsulta">Tu Historial Nutricional Personalizado</string>
 
 </resources>

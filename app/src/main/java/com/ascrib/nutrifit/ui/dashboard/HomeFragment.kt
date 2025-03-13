@@ -85,5 +85,18 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.action_homeFragment_a_myProgressFragment)
     }
 
+    fun onPlanAlimentClicked(){
+        findNavController().navigate(R.id.global_planListFrgament)
+    }
+
+    fun onConsejoOnClicked(){
+
+    }
+
+    fun onHistorialNutriClicked(){
+
+    }
+
+
 
 }

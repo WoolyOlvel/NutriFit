@@ -46,7 +46,7 @@
                         android:layout_height="@dimen/_30sdp"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/perfil_prueba"/>
+                        android:src="@drawable/perfil_prueba2"/>
 
                 </androidx.cardview.widget.CardView>
 
@@ -113,7 +113,7 @@
                     android:layout_alignParentEnd="true"
                     app:animate="true"
                     android:onClick="@{()->handler.onMyProgessClicked()}"
-                    app:animateDuration="1000"
+                    app:animateDuration="3000"
                     app:fillColor="@color/whiteGrey"
                     app:progressColor="@color/colorPrimary"
                     app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
@@ -159,6 +159,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:onClick="@{()->handler.onPlanAlimentClicked()}"
                             android:orientation="vertical"
                             android:padding="@dimen/inner_spacing"
                             tools:ignore="UseCompoundDrawables">
@@ -205,6 +206,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:onClick="@{()->handler.onHistorialNutriClicked()}"
                             android:orientation="vertical"
                             android:padding="@dimen/inner_spacing"
                             tools:ignore="UseCompoundDrawables">
@@ -250,7 +252,7 @@
                         android:layout_weight=".5"
                         android:clickable="true"
                         android:focusable="true"
-
+                        android:onClick="@{()->handler.onConsejoOnClicked()}"
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:cardElevation="0dp">
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.dashboard.adapter.PlanListAdapter" />
+
+        <variable
+            name="lisPlan"
+            type="com.ascrib.nutrifit.model.PlanList" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_spacing"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/section_spacing">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <ImageView
+                    imageLoad="@{lisPlan.image}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/inner_spacing"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/inner_spacing">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{lisPlan.name}"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_2sdp">
+
+                    <TextView
+                        android:id="@+id/text_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="@{lisPlan.tipo}"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_h6" />
+
+                    <TextView
+                        android:id="@+id/text_status_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/text_gender"
+                        android:text="@{lisPlan.tiempo}"
+                        android:layout_marginStart="@dimen/inner_spacing"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="@dimen/text_size_h6" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/inner_spacing"
+                    android:gravity="center_vertical"
+                    android:text="@{lisPlan.phone}"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h6"
+                    app:drawableStartCompat="@drawable/ic_call"
+                    app:drawableTint="@color/red" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
