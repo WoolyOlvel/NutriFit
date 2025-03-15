@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -62,7 +63,8 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = ""
+        binding.toolbar.toolbar.title = "Historial Nutricional"
+        binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -82,31 +84,47 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
                     android.R.id.home -> {
                         findNavController().navigateUp()
                         true
-                    }else -> false
+                    }
+                    R.id.action_notification ->{
+                        findNavController().navigate(R.id.global_notificationFragment)
+                        return true
+                    }
+                    else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     fun makeAppointment() {
-        appointmentAdapter = AppointmentAdapter(model.getAppointmentList(), this)
+        val inProgressAdapter = AppointmentAdapter(ArrayList(model.getInProgressAppointments()), this)
+        val nextConsultsAdapter = AppointmentAdapter(ArrayList(model.getNextAppointments()), this)
+        val pastConsultsAdapter = AppointmentAdapter(ArrayList(model.getPastAppointments()), this)
+
         binding.recyclerviewInProgress.apply {
-            adapter = appointmentAdapter
+            adapter = inProgressAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         binding.recyclerviewNextConsults.apply {
-            adapter = appointmentAdapter
+            adapter = nextConsultsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         binding.recyclerviewPastConsults.apply {
-            adapter = appointmentAdapter
+            adapter = pastConsultsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
+
     override fun appointmentClicked(appointment: Appointment) {
-        // No hacer nada
+        if (appointment.statusType == 3 || appointment.statusType == 4) {
+            findNavController().navigate(
+                R.id.global_planListDetailFragment, bundleOf("appointment" to appointment.statusType)
+            )
+        } else {
+            // Si el estado no es 2 ni 4, no hacemos nada (evitamos la navegación)
+        }
     }
+
 
 }

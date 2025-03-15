@@ -75,6 +75,10 @@ class HomeFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
+                    R.id.action_notification ->{
+                        findNavController().navigate(R.id.global_notificationFragment)
+                        return true
+                    }
                     else -> false
                 }
             }
@@ -91,6 +95,10 @@ class HomeFragment : Fragment() {
 
     fun onConsejoOnClicked(){
 
+    }
+
+    fun onReportSaludClicked(){
+        findNavController().navigate(R.id.action_homeFragment_a_myPersonSaludFragment)
     }
 
     fun onHistorialNutriClicked(){

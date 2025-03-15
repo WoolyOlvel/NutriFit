@@ -104,6 +104,7 @@
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h5"/>
 
+
                 </LinearLayout>
 
                 <com.vaibhavlakhera.circularprogressview.CircularProgressView
@@ -307,6 +308,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
+                            android:onClick="@{()->handler.onReportSaludClicked()}"
                             android:padding="@dimen/inner_spacing"
                             tools:ignore="UseCompoundDrawables">
 
@@ -340,7 +342,6 @@
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
-
 
 
 

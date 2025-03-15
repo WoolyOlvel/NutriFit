@@ -70,4 +70,52 @@
     <string name="consultaPasadas">Reservaciones Anteriores</string>
     <string name="historialConsulta">Tu Historial Nutricional Personalizado</string>
 
+    <string name="consultaInfo">Alycra Lumina </string>
+    <string name="consultaInfo2">Femenino </string>
+    <string name="consultaInfo3">12/12/2002</string>
+    <string name="consultaInfo4">Mérida, Yucatán</string>
+    <string name="consultaSubInfo1">Peso (kg):</string>
+    <string name="consultaSubInfo1_1">55 kg</string>
+    <string name="consultaSubInfo2">Talla: </string>
+    <string name="consultaSubInfo1_2">M </string>
+    <string name="consultaSubInfo3">Cintura:</string>
+    <string name="consultaSubInfo1_3">65 cm</string>
+    <string name="consultaSubInfo4">Cadera:</string>
+    <string name="consultaSubInfo1_4">92 cm</string>
+    <string name="consultaSubInfo5">GC:</string>
+    <string name="consultaSubInfo1_5">25%</string>
+    <string name="consultaSubInfo6">MM:</string>
+    <string name="consultaSubInfo1_6">38%</string>
+    <string name="consultaSubInfo7">EM:</string>
+    <string name="consultaSubInfo1_7">20 años</string>
+    <string name="consultaSubInfo8">Altura:</string>
+    <string name="consultaSubInfo1_8">1.65 m</string>
+
+    <string name="consultaInfo5">Horario de consulta</string>
+    <string name="consultaSubInfo2_1">Hoy, 15 de marzo del 2025</string>
+    <string name="consultaSubInfo2_2"><b>08 : 00 AM</b> Nut. Rodolfo Cárdenaz</string>
+    <string name="consultaInfo6">Diagnóstico:</string>
+    <string name="consultaSubInfo3_1">Detalles del Diagnóstico</string>
+    <string name="consultaSubPInfo_1">Sin Datos</string>
+    <string name="consultaSubInfo3_2">Resultados de la Evaluación</string>
+    <string name="consultaSubInfo3_3">Análisis Nutricional</string>
+
+    <string name="consultaInfo7">Objetivo</string>
+    <string name="consultaSubInfo4_1">Descripción</string>
+
+    <string name="consultaInfo8">Próxima Consulta</string>
+    <string name="consultaSubInfo5_1">Martes, 15 de abril del 2025</string>
+    <string name="consultaSubInfo5_2"><b>10 : 00 AM</b> Nut. Rodolfo Cárdenaz</string>
+
+    <string name="consultaInfo9">Consulta Finalizada</string>
+    <string name="consultaInfo10">Consulta Cancelada</string>
+    <string name="consultaButton1">Sí, Cancelar</string>
+    <string name="consultaButton2">No, No Cancelar</string>
+    <string name="consultaButtom">Información Consulta</string>
+
+    <string name="graficaSubTexto">Conoce tus avances</string>
+
+    <string name="notificationButton">Marcar como leído</string>
+    <string name="notificationButton2">Eliminar Notificaciones</string>
+
 </resources>
