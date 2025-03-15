@@ -70,4 +70,6 @@
     <string name="consultaPasadas">Reservaciones Anteriores</string>
     <string name="historialConsulta">Tu Historial Nutricional Personalizado</string>
 
+    <string name="type_your_message">Escribe tu mensaje</string>
+
 </resources>

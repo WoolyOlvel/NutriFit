@@ -52,11 +52,13 @@ class DashboardActivity : AppCompatActivity(), NavController.OnDestinationChange
     ) {
         when(destination.id){
             R.id.homeFragment,
+            R.id.chatFragment,
                 ->{
                     binding.navigationDashboard.visibility = View.VISIBLE
                 } else -> {
                     hideBottomBav()
                 }
+
         }
     }
 

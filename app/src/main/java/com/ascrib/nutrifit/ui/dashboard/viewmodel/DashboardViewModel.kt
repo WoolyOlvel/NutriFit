@@ -3,12 +3,14 @@ package com.ascrib.nutrifit.ui.dashboard.viewmodel
 import androidx.lifecycle.ViewModel
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.model.Appointment
+import com.ascrib.nutrifit.model.Chat
 import com.ascrib.nutrifit.model.PlanList
 
 class DashboardViewModel : ViewModel() {
 
     fun getListPlan() = listplan
     fun getAppointmentList () = appointment
+    fun getChat() = dataChat
 
     private var listplan = arrayListOf(
         PlanList(1, "Alcrya Lumina",R.drawable.perfil_prueba2,"+52 9961025841", "Dieta hipocalórica", "Un Mes" )
@@ -56,5 +58,30 @@ class DashboardViewModel : ViewModel() {
         ),
 
     )
+
+    var dataChat = arrayListOf(
+        Chat(
+            1,
+            "Nut. Wilbert Edward",
+            "Te mandaré los planes nutricionales de esta semana",
+            R.drawable.big_logo,
+            "1 min ago",
+            true,
+            false
+        ),
+        Chat(
+            1,
+            "Alcyra",
+            "Está bien, buenas tardes",
+            R.drawable.perfil_prueba,
+            "15 min ago",
+            false,
+            true
+        ),
+
+
+    )
+
+
 
 }
