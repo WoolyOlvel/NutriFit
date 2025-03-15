@@ -7,5 +7,6 @@ data class Chat(
     var img: Int,
     var time: String,
     var read: Boolean,
-    var isOnline :Boolean
+    var isOnline :Boolean,
+
 )

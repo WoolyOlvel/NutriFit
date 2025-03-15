@@ -70,18 +70,19 @@ class DashboardViewModel : ViewModel() {
     var dataChat = arrayListOf(
         Chat(
             1,
-            "Nut. Wilbert Edward",
+            "Nut.Wilbert Edward",
             "Te mandaré los planes nutricionales de esta semana",
-            R.drawable.big_logo,
+            R.drawable.perfil_nutri,
             "1 min ago",
             true,
-            false
+            true,
+
         ),
         Chat(
-            1,
-            "Alcyra",
+            2,
+            "Nut.Isabel Medina",
             "Está bien, buenas tardes",
-            R.drawable.perfil_prueba,
+            R.drawable.fer,
             "15 min ago",
             false,
             true

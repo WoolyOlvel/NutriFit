@@ -9,6 +9,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -75,8 +76,7 @@ class ChatFragment : Fragment(), ChatHandler {
                         findNavController().navigateUp()
                         true
                     }
-
-                    R.id.action_notification -> {
+                    R.id.action_notification ->{
                         findNavController().navigate(R.id.global_notificationFragment)
                         return true
                     }
@@ -104,6 +104,20 @@ class ChatFragment : Fragment(), ChatHandler {
     }
 
     override fun onChatClicked(chat: Chat) {
-        findNavController().navigate(R.id.action_chatFragment_to_chatPersonFragment)
+        val dashboardViewModel: DashboardViewModel by viewModels()
+
+        // Obtener el chat correspondiente por ID
+        val selectedChat = dashboardViewModel.getChat().find { it.id == chat.id }
+
+        val chatName = selectedChat?.name ?: "Nombre no disponible"
+        val chatImage = selectedChat?.img ?: R.drawable.big_square  // Imagen por defecto si no se encuentra
+
+        val bundle = Bundle()
+        bundle.putString("chat_name", chatName)
+        bundle.putInt("chat_image", chatImage)
+
+        findNavController().navigate(R.id.action_chatFragment_to_chatPersonFragment, bundle)
     }
+
+
 }

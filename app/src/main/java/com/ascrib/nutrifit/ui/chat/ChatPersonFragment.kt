@@ -8,6 +8,7 @@ import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
@@ -58,7 +59,10 @@ class ChatPersonFragment : Fragment() {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = "Nil Jordon"
+        val chatName = arguments?.getString("chat_name") ?: "Chat"
+        val chatImage = arguments?.getInt("chat_image", R.drawable.big_square) ?: R.drawable.big_square
+        binding.toolbar.toolbar.title = chatName
+        binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -85,15 +89,18 @@ class ChatPersonFragment : Fragment() {
     }
 
     fun makeAppointment() {
-        chatHeadAdapter = ChatHeadAdapter(model.getChat())
-        //chatHeadAdapter = ChatHeadAdapter(model.getChat())
+        val chatList = model.getChat() // Obtener la lista de chats desde el ViewModel
+
+        chatHeadAdapter = ChatHeadAdapter(chatList) // Pasar la lista al adaptador
+
         binding.recyclerViewChat.apply {
             adapter = chatHeadAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        binding.recyclerViewChat.smoothScrollToPosition(model.dataChat.size)
+        binding.recyclerViewChat.smoothScrollToPosition(chatList.size)
     }
+
 
     fun replyClicked() {
         if (!binding.etMessage.text.toString().trim().contentEquals("")) {
@@ -102,10 +109,11 @@ class ChatPersonFragment : Fragment() {
                     UUID.randomUUID().mostSignificantBits.toInt(),
                     "",
                     binding.etMessage.text.toString(),
-                    R.drawable.big_logo,
+                    R.drawable.perfil_prueba2,
                     "Now",
                     true,
                     true
+
                 )
             )
 

@@ -4,6 +4,10 @@
     android:id="@+id/chat_nav_graph"
     app:startDestination="@id/chatFragment">
 
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.ascrib.nutrifit.ui.NotificationFragment"
+        android:label="NotificationFragment"/>
 
     <action
         android:id="@+id/global_notificationFragment"
