@@ -43,7 +43,9 @@ class AppointmentAdapter (
                 binding.textStatusType.setTextColor(ContextCompat.getColor(binding.root.context, R.color.colorSecondary))
             }else if (appointment.statusType == 2){
                 binding.textStatusType.setTextColor(ContextCompat.getColor(binding.root.context, R.color.orange))
-            }else{
+            }else if(appointment.statusType === 3){
+              binding.textStatusType.setTextColor(ContextCompat.getColor(binding.root.context, R.color.colorVariant))
+            } else{
                 binding.textStatusType.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
             }
         }

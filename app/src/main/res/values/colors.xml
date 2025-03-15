@@ -21,5 +21,8 @@
     <color name="colorVariant">#033b4a</color>
     <color name="colorVariant2">#212121</color>
 
-
+    <color name="teal">#5DCDC7</color>
+    <color name="teal_light">#A5E8E4</color>
+    <color name="light_gray">#EEEEEE</color>
+    <color name="teal_dark">#00857E</color>
 </resources>

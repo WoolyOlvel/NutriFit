@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
@@ -88,6 +89,9 @@ class PlanListFragment : Fragment(), ListHandler {
                     android.R.id.home -> {
                         findNavController().navigateUp()
                         true
+                    }R.id.action_notification -> {
+                        findNavController().navigate(R.id.global_notificationFragment)
+                        return true
                     }else -> false
                 }
             }
@@ -96,6 +100,8 @@ class PlanListFragment : Fragment(), ListHandler {
 
     override fun listPlanClicked(planList: PlanList) {
         findNavController().navigate(R.id.global_planListFrgament)
+
+
     }
 
 

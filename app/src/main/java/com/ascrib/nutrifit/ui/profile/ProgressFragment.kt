@@ -77,7 +77,12 @@ class ProgressFragment : Fragment() {
                     android.R.id.home -> {
                         findNavController().navigateUp()
                         true
-                    }else -> false
+                    }
+                    R.id.action_notification ->{
+                        findNavController().navigate(R.id.global_notificationFragment)
+                        return true
+                    }
+                    else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
