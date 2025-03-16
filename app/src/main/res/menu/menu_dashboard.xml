@@ -7,7 +7,7 @@
         android:icon="@drawable/home"/>
 
     <item
-        android:id="@+id/nutri_nav_graph"
+        android:id="@+id/doctor_nav_graph"
         android:title="Horarios"
         android:icon="@drawable/calendar"/>
 

@@ -4,7 +4,6 @@
     android:id="@+id/home_nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <include app:graph="@navigation/doctor_nav_graph" />
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -73,6 +72,7 @@
         android:name="com.ascrib.nutrifit.ui.patient.AppointmentDetailFragment"
         android:label="AppointmentDetailFragment" />
 
+
     <action
         android:id="@+id/global_appointmentDetailFragment"
         app:destination="@id/appointmentDetailFragment"
@@ -80,6 +80,9 @@
         app:exitAnim="@anim/fade_out"
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out" />
+
+    <include app:graph="@navigation/doctor_nav_graph" />
+
 
     <fragment
         android:id="@+id/historyFragment"
@@ -151,8 +154,6 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
-</navigation>
-
     <fragment
         android:id="@+id/desafioNutriFragment"
         android:name="com.ascrib.nutrifit.ui.planList.DesafioNutri"
@@ -167,3 +168,6 @@
         app:popExitAnim="@anim/fade_out"/>
 
 </navigation>
+
+
+
