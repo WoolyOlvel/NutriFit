@@ -1,14 +1,8 @@
-package com.ascrib.nutrifit.ui.planList
+package com.ascrib.nutrifit.ui.patient
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -20,28 +14,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ascrib.nutrifit.R
-import com.ascrib.nutrifit.databinding.FragmentPlanAlimenticioBinding
-import com.ascrib.nutrifit.handler.ListHandler
-import com.ascrib.nutrifit.model.PlanList
-import com.ascrib.nutrifit.ui.dashboard.adapter.PlanListAdapter
+import com.ascrib.nutrifit.databinding.FragmentPatientListBinding
+import com.ascrib.nutrifit.handler.PatientHandler
+import com.ascrib.nutrifit.model.Patient
+import com.ascrib.nutrifit.ui.dashboard.adapter.PatientListAdapter
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModel
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModelFactory
 import com.ascrib.nutrifit.util.getStatusBarHeight
 
-class PlanListFragment : Fragment(), ListHandler {
-
-    lateinit var binding:FragmentPlanAlimenticioBinding
+class PatientListFragment : Fragment(), PatientHandler {
+    lateinit var binding: FragmentPatientListBinding
 
     lateinit var model: DashboardViewModel
 
-    lateinit var planListAdapter: PlanListAdapter
+    lateinit var patientListAdapter: PatientListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plan_alimenticio, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_patient_list, container, false)
 
         model = ViewModelProvider(this, DashboardViewModelFactory())[DashboardViewModel::class.java]
         toolbarConfig()
@@ -52,15 +46,19 @@ class PlanListFragment : Fragment(), ListHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        makeLisPlan()
+        makePatient()
     }
 
-    fun makeLisPlan(){
-        planListAdapter = PlanListAdapter(model.getListPlan(), this)
+    fun makePatient() {
+        patientListAdapter = PatientListAdapter(model.getPatient(), this)
         binding.recyclerviewPatient.apply {
-            adapter = planListAdapter
+            adapter = patientListAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
+    }
+
+    override fun patientClicked(patient: Patient) {
+        findNavController().navigate(R.id.global_patientFragment)
     }
 
     private fun toolbarConfig() {
@@ -68,8 +66,7 @@ class PlanListFragment : Fragment(), ListHandler {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = "Planes Alimenticios"
-        binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        binding.toolbar.toolbar.title = "Patients"
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -89,21 +86,16 @@ class PlanListFragment : Fragment(), ListHandler {
                     android.R.id.home -> {
                         findNavController().navigateUp()
                         true
-                    }R.id.action_notification -> {
+                    }
+
+                    R.id.action_notification -> {
                         findNavController().navigate(R.id.global_notificationFragment)
                         return true
-                    }else -> false
+                    }
+
+                    else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
-
-    override fun listPlanClicked(planList: PlanList) {
-        findNavController().navigate(R.id.global_planListFragment)
-
-
-    }
-
-
-
 }

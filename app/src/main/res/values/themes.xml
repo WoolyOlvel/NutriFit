@@ -17,4 +17,18 @@
     <style name="DarkStatusBar" parent="Theme.NutriFit">
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="CalendarTextAppearance" parent="android:TextAppearance">
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">@dimen/text_size_h4</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorVariant</item>
+    </style>
+
+    <style name="CalendarTitleTextAppearance" parent="android:TextAppearance">
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">@dimen/text_size_h5</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
