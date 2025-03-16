@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+    <variable
+        name="handler"
+        type="com.ascrib.nutrifit.ui.profile.ServiceFragment" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_services"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_button"
+            android:background="@drawable/bottom_background_radius"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_10sdp">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_dark_arrow" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h5"
+                                android:textStyle="bold"
+                                android:drawablePadding="@dimen/inner_spacing"
+                                android:text="@string/send_message"
+                                android:textColor="@color/colorVariant"
+                                app:drawableLeftCompat="@drawable/ic_chat"
+                                app:drawableTint="@color/colorPrimary" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/section_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/service_price_240_consulted"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textEmailAddress"
+                                android:importantForAutofill="no"
+                                android:text="@string/_45"
+                                tools:ignore="LabelFor"
+                                android:paddingHorizontal="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_30_minutes"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/inner_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/description"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textMultiLine"
+                                android:importantForAutofill="no"
+                                tools:ignore="LabelFor"
+                                android:gravity="start"
+                                android:hint="@string/send_multiple_messages_attachments_get_first_reponse_within_4_hours"
+                                android:minHeight="@dimen/_80sdp"
+                                android:padding="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h5"
+                                android:textStyle="bold"
+                                android:drawablePadding="@dimen/inner_spacing"
+                                android:text="@string/personal_call"
+                                android:textColor="@color/colorVariant"
+                                app:drawableLeftCompat="@drawable/ic_call"
+                                app:drawableTint="@color/colorPrimary" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/section_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/service_price_103_consulted"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textEmailAddress"
+                                android:importantForAutofill="no"
+                                android:text="@string/_45"
+                                tools:ignore="LabelFor"
+                                android:paddingHorizontal="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_30_minutes"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/inner_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/description"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textMultiLine"
+                                android:importantForAutofill="no"
+                                tools:ignore="LabelFor"
+                                android:gravity="start"
+                                android:hint="@string/send_multiple_messages_attachments_get_first_reponse_within_4_hours"
+                                android:minHeight="@dimen/_80sdp"
+                                android:padding="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h5"
+                                android:textStyle="bold"
+                                android:drawablePadding="@dimen/inner_spacing"
+                                android:text="@string/available_time"
+                                android:textColor="@color/colorVariant"
+                                app:drawableLeftCompat="@drawable/ic_calendar"
+                                app:drawableTint="@color/colorPrimary" />
+<!--
+                            <com.dpro.widgets.WeekdaysPicker
+                                android:id="@+id/weekdays"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:background_color="@color/white"
+                                app:text_color="@color/white"
+                                app:highlight_color="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/section_spacing"
+                                app:text_unselected_color="@color/grey"
+                                app:sunday_first_day="false" />-->
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/description"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textMultiLine"
+                                android:importantForAutofill="no"
+                                tools:ignore="LabelFor"
+                                android:gravity="start"
+                                android:hint="@string/send_multiple_messages_attachments_get_first_reponse_within_4_hours"
+                                android:minHeight="@dimen/_80sdp"
+                                android:padding="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/section_spacing"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:onClick="@{()->handler.saveAccount()}"
+                android:stateListAnimator="@null"
+                android:textColor="@color/white"
+                android:backgroundTint="#40f1f1f1"
+                android:textSize="@dimen/text_size_h6" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>
