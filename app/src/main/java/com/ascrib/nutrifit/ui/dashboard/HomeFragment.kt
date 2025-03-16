@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.ui.dashboard
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,12 +14,17 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentHomeBinding
+import com.ascrib.nutrifit.ui.form.adapter.BienvenidaAdapter
+import com.ascrib.nutrifit.ui.form.adapter.SliderAdapter
 import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
+import android.os.Looper
+import androidx.viewpager2.widget.ViewPager2
 
 class HomeFragment : Fragment() {
 
@@ -44,10 +50,53 @@ class HomeFragment : Fragment() {
         return  binding.root
     }
 
+    private val sliderHandler = Handler(Looper.getMainLooper())
+    private val sliderRunnable = Runnable {
+        val nextItem = binding.vpWelcome.currentItem + 1
+        if (nextItem < (binding.vpWelcome.adapter?.itemCount ?: 0)) {
+            binding.vpWelcome.currentItem = nextItem
+        } else {
+            binding.vpWelcome.currentItem = 0 // Vuelve al principio cuando llega al final
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.progressView.setProgress(55,true)
+        binding.progressView.setProgress(55, true)
+
+        val pagerAdapter = SliderAdapter(context as FragmentActivity)
+        binding.vpWelcome.adapter = pagerAdapter
+        binding.dotsIndicator.setViewPager2(binding.vpWelcome)
+
+        // escuchador de página para reiniciar el temporizador cuando el usuario desliza manualmente
+        binding.vpWelcome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                // Cuando el usuario cambia de página, reinicia el temporizador
+                sliderHandler.removeCallbacks(sliderRunnable)
+                sliderHandler.postDelayed(sliderRunnable, 3000) // 3 segundos
+            }
+        })
+
+        // Inicia el desplazamiento automático
+        startAutoSlide()
+    }
+
+    // Método para iniciar el desplazamiento automático
+    private fun startAutoSlide() {
+        sliderHandler.postDelayed(sliderRunnable, 3000) // 3 segundos
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sliderHandler.removeCallbacks(sliderRunnable)
+    }
+
+    // Reinicia el desplazamiento automático cuando el fragmento vuelve a ser visible
+    override fun onResume() {
+        super.onResume()
+        startAutoSlide()
     }
 
     private fun toolbarConfig() {
@@ -93,8 +142,8 @@ class HomeFragment : Fragment() {
         findNavController().navigate(R.id.global_planListFrgament)
     }
 
-    fun onConsejoOnClicked(){
-
+    fun onNutriDefOnClicked(){
+        findNavController().navigate(R.id.global_desafioNutriFragment)
     }
 
     fun onReportSaludClicked(){

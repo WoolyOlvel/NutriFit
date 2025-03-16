@@ -117,6 +117,107 @@ class PerfilSaludFragment : Fragment() {
             R.color.teal,
             R.color.teal_light
         )
+
+        setupLineChart(binding.chartLinealSalud4, "Grasa Vísceral", 12f, 17f,"grasa_visceral")
+        loadLineChartData(
+            binding.chartLinealSalud4,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Grasa Vísceral",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud5, "Masa Muscular", 11f, 17f,"masa_muscular")
+        loadLineChartData(
+            binding.chartLinealSalud5,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Masa Muscular",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud6, "Perdida De Grasa", 13f, 17f,"perdida_grasa")
+        loadLineChartData(
+            binding.chartLinealSalud6,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Perdida De Grasa",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud7, "Grasa Subcutanea", 12f, 17f,"grasa_subcutanea")
+        loadLineChartData(
+            binding.chartLinealSalud7,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Grasa Subcutanea",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud8, "Músculo Esquelético", 12f, 17f,"musculo_esqueletico")
+        loadLineChartData(
+            binding.chartLinealSalud8,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Músculo Esquelético",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud9, "BMR", 14f, 17f,"bmr")
+        loadLineChartData(
+            binding.chartLinealSalud9,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "BMR",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud10, "Grasa Corporal", 12f, 17f,"grasa_corporal")
+        loadLineChartData(
+            binding.chartLinealSalud10,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Grasa Corporal",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud11, "Agua Corporal", 12f, 17f,"agua")
+        loadLineChartData(
+            binding.chartLinealSalud11,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Agua Corporal",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud12, "Peso", 12f, 17f,"peso")
+        loadLineChartData(
+            binding.chartLinealSalud12,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "Peso",
+            R.color.teal,
+            R.color.teal_light
+        )
+
+        setupLineChart(binding.chartLinealSalud13, "IMC", 12f, 17f,"imc")
+        loadLineChartData(
+            binding.chartLinealSalud13,
+            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
+            getFormattedDates(),
+            "IMC",
+            R.color.teal,
+            R.color.teal_light
+        )
+
     }
 
     private fun setupLineChart(lineChart: com.github.mikephil.charting.charts.LineChart, title: String, minY: Float, maxY: Float, chartType: String) {
@@ -245,6 +346,26 @@ class PerfilSaludFragment : Fragment() {
                         tvContent.text = String.format("%.1f%%", e.y)
                     }"masa_esqueletico" ->{
                         tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                    }"grasa_visceral"->{
+                        tvContent.text = String.format("%.1f ", e.y.toDouble())
+                    }"masa_muscular"->{
+                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                    }"perdida_grasa"->{
+                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                    }"grasa_subcutanea"->{
+                        tvContent.text = String.format("%.1f%%", e.y)
+                    }"musculo_esqueletico"->{
+                        tvContent.text = String.format("%.1f%%", e.y)
+                    }"bmr"->{
+                        tvContent.text = String.format("%.1f ", e.y.toDouble())
+                    }"grasa_corporal"->{
+                        tvContent.text = String.format("%.1f%%", e.y)
+                    }"agua"->{
+                        tvContent.text = String.format("%.1f%%", e.y)
+                    }"peso"->{
+                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                    }"imc"->{
+                        tvContent.text = String.format("%.1f ", e.y.toDouble())
                     }else -> {
                         // Formato predeterminado
                         tvContent.text = String.format("%.1f", e.y)

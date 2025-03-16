@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.model.Appointment
 import com.ascrib.nutrifit.model.Chat
+import com.ascrib.nutrifit.model.Desafio
 import com.ascrib.nutrifit.model.Notification
 import com.ascrib.nutrifit.model.PlanList
 
@@ -15,6 +16,11 @@ class DashboardViewModel : ViewModel() {
     fun getInProgressAppointments() = appointment.filter { it.statusType == 1 }
     fun getNextAppointments() = appointment.filter { it.statusType == 2 }
     fun getPastAppointments() = appointment.filter { it.statusType in listOf(3, 4) }
+    fun getDesafio1() = desafio.filter {it.statusType == 1}
+    fun getDesafio2() = desafio.filter {it.statusType == 2}
+    fun getDesafio3() = desafio.filter {it.statusType in listOf(3, 4)}
+
+
     fun getNotification () = notification
 
     private var listplan = arrayListOf(
@@ -91,6 +97,33 @@ class DashboardViewModel : ViewModel() {
 
     )
 
+
+    private var desafio = arrayListOf(
+        Desafio(
+            1,
+            "Sopa De Letras Nutri",
+            "Sopa de letras",
+            R.drawable.desafio,
+            "Activo",
+            1
+        ),
+        Desafio(
+            2,
+            "Memorama Nutri",
+            "Memoramas",
+            R.drawable.memoraa,
+            "Activo",
+            2
+        ),
+        Desafio(
+            3,
+            "Crucigramas Nutri",
+            "Crucigrama",
+            R.drawable.cru,
+            "Próximamente",
+            3
+        )
+    )
 
 
 

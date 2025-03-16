@@ -7,6 +7,9 @@
         <variable
             name="handler"
             type="com.ascrib.nutrifit.ui.dashboard.HomeFragment" />
+
+
+
     </data>
 
     <ScrollView
@@ -187,7 +190,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="@dimen/_2sdp"
-                                android:text="Disponibles"
+                                android:text="¡Descárgalo ahora!"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
 
@@ -233,7 +236,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="@dimen/_2sdp"
-                                android:text="Disponibles"
+                                android:text="Consulta tu historial"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
 
@@ -253,7 +256,7 @@
                         android:layout_weight=".5"
                         android:clickable="true"
                         android:focusable="true"
-                        android:onClick="@{()->handler.onConsejoOnClicked()}"
+                        android:onClick="@{()->handler.onNutriDefOnClicked()}"
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:cardElevation="0dp">
 
@@ -267,7 +270,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
-                                android:src="@drawable/consejo"
+                                android:src="@drawable/desafio"
                                 android:paddingTop="@dimen/inner_spacing"
                                 android:contentDescription="@string/todo" />
 
@@ -285,7 +288,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="@dimen/_2sdp"
-                                android:text="Disponibles"
+                                android:text="Juegos y Diversión"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
 
@@ -343,9 +346,37 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:id="@+id/layout_bienvenida"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_marginTop="@dimen/section_spacing">
 
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_welcome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background_radius"/>
+
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                        android:id="@+id/dots_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/_1sdp"
+                        app:dotsColor="@color/colorVariant"
+                        app:dotsCornerRadius="8dp"
+                        app:dotsSize="10dp"
+                        app:dotsSpacing="4dp"
+                        app:dotsWidthFactor="2.5"
+                        app:progressMode="true"
+                        app:selectedDotColor="@color/colorPrimary"/>
+                </RelativeLayout>
 
             </LinearLayout>
+
+
 
         </RelativeLayout>
 
