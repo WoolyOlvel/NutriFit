@@ -53,7 +53,7 @@
     <string name="messageH2_">¡Tu salud es la prioridad!</string>
     <string name="textCard1">Planes Alimenticios</string>
     <string name="textCard2">Historial Nutricional</string>
-    <string name="textCard3">Consejo Nutricional</string>
+    <string name="textCard3">Desafíos Nutrifit </string>
     <string name="textCard4">Perfil De Salud</string>
 
     <string name="primeryCase">Peso (Kg)</string>
@@ -119,7 +119,7 @@
 
     <string name="notificationButton">Marcar como leído</string>
     <string name="notificationButton2">Eliminar Notificaciones</string>
-
+  
     <string name="hi_max_webber"><b>Hola, Alcyra. ¡Bienvenida!</b>\nEstamos encantados de tenerte aquí</string>
 
 
@@ -190,5 +190,11 @@
         <item>7 PM</item>
         <item>8 PM</item>
     </string-array>
+
+    <string name="titleDefNutri1">Sopa de letras</string>
+    <string name="titleDefNutri2">Memoramas</string>
+
+    <string name="titleDefNutri3">Próximos</string>
+<string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
 
 </resources>

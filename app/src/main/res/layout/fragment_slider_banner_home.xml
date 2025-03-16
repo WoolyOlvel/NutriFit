@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.dashboard.HomeFragment" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_bienvenida"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:backgroundTint="@color/transparent"
+        android:layout_margin="0dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_margin="@dimen/section_spacing"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner2" />
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    
+    
+</layout>

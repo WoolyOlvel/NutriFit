@@ -153,3 +153,17 @@
 
 </navigation>
 
+    <fragment
+        android:id="@+id/desafioNutriFragment"
+        android:name="com.ascrib.nutrifit.ui.planList.DesafioNutri"
+        android:label="DesafioNutriFragment"/>
+
+    <action
+        android:id="@+id/global_desafioNutriFragment"
+        app:destination="@+id/desafioNutriFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+</navigation>
