@@ -4,6 +4,7 @@
     android:id="@+id/home_nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <include app:graph="@navigation/doctor_nav_graph" />
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -24,30 +25,90 @@
         android:label="HomeFragment">
 
         <action
-            android:id="@+id/action_homeFragment_a_myProgressFragment"
-            app:destination="@+id/myProgressFragment"
+            android:id="@+id/action_homeFragment_to_doctor_nav_graph"
+            app:destination="@id/doctor_nav_graph"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
-
         <action
-            android:id="@+id/action_homeFragment_a_myPersonSaludFragment"
-            app:destination="@+id/myPersonSaludFragment"
+            android:id="@+id/action_homeFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-
-        <action
-            android:id="@+id/action_homeFragment_a_historyNutriListFragment"
-            app:destination="@+id/historyNutriFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
+
+    <fragment
+        android:id="@+id/patientListFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.PatientListFragment"
+        android:label="PatientListFragment" />
+
+    <action
+        android:id="@+id/global_patientListFrgament"
+        app:destination="@id/patientListFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.PatientFragment"
+        android:label="PatientFragment" />
+
+    <action
+        android:id="@+id/global_patientFragment"
+        app:destination="@id/patientFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
+    <fragment
+        android:id="@+id/appointmentDetailFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.AppointmentDetailFragment"
+        android:label="AppointmentDetailFragment" />
+
+    <action
+        android:id="@+id/global_appointmentDetailFragment"
+        app:destination="@id/appointmentDetailFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.HistoryFragment"
+        android:label="HistoryFragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_a_myProgressFragment"
+        app:destination="@+id/myProgressFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+    <action
+        android:id="@+id/action_homeFragment_a_myPersonSaludFragment"
+        app:destination="@+id/myPersonSaludFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+    <action
+        android:id="@+id/action_homeFragment_a_historyNutriListFragment"
+        app:destination="@+id/historyNutriFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
     <fragment
         android:id="@+id/myPersonSaludFragment"
@@ -65,7 +126,7 @@
         android:label="PlanListFragment"/>
 
     <action
-        android:id="@+id/global_planListFrgament"
+        android:id="@+id/global_planListFragment"
         app:destination="@+id/planListFragment"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
@@ -90,6 +151,7 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
+</navigation>
 
     <fragment
         android:id="@+id/desafioNutriFragment"
@@ -103,9 +165,5 @@
         app:exitAnim="@anim/fade_out"
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
-
-
-
-
 
 </navigation>

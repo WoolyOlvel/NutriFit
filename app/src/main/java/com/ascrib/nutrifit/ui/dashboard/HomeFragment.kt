@@ -139,7 +139,7 @@ class HomeFragment : Fragment() {
     }
 
     fun onPlanAlimentClicked(){
-        findNavController().navigate(R.id.global_planListFrgament)
+        findNavController().navigate(R.id.global_planListFragment)
     }
 
     fun onNutriDefOnClicked(){

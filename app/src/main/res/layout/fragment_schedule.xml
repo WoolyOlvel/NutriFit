@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.dashboard.ScheduleFragment" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_background_radius"
+        android:elevation="0dp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_10sdp">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_dark_arrow" />
+
+        <LinearLayout
+            android:id="@+id/layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/section_spacing"
+            android:paddingVertical="@dimen/inner_spacing">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/perfil_prueba" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/inner_spacing"
+                android:text="@string/hi_max_webber"
+                android:textColor="@color/colorVariant"
+                android:textSize="@dimen/text_size_h5" />
+        </LinearLayout>
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_header"
+            android:layout_margin="@dimen/section_spacing"
+            app:mcv_calendarMode="week"
+            app:mcv_headerTextAppearance="@style/CalendarTextAppearance"
+            app:mcv_selectionColor="@color/colorSecondary"
+            app:mcv_selectionMode="range"
+            app:mcv_showOtherDates="all"
+            app:mcv_tileHeight="@dimen/_30sdp"
+            app:mcv_titleAnimationOrientation="vertical" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_appointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendarView"
+            android:layout_margin="@dimen/section_spacing" />
+
+    </RelativeLayout>
+</layout>

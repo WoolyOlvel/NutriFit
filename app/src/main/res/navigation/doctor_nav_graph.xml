@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/doctor_nav_graph"
+    app:startDestination="@id/scheduleFragment">
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.ascrib.nutrifit.ui.NotificationFragment"
+        android:label="NotificationFragment" />
+
+    <action
+        android:id="@+id/global_notificationFragment"
+        app:destination="@id/notificationFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.ascrib.nutrifit.ui.dashboard.ScheduleFragment"
+        android:label="ScheduleFragment" />
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.PatientFragment"
+        android:label="PatientFragment" />
+
+    <action
+        android:id="@+id/global_patientFragment"
+        app:destination="@id/patientFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
+    <fragment
+        android:id="@+id/appointmentDetailFragment"
+        android:name="com.ascrib.nutrifit.ui.patient.AppointmentDetailFragment"
+        android:label="AppointmentDetailFragment" />
+
+    <action
+        android:id="@+id/global_appointmentDetailFragment"
+        app:destination="@id/appointmentDetailFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
+
+
+
+</navigation>
