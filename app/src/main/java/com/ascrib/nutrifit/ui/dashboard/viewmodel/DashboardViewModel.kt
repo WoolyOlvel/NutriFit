@@ -16,15 +16,27 @@ class DashboardViewModel : ViewModel() {
     fun getChat() = dataChat
     fun getAppointment() = appointment
     fun getInProgressAppointments() = appointment.filter { it.statusType == 1 }
+
     fun getNextAppointments() = appointment.filter { it.statusType == 2 }
     fun getPastAppointments() = appointment.filter { it.statusType in listOf(3, 4) }
     fun getDesafio1() = desafio.filter {it.statusType == 1}
     fun getDesafio2() = desafio.filter {it.statusType == 2}
     fun getDesafio3() = desafio.filter {it.statusType in listOf(3, 4)}
 
+    fun getNewAppointmentList() = newAppointmentList
+    fun getInProgressNewAppointments() = newAppointmentList.filter { it.statusType == 1 }
+    fun getNextNewAppointments() = newAppointmentList.filter { it.statusType == 2 }
+    fun getPastNewAppointments() = newAppointmentList.filter { it.statusType in listOf(3, 4) }
+
+
+
 
     fun getNotification () = notification
     fun getPatient() = patients
+    fun getCompletedAppointments(): List<Appointment> {
+        // Filtramos la lista de citas que tienen un statusType de 3 o 4 (completadas)
+        return appointment.filter { it.statusType == 3 || it.statusType == 4 }
+    }
 
     private var listplan = arrayListOf(
         PlanList(1, "Alcrya Lumina",R.drawable.perfil_prueba2,"+52 9961025841", "Dieta hipocalórica", "Un Mes" )
@@ -186,5 +198,48 @@ class DashboardViewModel : ViewModel() {
         ),
 
     )
+
+    private var newAppointmentList = arrayListOf(
+        Appointment(
+            1,
+            "Nut. Wilbert Edward",
+            "Presencial",
+            "NutriVida",
+            R.drawable.perfil_nutri,
+            "Disponible",
+            1
+        ),
+        Appointment(
+            2,
+            "Nut. Alessandra Muñoz",
+            "Virtual",
+            "Clínica Nutrición Avanzada",
+            R.drawable.img_log,
+            "Pocos cupos",
+            2
+        ),
+        Appointment(
+            3,
+            "Nut. Rodolfo Cardenaz",
+            "Presencial",
+            "Centro Nutricional Bienestar",
+            R.drawable.opa,
+            "Disponible",
+            3
+        ),
+        Appointment(
+            3,
+            "Nut. Isabel Medina",
+            "Chat",
+            "NutriSalud",
+            R.drawable.fer,
+            "No disponible",
+            4
+        ),
+
+        )
+
+
+
 
 }

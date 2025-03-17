@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.RowAppointmentBinding
 import com.ascrib.nutrifit.handler.AppointmentHandler
 import com.ascrib.nutrifit.model.Appointment
 
-class AppointmentAdapter (
-    private val data: ArrayList<Appointment>,
+class AppointmentAdapter(
+    private val data: List<Appointment>,
     private val appointmentHandler: AppointmentHandler
 ): RecyclerView.Adapter<AppointmentAdapter.ViewHolder>(){
 

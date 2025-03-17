@@ -117,14 +117,19 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
     }
 
     override fun appointmentClicked(appointment: Appointment) {
+        // Verifica si el estado de la cita es 3 o 4
         if (appointment.statusType == 3 || appointment.statusType == 4) {
+            // Si es 3 o 4, navega a global_planListDetailFragment
             findNavController().navigate(
-                R.id.global_planListDetailFragment, bundleOf("appointment" to appointment.statusType)
+                R.id.global_planListDetailFragment,
+                bundleOf("appointment" to appointment.statusType)
             )
         } else {
-            // Si el estado no es 2 ni 4, no hacemos nada (evitamos la navegación)
+            // Si el estado no es 3 ni 4, no hace nada
+            // (puedes agregar alguna lógica adicional aquí si es necesario)
         }
     }
+
 
 
 }

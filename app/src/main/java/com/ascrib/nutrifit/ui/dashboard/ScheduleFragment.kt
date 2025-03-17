@@ -33,6 +33,9 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
 
     lateinit var appointmentAdapter: AppointmentAdapter
 
+    private var newAppointmentsList: List<Appointment> = listOf()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -110,17 +113,48 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
     }
 
     fun makeAppointment() {
-        appointmentAdapter = AppointmentAdapter(model.getAppointment(), this)
+        // Usa las listas filtradas de citas según su estado
+        val inProgressAdapter = AppointmentAdapter(ArrayList(model.getInProgressAppointments()), this)
+        val nextConsultsAdapter = AppointmentAdapter(ArrayList(model.getNextAppointments()), this)
+        val pastConsultsAdapter = AppointmentAdapter(ArrayList(model.getPastAppointments()), this)
+
+        // Establece la lista de citas nuevas
+        newAppointmentsList = model.getNewAppointmentList()  // Aquí puedes cambiar la lógica según lo que necesites
+
+        // Asigna el adaptador para mostrar la lista de citas nuevas
+        appointmentAdapter = AppointmentAdapter(newAppointmentsList, this)
         binding.recyclerviewAppointments.apply {
             adapter = appointmentAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        binding.recyclerviewInProgress.apply {
+            adapter = inProgressAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        binding.recyclerviewNextConsults.apply {
+            adapter = nextConsultsAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        binding.recyclerviewPastConsults.apply {
+            adapter = pastConsultsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
     override fun appointmentClicked(appointment: Appointment) {
-        findNavController().navigate(
-            R.id.global_appointmentDetailFragment,
-            bundleOf("appointment" to appointment.statusType)
-        )
+        if (appointment.statusType in listOf(1, 2, 3)) {
+            // Si el estado es 1, 2 o 3, navega a global_appointmentDetailFragment
+            findNavController().navigate(
+                R.id.global_appointmentDetailFragment,
+                bundleOf("appointment" to appointment.statusType)
+            )
+        } else {
+            // Si el estado es 4 (o cualquier otro si lo decides), no navega
+            // Puedes agregar una notificación aquí si lo deseas
+        }
     }
+
 }
