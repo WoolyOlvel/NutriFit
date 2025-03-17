@@ -3,6 +3,7 @@ package com.ascrib.nutrifit.ui.patient
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -29,7 +30,7 @@ class PatientFragment : Fragment(), AppointmentHandler {
 
     lateinit var appointmentAdapter: AppointmentAdapter
 
-    val copiedList = model.getAppointment().map { it.copy() }
+
 
 
 
@@ -59,7 +60,8 @@ class PatientFragment : Fragment(), AppointmentHandler {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = ""
+        binding.toolbar.toolbar.title = "Sobre Mí"
+        binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -99,10 +101,7 @@ class PatientFragment : Fragment(), AppointmentHandler {
         // Usamos la copia en el adaptador para evitar modificar la original
         appointmentAdapter = AppointmentAdapter(copiedList, this)
 
-        binding.recyclerviewAppointments.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
+
     }
 
 

@@ -124,87 +124,75 @@
 
 
     <string name="name_nut">Nut.Wilbert Edward</string>
-    <string name="male">Maculino</string>
-    <string name="birthday">01/01/1997</string>
+    <string name="male">Masculino</string>
+    <string name="birthday">02/12/2000</string>
     <string name="ubication">Calikiní, Campeche.</string>
-    <string name="height">Altura</string>
+    <string name="Edad2">Edad</string>
+    <string name="Edad3">24 años</string>
     <string name="num_height">170 cm</string>
-    <string name="weight">Peso</string>
+    <string name="paciente">Pacientes</string>
+    <string name="paciente2">45</string>
     <string name="_72kg">82kg</string>
-    <string name="bmi">BMI</string>
+    <string name="exp">Experiencia</string>
+    <string name="exp2">3 años</string>
     <string name="_20_33">20.33</string>
-    <string name="blood_type">Tipo de sangre</string>
+    <string name="Esp">Espicialidad</string>
+    <string name="Esp2">Autoinmune</string>
     <string name="b">B+</string>
 
-    <string name="consult">Consulta</string>
-    <string name="consult_now">Consultar Ahora</string>
+    <string name="consult">Generar Cita</string>
+    <string name="consult_now">Reservar Cita</string>
 
-    <string name="visiting_time">Tiempo de Visita</string>
+    <string name="horarioDis">Horarios Disponibles</string>
     <string name="today_may_12_2022">Hoy, 16 de marzo de 2025</string>
     <string name="_01_19_pm_alarm_before_30_minutes"><b>01 : 19 PM</b> Alarma Antes 30 minutes</string>
 
-    <string name="consulting_details">Detalles de la consulta nutricional</string>
-    <string name="for_her_son_3_years_old">Para mi paciente</string>
-    <string name="description">Mantenerte hidratado es esencial para el buen funcionamiento de tu cuerpo. Trata de beber al menos 8 vasos de agua al día, o más si realizas actividad física.</string>
-    <string name="uploaded_may_12_2022">Consulta subida el 12 de mayo de 2022</string>
+    <string name="informacionNutri">Conoce un poco de mi</string>
+    <string name="for_her_son_3_years_old">Sobre Mí</string>
+    <string name="description">Soy Wilbert Edward, nutriologo especializado en el manejo de enfermedades autoinmunes a través de la nutrición. Mi enfoque es brindar un tratamiento personalizado que ayude a optimizar la salud de cada paciente, utilizando dietas específicas para apoyar la regulación del sistema inmunológico. Mi objetivo es ofrecer un enfoque integral que mejore el bienestar y calidad de vida de quienes buscan un apoyo nutricional especializado en su condición.</string>
+    <string name="actualizado">Descripción Actualizada</string>
 
     <string name="my_answer">Mi respuesta nutricional</string>
     <string name="answered_01_25_pm_may_12_2022">Respondido a las 01:25 PM, 16 de marzo de 2025</string>
 
-    <string name="additional_information">Información Adicional</string>
-    <string name="diagonased_condition">Condición Diagnosticada</string>
-    <string name="none">Ninguna</string>
-    <string name="medication">Medicación</string>
-    <string name="allergies">Alergias</string>
-    <string name="review">Revisión</string>
+    <string name="formacion">Formación Profesional</string>
+    <string name="formacion2">Universidad</string>
+    <string name="universidad">Graduado De La Universidad Autonoma De Campeche, Campus Nutrición</string>
+    <string name="diplomado2">Diplomado en Nutrición en Enfermedades Autoinmunes
+                                , Diplomado en Nutrición Clínica, Diplomado en Dietética y Alimentación Saludable</string>
+    <string name="diplomado">Diplomados</string>
+    <string name="participacion">Especialización En Enfermedades AutoInmunes</string>
+    <string name="enfermedades">Lupus eritematoso sistémico, Diabetes tipo 1, Vasculitis autoinmune, Enfermedad celíaca, Artritis reumatoide </string>
+    <string name="participacion2"></string>
+    <string name="review">¡Califícame!</string>
     <string name="cancel_appointment">Cancelar Cita</string>
     <string name="are_you_done_finish_consult_now">¿Has terminado? Finalizar Consulta Ahora</string>
     <string name="accept">Aceptar</string>
     <string name="reject">Rechazar</string>
     <string name="respect_patients_detail_and_privacy_following_the_protocols">Respeta los detalles y la privacidad del paciente siguiendo los protocolos.</string>
+    <string name="textbuttominformation">¡Conoce la información de tu nutriologo de confianza!</string>
+    <string name="textbuttominformation2">¡Reserva una cita ahora, antes que se llenen los cupos!</string>
 
-    <string name="consult">Consult</string>
-    <string name="consult_now">Consult Now</string>
-
-    <string name="visiting_time">Tu próxima cita es:</string>
     <string name="fecha">Viernes, 28 de marzo del 2025</string>
     <string name="hora"><b>11 : 11 AM</b> con el Nut. Isabel Medina</string>
-
-    <string name="consulting_details">Consulting Details</string>
-    <string name="for_her_son_3_years_old">For her son, 3 years old</string>
     <string name="i_think_my_child_has_been_exposed_to_malaria_what_should_i_do_for_it_any_remedies_to_cure_this_quickly">I think my child has been exposed to malaria what should I do for it? Any remedies to cure this quickly?</string>
-    <string name="uploaded_may_12_2022">Uploaded May 12 2022</string>
 
-    <string name="my_answer">My Answer</string>
-    <string name="answered_01_25_pm_may_12_2022">Answered 01:25 PM May 12 2022</string>
 
-    <string name="additional_information">Additional Information</string>
-    <string name="diagonased_condition">Diagonased Condition</string>
-    <string name="none">None</string>
-    <string name="medication">Medication</string>
-    <string name="allergies">Allergies</string>
-    <string name="review">Review</string>
-    <string name="cancel_appointment">Cancel Appointment</string>
-    <string name="are_you_done_finish_consult_now">Are you done? Finish Consult Now</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Reject</string>
-    <string name="respect_patients_detail_and_privacy_following_the_protocols">Respect Patients Detail and Privacy following the protocols.</string>
-
-    <string name="_571_69258841">571-69258841</string>
-    <string name="spent_2_56_used_your_service">Gastado $2.56 utilizando su servicio</string>
+    <string name="numberNutri">+52 9961122610</string>
+    <string name="profesion">Licenciado En Nutrición</string>
     <string name="consult_history">Historial de Consultas</string>
 
-    <string name="write_an_answer">Escribir una Respuesta</string>
-    <string name="write_answer">Respuesta</string>
+    <string name="write_an_answer">Escribir un comentario</string>
+    <string name="write_answer">Guardar Comentario</string>
     <string name="response_details">Detalles de la respuesta</string>
-    <string name="optional_note">Notas</string>
-    <string name="medication_name">Nombre del Medicamento</string>
+    <string name="optional_note">Satisfacción del Paciente</string>
+    <string name="medication_name">Nombre del Paciente</string>
 
 
     <string name="prescription">Receta</string>
     <string name="pres_details">Detalles de la receta</string>
 
-    <string name="comentary">Dejános un comentario, ¡tú opinión es importante!</string>
+    <string name="comentary">Dejame un comentario, ¡tú opinión es importante!</string>
 
     <string name="still_in_progress">En Progreso</string>
     <string name="next_consults">Próximas Consultas</string>
@@ -249,23 +237,41 @@
     <string name="enfermedad">¿Padece Alguna Enfermedad?</string>
 
     <string name="guardarCambios">Guardar Cambios</string>
+    <string name="horarios">Lunes a Viernes:</string>
+    <string name="horas">10:00 AM - 4:00 PM,
+        6:00 PM - 8:00 PM</string>
 
 
 
     <string name="send_message">Reservar Cita</string>
-    <string name="service_price_240_consulted">Precio del Servicio</string>
-    <string name="_45">$45</string>
-    <string name="rate_per_30_minutes">Tarifa por 30 minutos</string>
-    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía mensajes y adjuntos. Recibe la primera respuesta en un máximo de 4 horas.</string>
+    <string name="service_price_240_consulted">Precio por la cita</string>
+    <string name="_45">100 USD</string>
+    <string name="_40">50 USD</string>
+    <string name="rate_per_30_minutes">Tarifa por 1 hora</string>
+    <string name="rate_per_32_minutes">El especialista te contactará para coordinar el método de pago</string>
+    <string name="rate_per_20_minutes">Tarifa por 30 minutos</string>
+    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía mensajes y adjuntos, y describe el motivo de tu cita. Recibe la primera respuesta en un máximo de 2 horas.</string>
     <string name="personal_call">Llamada Personal</string>
     <string name="service_price_103_consulted">Precio del Servicio</string>
     <string name="available_time">Horario Disponible</string>
     <string name="_30_minutes_call_durations_get_first_reponse_within_30_minutes">Duración de la llamada: 30 minutos. </string>
     <string name="save">Guardar</string>
-    <string name="description_res">Descripción de la consulta</string>
+    <string name="description_res">Motivo de la cita</string>
     <string name="description_consult">Consulta médica en línea con un especialista.</string>
-    <string name="horario_consult">Horario de Consulta</string>
+    <string name="horario_consult">Horarios de reservaciones</string>
     <string name="horario">Horario</string>
+    <string name="EnfermedadesTra">Enfermedades Tratadas</string>
+    <string name="Enfermedad1">Artritis reumatoide</string>
+    <string name="Enfermedad2">Lupus eritematoso sistémico</string>
+    <string name="Enfermedad3">Enfermedad celíaca</string>
+    <string name="Enfermedad4">Diabetes tipo 1</string>
+    <string name="Enfermedad5">Psoriasis</string>
+    <string name="Enfermedad6">Vasculitis autoinmune</string>
+
+    <string name="desc">¡Conoceme!</string>
+    <string name="horario2">Su próxima cita es</string>
+
+    <string name="no_date_selected">No se ha seleccionado fecha y hora</string>
 
 
 </resources>

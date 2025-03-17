@@ -62,7 +62,7 @@
             app:mcv_calendarMode="week"
             app:mcv_headerTextAppearance="@style/CalendarTextAppearance"
             app:mcv_selectionColor="@color/colorSecondary"
-            app:mcv_selectionMode="range"
+            app:mcv_selectionMode="single"
             app:mcv_showOtherDates="all"
             app:mcv_tileHeight="@dimen/_30sdp"
             app:mcv_titleAnimationOrientation="vertical" />

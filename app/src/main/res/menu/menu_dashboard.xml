@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/doctor_nav_graph"
-        android:title="Horarios"
+        android:title="Reserva"
         android:icon="@drawable/calendar"/>
 
     <item

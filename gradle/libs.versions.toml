@@ -21,6 +21,7 @@ circular-progress-view = "0.1.2"
 mpandroidchart = "3.1.0"
 materialcalendarview = "2.0.1"
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

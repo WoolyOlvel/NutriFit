@@ -137,7 +137,7 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:paddingTop="@dimen/inner_spacing"
-                        android:text="@string/visiting_time"
+                        android:text="@string/horario2"
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h5"
                         android:textStyle="bold"

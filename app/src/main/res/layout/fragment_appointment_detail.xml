@@ -101,8 +101,7 @@
                                     android:text="@string/birthday"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
-                                    app:drawableLeftCompat="@drawable/ic_cake"
-                                    app:drawableTint="@color/grey" />
+                                    app:drawableLeftCompat="@drawable/fech" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -113,8 +112,7 @@
                                     android:text="@string/ubication"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
-                                    app:drawableLeftCompat="@drawable/ic_location"
-                                    app:drawableTint="@color/grey" />
+                                    app:drawableLeftCompat="@drawable/loc" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -135,7 +133,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/height"
+                                        android:text="@string/Edad2"
                                         android:textColor="@color/grey"
                                         android:textSize="@dimen/text_size_h6"
                                         tools:ignore="TooDeepLayout" />
@@ -143,7 +141,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/num_height"
+                                        android:text="@string/Edad3"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -158,14 +156,14 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/weight"
+                                        android:text="@string/paciente"
                                         android:textColor="@color/grey"
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/_72kg"
+                                        android:text="@string/paciente2"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -180,14 +178,14 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/bmi"
+                                        android:text="@string/exp"
                                         android:textColor="@color/grey"
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/_20_33"
+                                        android:text="@string/exp2"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -202,14 +200,14 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/blood_type"
+                                        android:text="@string/Esp"
                                         android:textColor="@color/grey"
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/b"
+                                        android:text="@string/Esp2"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -244,7 +242,7 @@
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold"
-                                app:drawableLeftCompat="@drawable/ic_doctor" />
+                                app:drawableLeftCompat="@drawable/cita" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -267,7 +265,7 @@
                                     android:text="@string/consult_now"
                                     android:textAllCaps="false"
                                     android:textSize="@dimen/text_size_h6"
-                                    app:icon="@drawable/ic_call"
+                                    app:icon="@drawable/telephone"
                                     app:iconGravity="textStart" />
 
                                 <com.google.android.material.button.MaterialButton
@@ -280,7 +278,7 @@
                                     android:onClick="@{()->handler.onChatClicked()}"
                                     android:textAllCaps="false"
                                     android:textSize="@dimen/text_size_h6"
-                                    app:icon="@drawable/ic_chat"
+                                    app:icon="@drawable/chat"
                                     app:iconGravity="textStart"
                                     app:iconPadding="0dp" />
                             </RelativeLayout>
@@ -307,11 +305,11 @@
                                 android:gravity="center_vertical"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:paddingTop="@dimen/inner_spacing"
-                                android:text="@string/visiting_time"
+                                android:text="@string/horarioDis"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold"
-                                app:drawableLeftCompat="@drawable/ic_calendar" />
+                                app:drawableLeftCompat="@drawable/calendar3" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -323,16 +321,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/guardarCambios"
+                                android:text="@string/horarios"
                                 android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6" />
+                                android:textSize="@dimen/text_size_h5" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/guardarCambios"
+                                android:text="@string/horas"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
                         </LinearLayout>
@@ -358,11 +356,11 @@
                                 android:gravity="center_vertical"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:paddingTop="@dimen/inner_spacing"
-                                android:text="@string/consulting_details"
+                                android:text="@string/desc"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold"
-                                app:drawableLeftCompat="@drawable/ic_question" />
+                                app:drawableLeftCompat="@drawable/nutri" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -385,37 +383,10 @@
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:text="@string/description"
+                                android:justificationMode="inter_word"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/section_spacing"
-                                    android:layout_weight=".5"
-                                    android:gravity="start"
-                                    android:paddingHorizontal="@dimen/section_spacing"
-                                    android:text="@string/uploaded_may_12_2022"
-                                    android:textColor="@color/grey"
-                                    android:textSize="@dimen/text_size_h6" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/section_spacing"
-                                    android:layout_weight=".5"
-                                    android:gravity="end"
-                                    android:onClick="@{()->handler.onAnswerClicked()}"
-                                    android:paddingHorizontal="@dimen/section_spacing"
-                                    android:text="@string/write_an_answer"
-                                    android:textColor="@color/colorVariant"
-                                    android:textSize="@dimen/text_size_h6" />
-                            </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
@@ -423,54 +394,6 @@
                                 android:layout_margin="@dimen/section_spacing"
                                 android:background="@color/white" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/my_answer"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h5"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/inner_spacing"
-                                android:gravity="start"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/answered_01_25_pm_may_12_2022"
-                                android:textColor="@color/grey"
-                                android:textSize="@dimen/text_size_h6" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/section_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/pres_details"
-                                android:textColor="@color/grey"
-                                android:textSize="@dimen/text_size_h6" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/section_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/prescription"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/section_spacing"
-                                android:background="@drawable/background_radius"
-                                android:backgroundTint="@color/whiteGrey"
-                                android:padding="@dimen/section_spacing"
-                                android:text="@string/pres_details"
-                                android:textColor="@color/grey"
-                                android:textSize="@dimen/text_size_h6" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -494,11 +417,11 @@
                                 android:gravity="center_vertical"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:paddingTop="@dimen/inner_spacing"
-                                android:text="@string/additional_information"
+                                android:text="@string/EnfermedadesTra"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold"
-                                app:drawableLeftCompat="@drawable/ic_information" />
+                                app:drawableLeftCompat="@drawable/enf" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -510,7 +433,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/diagonased_condition"
+                                android:text="@string/Enfermedad1"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold" />
@@ -520,7 +443,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/none"
+                                android:text="@string/Enfermedad2"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -529,7 +452,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/section_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/medication"
+                                android:text="@string/Enfermedad3"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold" />
@@ -539,7 +462,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/none"
+                                android:text="@string/Enfermedad4"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -548,7 +471,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/section_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/allergies"
+                                android:text="@string/Enfermedad5"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold" />
@@ -558,7 +481,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/none"
+                                android:text="@string/Enfermedad6"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
                         </LinearLayout>
@@ -590,7 +513,7 @@
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold"
-                                app:drawableLeftCompat="@drawable/ic_review" />
+                                app:drawableLeftCompat="@drawable/cal" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -608,72 +531,23 @@
                                 android:stepSize="1" />
 
                             <TextView
+                                android:id="@+id/tv_comment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/section_spacing"
                                 android:background="@drawable/background_radius"
                                 android:backgroundTint="@color/whiteGrey"
                                 android:padding="@dimen/section_spacing"
+                                android:onClick="@{()->handler.onAnswerClicked()}"
                                 android:text="@string/comentary"
                                 android:textColor="@color/grey"
-                                android:textSize="@dimen/text_size_h5" />
+                                android:textSize="@dimen/text_size_h5"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?attr/selectableItemBackground" />
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/text_cancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="@dimen/section_spacing"
-                        android:text="@string/cancel_appointment"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/text_size_h6"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/text_completed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="@dimen/section_spacing"
-                        android:text="@string/are_you_done_finish_consult_now"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/text_size_h6"
-                        android:visibility="gone" />
-
-                    <LinearLayout
-                        android:id="@+id/layout_buttons"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/section_spacing"
-                        android:visibility="gone">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/inner_spacing"
-                            android:layout_weight=".5"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:text="@string/accept"
-                            android:textAllCaps="false"
-                            app:cornerRadius="@dimen/_5sdp" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/inner_spacing"
-                            android:layout_weight=".5"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:text="@string/reject"
-                            android:textAllCaps="false"
-                            app:cornerRadius="@dimen/_5sdp" />
-                    </LinearLayout>
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -694,7 +568,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/respect_patients_detail_and_privacy_following_the_protocols"
+                android:text="@string/textbuttominformation2"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_h6" />
         </LinearLayout>

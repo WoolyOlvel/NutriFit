@@ -57,7 +57,7 @@
                                 android:drawablePadding="@dimen/inner_spacing"
                                 android:text="@string/send_message"
                                 android:textColor="@color/colorVariant"
-                                app:drawableLeftCompat="@drawable/ic_chat"
+                                app:drawableLeftCompat="@drawable/chat2"
                                 app:drawableTint="@color/colorPrimary" />
 
                             <TextView
@@ -78,6 +78,8 @@
                                 android:inputType="textEmailAddress"
                                 android:importantForAutofill="no"
                                 android:text="@string/_45"
+                                android:textStyle="bold"
+                                android:enabled="false"
                                 tools:ignore="LabelFor"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"
@@ -117,6 +119,18 @@
                                 android:padding="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_32_minutes"/>
+
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -140,7 +154,7 @@
                                 android:drawablePadding="@dimen/inner_spacing"
                                 android:text="@string/personal_call"
                                 android:textColor="@color/colorVariant"
-                                app:drawableLeftCompat="@drawable/ic_call"
+                                app:drawableLeftCompat="@drawable/tel"
                                 app:drawableTint="@color/colorPrimary" />
 
                             <TextView
@@ -159,8 +173,10 @@
                                 android:background="@drawable/background_radius"
                                 android:backgroundTint="#f1f1f1"
                                 android:inputType="textEmailAddress"
+                                android:enabled="false"
+                                android:textStyle="bold"
                                 android:importantForAutofill="no"
-                                android:text="@string/_45"
+                                android:text="@string/_40"
                                 tools:ignore="LabelFor"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"
@@ -200,6 +216,17 @@
                                 android:padding="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_32_minutes"/>
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -225,41 +252,34 @@
                                 android:textColor="@color/colorVariant"
                                 app:drawableLeftCompat="@drawable/ic_calendar"
                                 app:drawableTint="@color/colorPrimary" />
-                            <!--
-                                                        <com.dpro.widgets.WeekdaysPicker
-                                                            android:id="@+id/weekdays"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            app:background_color="@color/white"
-                                                            app:text_color="@color/white"
-                                                            app:highlight_color="@color/colorPrimary"
-                                                            android:layout_marginTop="@dimen/section_spacing"
-                                                            app:text_unselected_color="@color/grey"
-                                                            app:sunday_first_day="false" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textColor="@color/colorPrimary"
-                                android:paddingVertical="@dimen/inner_spacing"
-                                android:text="@string/horario_consult"/>
-
-                            <EditText
+                            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                                android:id="@+id/calendarView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:layout_margin="@dimen/section_spacing"
+                                app:mcv_calendarMode="week"
+                                app:mcv_headerTextAppearance="@style/CalendarTextAppearance"
+                                app:mcv_selectionColor="@color/colorSecondary"
+                                app:mcv_selectionMode="single"
+                                app:mcv_showOtherDates="all"
+                                app:mcv_tileHeight="@dimen/_30sdp"
+                                app:mcv_titleAnimationOrientation="vertical" />
+
+                            <TextView
+                                android:id="@+id/tv_selected_datetime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
                                 android:background="@drawable/background_radius"
                                 android:backgroundTint="#f1f1f1"
-                                android:inputType="textMultiLine"
-                                android:importantForAutofill="no"
-                                tools:ignore="LabelFor"
-                                android:gravity="start"
-                                android:hint="@string/horario"
-                                android:minHeight="@dimen/_80sdp"
                                 android:padding="@dimen/section_spacing"
-                                android:textColorHint="@color/grey"
-                                android:textSize="@dimen/text_size_h6" />
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:text="@string/no_date_selected"
+                                android:gravity="center" />
+
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
