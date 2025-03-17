@@ -36,4 +36,9 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/timeFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.TimeFragment"
+        android:label="TimeFragment" />
+
 </navigation>

@@ -56,17 +56,12 @@ class AppointmentDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments?.get("appointment") == 1) {
-            binding.cardReview.visibility = View.VISIBLE
-        } else if (arguments?.get("appointment") == 2) {
-            binding.textCancel.visibility = View.VISIBLE
-            binding.cardConsult.visibility = View.VISIBLE
-        } else if (arguments?.get("appointment") == 3) {
-            binding.layoutButtons.visibility = View.VISIBLE
-        } else if (arguments?.get("appointment") == 4) {
-            binding.textCompleted.visibility = View.VISIBLE
-            binding.cardConsult.visibility = View.VISIBLE
-        }
+        binding.cardReview.visibility = View.VISIBLE
+        binding.textCancel.visibility = View.VISIBLE
+        binding.cardConsult.visibility = View.VISIBLE
+        binding.layoutButtons.visibility = View.VISIBLE
+        binding.textCompleted.visibility = View.VISIBLE
+
     }
 
     private fun toolbarConfig() {
@@ -111,8 +106,13 @@ class AppointmentDetailFragment : Fragment() {
         findNavController().navigate(R.id.global_patientFragment)
     }
 
+    fun onChatClicked(){
+        findNavController().navigate(R.id.global_chat_patient)
+    }
 
-
+    fun onCallClicked(){
+        findNavController().navigate(R.id.serviceFragment)
+    }
 
     private fun showBottomSheetReply() {
         val dialog = BottomSheetDialog(requireContext())

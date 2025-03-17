@@ -1,54 +1,39 @@
-package com.ascrib.nutrifit.ui.patient
+package com.ascrib.nutrifit.ui.profile
 
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModel
-import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModelFactory
 import com.ascrib.nutrifit.R
-import com.ascrib.nutrifit.databinding.FragmentHistoryListBinding
-import com.ascrib.nutrifit.handler.AppointmentHandler
-import com.ascrib.nutrifit.model.Appointment
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+import com.ascrib.nutrifit.databinding.FragmentServicesBinding
 import com.ascrib.nutrifit.util.getStatusBarHeight
 
-class HistoryFragment : Fragment(), AppointmentHandler {
-    lateinit var binding: FragmentHistoryListBinding
-
-    lateinit var model: DashboardViewModel
-
-    lateinit var appointmentAdapter: AppointmentAdapter
+class ServiceFragment : Fragment() {
+    lateinit var binding: FragmentServicesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_history_list, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_services, container, false)
+
         binding.handler = this
-
-        model = ViewModelProvider(this, DashboardViewModelFactory())[DashboardViewModel::class.java]
-
         toolbarConfig()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        makeAppointment()
+        //weekdays()
     }
 
     private fun toolbarConfig() {
@@ -56,7 +41,7 @@ class HistoryFragment : Fragment(), AppointmentHandler {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = ""
+        binding.toolbar.toolbar.title = "Reservar Citas"
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -89,28 +74,13 @@ class HistoryFragment : Fragment(), AppointmentHandler {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun makeAppointment() {
-        appointmentAdapter = AppointmentAdapter(model.getAppointment(), this)
-        binding.recyclerviewInProgress.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    /*fun weekdays(){
+        binding.weekdays.setOnWeekdaysChangeListener { view, clickedDayOfWeek, selectedDays ->
+            findNavController().navigate(R.id.action_serviceFragment_to_timeFragment)
         }
+    }*/
 
-        binding.recyclerviewNextConsults.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.recyclerviewPastConsults.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-    }
-
-    override fun appointmentClicked(appointment: Appointment) {
-        findNavController().navigate(
-            R.id.global_appointmentDetailFragment,
-            bundleOf("appointment" to appointment.statusType)
-        )
+    fun saveAccount() {
+        findNavController().navigateUp()
     }
 }

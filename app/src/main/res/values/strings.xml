@@ -124,61 +124,66 @@
 
 
 
-    <string name="rimal_hamal">Rimal Hamal</string>
-    <string name="female">Female</string>
-    <string name="_01_01_1997">01/01/1997</string>
-    <string name="_150_aplles_st_ny_10235">150 Aplles St. NY 10235</string>
-    <string name="height">Height</string>
-    <string name="_150_cm">150 cm</string>
-    <string name="weight">Weight</string>
-    <string name="_72kg">72kg</string>
+    <string name="name_nut">Nut.Wilbert Edward</string>
+    <string name="male">Maculino</string>
+    <string name="birthday">01/01/1997</string>
+    <string name="ubication">Calikiní, Campeche.</string>
+    <string name="height">Altura</string>
+    <string name="num_height">170 cm</string>
+    <string name="weight">Peso</string>
+    <string name="_72kg">82kg</string>
     <string name="bmi">BMI</string>
     <string name="_20_33">20.33</string>
-    <string name="blood_type">Blood Type</string>
+    <string name="blood_type">Tipo de sangre</string>
     <string name="b">B+</string>
-    <string name="consult">Consult</string>
-    <string name="consult_now">Consult Now</string>
+    <string name="consult">Consulta</string>
+    <string name="consult_now">Consultar Ahora</string>
 
-    <string name="visiting_time">Visiting Time</string>
-    <string name="today_may_12_2022">Today, May 12 2022</string>
-    <string name="_01_19_pm_alarm_before_30_minutes"><b>01 : 19 PM</b> Alarm Before 30 minutes</string>
+    <string name="visiting_time">Tiempo de Visita</string>
+    <string name="today_may_12_2022">Hoy, 16 de marzo de 2025</string>
+    <string name="_01_19_pm_alarm_before_30_minutes"><b>01 : 19 PM</b> Alarma Antes 30 minutes</string>
 
-    <string name="consulting_details">Consulting Details</string>
-    <string name="for_her_son_3_years_old">For her son, 3 years old</string>
-    <string name="i_think_my_child_has_been_exposed_to_malaria_what_should_i_do_for_it_any_remedies_to_cure_this_quickly">I think my child has been exposed to malaria what should I do for it? Any remedies to cure this quickly?</string>
-    <string name="uploaded_may_12_2022">Uploaded May 12 2022</string>
+    <string name="consulting_details">Detalles de la consulta nutricional</string>
+    <string name="for_her_son_3_years_old">Para mi paciente</string>
+    <string name="description">Mantenerte hidratado es esencial para el buen funcionamiento de tu cuerpo. Trata de beber al menos 8 vasos de agua al día, o más si realizas actividad física.</string>
+    <string name="uploaded_may_12_2022">Consulta subida el 12 de mayo de 2022</string>
 
-    <string name="my_answer">My Answer</string>
-    <string name="answered_01_25_pm_may_12_2022">Answered 01:25 PM May 12 2022</string>
+    <string name="my_answer">Mi respuesta nutricional</string>
+    <string name="answered_01_25_pm_may_12_2022">Respondido a las 01:25 PM, 16 de marzo de 2025</string>
 
-    <string name="additional_information">Additional Information</string>
-    <string name="diagonased_condition">Diagonased Condition</string>
-    <string name="none">None</string>
-    <string name="medication">Medication</string>
-    <string name="allergies">Allergies</string>
-    <string name="review">Review</string>
-    <string name="cancel_appointment">Cancel Appointment</string>
-    <string name="are_you_done_finish_consult_now">Are you done? Finish Consult Now</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Reject</string>
-    <string name="respect_patients_detail_and_privacy_following_the_protocols">Respect Patients Detail and Privacy following the protocols.</string>
+    <string name="additional_information">Información Adicional</string>
+    <string name="diagonased_condition">Condición Diagnosticada</string>
+    <string name="none">Ninguna</string>
+    <string name="medication">Medicación</string>
+    <string name="allergies">Alergias</string>
+    <string name="review">Revisión</string>
+    <string name="cancel_appointment">Cancelar Cita</string>
+    <string name="are_you_done_finish_consult_now">¿Has terminado? Finalizar Consulta Ahora</string>
+    <string name="accept">Aceptar</string>
+    <string name="reject">Rechazar</string>
+    <string name="respect_patients_detail_and_privacy_following_the_protocols">Respeta los detalles y la privacidad del paciente siguiendo los protocolos.</string>
+
 
     <string name="_571_69258841">571-69258841</string>
-    <string name="spent_2_56_used_your_service">Spent $2.56 used your service</string>
-    <string name="consult_history">Consult History</string>
+    <string name="spent_2_56_used_your_service">Gastado $2.56 utilizando su servicio</string>
+    <string name="consult_history">Historial de Consultas</string>
 
-    <string name="write_an_answer">Write an Answer</string>
-    <string name="write_answer">Write Answer</string>
-    <string name="optional_note">Optional Note</string>
-    <string name="medication_name">Medication Name</string>
+    <string name="write_an_answer">Escribir una Respuesta</string>
+    <string name="write_answer">Respuesta</string>
+    <string name="response_details">Detalles de la respuesta</string>
+    <string name="optional_note">Notas</string>
+    <string name="medication_name">Nombre del Medicamento</string>
 
-    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipisicing_elit_consequuntur_exercitationem_repellendus">Lorem ipsum dolor sit amet,
-        consectetur adipisicing elit. Consequuntur exercitationem repellendus.</string>
-    <string name="prescription">Prescription</string>
 
-    <string name="still_in_progress">Still in Progress</string>
-    <string name="next_consults">Next Consults</string>
-    <string name="past_consults">Past Consults</string>
+    <string name="prescription">Receta</string>
+    <string name="pres_details">Detalles de la receta</string>
+
+    <string name="comentary">Dejános un comentario, ¡tú opinión es importante!</string>
+
+    <string name="still_in_progress">En Progreso</string>
+    <string name="next_consults">Próximas Consultas</string>
+    <string name="past_consults">Consultas Pasadas</string>
+
 
     <string-array name="time">
         <item>1 PM</item>
@@ -196,5 +201,23 @@
 
     <string name="titleDefNutri3">Próximos</string>
 <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
+
+
+
+    <string name="send_message">Reservar Cita</string>
+    <string name="service_price_240_consulted">Precio del Servicio</string>
+    <string name="_45">$45</string>
+    <string name="rate_per_30_minutes">Tarifa por 30 minutos</string>
+    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía mensajes y adjuntos. Recibe la primera respuesta en un máximo de 4 horas.</string>
+    <string name="personal_call">Llamada Personal</string>
+    <string name="service_price_103_consulted">Precio del Servicio</string>
+    <string name="available_time">Horario Disponible</string>
+    <string name="_30_minutes_call_durations_get_first_reponse_within_30_minutes">Duración de la llamada: 30 minutos. </string>
+    <string name="save">Guardar</string>
+    <string name="description_res">Descripción de la consulta</string>
+    <string name="description_consult">Consulta médica en línea con un especialista.</string>
+    <string name="horario_consult">Horario de Consulta</string>
+    <string name="horario">Horario</string>
+
 
 </resources>

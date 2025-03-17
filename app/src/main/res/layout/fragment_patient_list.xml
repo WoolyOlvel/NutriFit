@@ -2,24 +2,25 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="handler"
             type="com.ascrib.nutrifit.ui.NotificationFragment" />
     </data>
 
+    <!-- Contenedor raíz único -->
     <RelativeLayout
-        android:id="@+id/layout_doctor_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Contenido principal: RecyclerView y el mensaje informativo -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/layout_button"
-            android:background="@drawable/bottom_background_radius"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
             android:orientation="vertical"
+            android:background="@drawable/bottom_background_radius"
             android:paddingBottom="@dimen/_10sdp">
 
             <include
@@ -29,12 +30,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_patient"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_below="@id/toolbar"
-                android:padding="@dimen/section_spacing" />
+                android:padding="@dimen/section_spacing"
+                android:layout_weight="1" />
 
         </RelativeLayout>
 
+        <!-- Botón informativo al final -->
         <LinearLayout
             android:id="@+id/layout_button"
             android:layout_width="match_parent"
@@ -53,6 +56,27 @@
                 android:textSize="@dimen/text_size_h6" />
         </LinearLayout>
 
-    </RelativeLayout>
+        <!-- RecyclerView para In Progress y Completed -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewInProgress"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewCompletedAppointments"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </layout>
+

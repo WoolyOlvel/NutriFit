@@ -19,19 +19,15 @@
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.ascrib.nutrifit.ui.dashboard.ScheduleFragment"
-        android:label="ScheduleFragment" />
+        android:label="ScheduleFragment"
+        />
+
     <fragment
         android:id="@+id/patientFragment"
         android:name="com.ascrib.nutrifit.ui.patient.PatientFragment"
         android:label="PatientFragment" />
 
-    <action
-        android:id="@+id/global_patientFragment"
-        app:destination="@id/patientFragment"
-        app:enterAnim="@anim/fade_in"
-        app:exitAnim="@anim/fade_out"
-        app:popEnterAnim="@anim/fade_in"
-        app:popExitAnim="@anim/fade_out" />
+
 
     <fragment
         android:id="@+id/appointmentDetailFragment"
@@ -46,7 +42,43 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out" />
 
+    <fragment
+        android:id="@+id/chatPersonFragment"
+        android:name="com.ascrib.nutrifit.ui.chat.ChatPersonFragment"
+        android:label="ChatPersonFragment">
+        <action
+            android:id="@+id/action_chatPersonFragment_to_callFragment"
+            app:destination="@id/callFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.ascrib.nutrifit.ui.chat.CallFragment"
+        android:label="CallFragment" />
 
+    <fragment
+        android:id="@+id/serviceFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.ServiceFragment"
+        android:label="ServiceFragment" >
+        <action
+            android:id="@+id/action_serviceFragment_to_timeFragment"
+            app:destination="@id/timeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_chatPersonFragment_to_callFragment"
+        app:destination="@id/callFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
 
 
 </navigation>

@@ -29,6 +29,10 @@ class PatientFragment : Fragment(), AppointmentHandler {
 
     lateinit var appointmentAdapter: AppointmentAdapter
 
+    val copiedList = model.getAppointment().map { it.copy() }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -89,12 +93,18 @@ class PatientFragment : Fragment(), AppointmentHandler {
     }
 
     fun makeAppointment() {
-        appointmentAdapter = AppointmentAdapter(model.getAppointment(), this)
+        // Clonamos la lista original para evitar modificar la misma instancia
+        val copiedList = model.getAppointment().map { it.copy() }
+
+        // Usamos la copia en el adaptador para evitar modificar la original
+        appointmentAdapter = AppointmentAdapter(copiedList, this)
+
         binding.recyclerviewAppointments.apply {
             adapter = appointmentAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
+
 
     override fun appointmentClicked(appointment: Appointment) {
         findNavController().navigate(
