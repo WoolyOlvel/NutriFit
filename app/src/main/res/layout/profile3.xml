@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.cninfotech.swasthyedoctor.ui.dashboard.ProfileFragment" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_background_radius"
+        android:elevation="0dp"
+        android:paddingBottom="@dimen/_10sdp">
+
+        <LinearLayout
+            android:id="@+id/layout_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/layout_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_background_radius"
+                android:elevation="0dp"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar_dark_arrow" />
+
+                <ImageView
+                    android:id="@+id/btn_notification"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/section_spacing"
+                    android:layout_marginTop="@dimen/inner_spacing"
+                    android:src="@drawable/ic_notification"
+                    app:tint="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:id="@+id/layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/section_spacing"
+                    android:paddingVertical="@dimen/inner_spacing">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_12sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:contentDescription="@string/todo"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/nut" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/inner_spacing"
+                        android:text="@string/hi_max_webber"
+                        android:textColor="@color/teal_700"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_header1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/section_spacing"
+                android:background="@drawable/background_radius"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/section_spacing"
+                android:paddingVertical="@dimen/inner_spacing">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_image"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerVertical="true"
+                    app:cardCornerRadius="@dimen/_25sdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/todo"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/nut" />
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/card_image"
+                    android:orientation="vertical"
+                    android:padding="@dimen/section_spacing">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mi Perfil"
+                        android:textColor="@color/teal_700"
+                        android:textSize="20dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dr_smith_rowe"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/inner_spacing"
+                        android:paddingVertical="@dimen/inner_spacing"
+                        android:text="@string/smthrowe_gmail_com"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_h6"
+                        app:drawableLeftCompat="@drawable/ic_email"
+                        app:drawableTint="@color/grey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/inner_spacing"
+                        android:text="@string/_1_62_546_126"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_h6"
+                        app:drawableLeftCompat="@drawable/ic_call"
+                        app:drawableTint="@color/grey" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/teal_700"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:onClick="@{()->handler.onEditProfileClicked()}"
+                    android:padding="0dp"
+                    app:cornerRadius="@dimen/_5sdp"
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="@dimen/_15sdp" />
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/section_spacing"
+                android:backgroundTint="@color/white"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/section_spacing">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/inner_spacing"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:paddingTop="@dimen/inner_spacing"
+                        android:text="@string/visiting_time"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_calendar" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="@dimen/section_spacing"
+                        android:background="@color/lightGrey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:text="@string/today_may_12_2022"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h6" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/inner_spacing"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:text="@string/_01_19_pm_alarm_before_30_minutes"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</layout>
