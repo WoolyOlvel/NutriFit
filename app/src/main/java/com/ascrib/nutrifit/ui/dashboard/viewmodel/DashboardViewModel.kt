@@ -82,9 +82,10 @@ class DashboardViewModel : ViewModel() {
             "Nut.Wilbert Edward",
             "Te mandaré los planes nutricionales de esta semana",
             R.drawable.perfil_nutri,
-            "1 min ago",
+            "Hace 1 minuto",
             true,
             true,
+            false
 
         ),
         Chat(
@@ -92,8 +93,9 @@ class DashboardViewModel : ViewModel() {
             "Nut.Isabel Medina",
             "Está bien, buenas tardes",
             R.drawable.fer,
-            "15 min ago",
+            "Hace 15 minutos",
             false,
+            true,
             true
         ),
 
@@ -167,8 +169,9 @@ class DashboardViewModel : ViewModel() {
             "Ram Prasad",
             "Contrary to popular belief, Lorem Ipsum is not simply random text.",
             R.drawable.big_square,
-            "1 min ago",
+            "Hace 1 minutos",
             true,
+            false,
             false
         ),
         Chat(
@@ -176,9 +179,10 @@ class DashboardViewModel : ViewModel() {
             "Binod Sharma",
             "Contrary to popular belief",
             R.drawable.big_square,
-            "15 min ago",
+            "Hace 15 minutos",
             false,
-            true
+            true,
+            false
         ),
 
     )

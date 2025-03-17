@@ -6,7 +6,7 @@
     <data>
         <variable
             name="handler"
-            type="com.cninfotech.swasthyedoctor.ui.dashboard.ProfileFragment" />
+            type="com.ascrib.nutrifit.ui.dashboard.ProfileFragment" />
     </data>
 
     <ScrollView
@@ -22,63 +22,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_schedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bottom_background_radius"
-                android:elevation="0dp"
-                android:paddingBottom="@dimen/_10sdp">
-
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/toolbar_dark_arrow" />
-
-                <ImageView
-                    android:id="@+id/btn_notification"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/section_spacing"
-                    android:layout_marginTop="@dimen/inner_spacing"
-                    android:src="@drawable/ic_notification"
-                    app:tint="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:id="@+id/layout_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/section_spacing"
-                    android:paddingVertical="@dimen/inner_spacing">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="@dimen/_12sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_24sdp"
-                            android:layout_height="@dimen/_24sdp"
-                            android:contentDescription="@string/todo"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/nut" />
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/inner_spacing"
-                        android:text="@string/hi_max_webber"
-                        android:textColor="@color/teal_700"
-                        android:textSize="20dp" />
-                </LinearLayout>
-
-            </RelativeLayout>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_dark_arrow" />
 
             <RelativeLayout
-                android:id="@+id/layout_header1"
+                android:id="@+id/layout_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/section_spacing"
@@ -101,7 +50,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/nut" />
+                        android:src="@drawable/perfil_prueba2" />
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
@@ -112,39 +61,41 @@
                     android:padding="@dimen/section_spacing">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mi Perfil"
+                        android:text="@string/myInformation"
                         android:textColor="@color/teal_700"
-                        android:textSize="20dp"/>
+                        android:textSize="@dimen/text_size_h4"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/dr_smith_rowe"
+                        android:text="@string/nameProfile"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h4" />
+                        android:textSize="@dimen/text_size_h4"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_spacing"
                         android:paddingVertical="@dimen/inner_spacing"
-                        android:text="@string/smthrowe_gmail_com"
+                        android:text="@string/correoProfile"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h6"
-                        app:drawableLeftCompat="@drawable/ic_email"
-                        app:drawableTint="@color/grey" />
+                        app:drawableLeftCompat="@drawable/correo"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_spacing"
-                        android:text="@string/_1_62_546_126"
+                        android:text="@string/telephoneProfile"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h6"
-                        app:drawableLeftCompat="@drawable/ic_call"
-                        app:drawableTint="@color/grey" />
+                        app:drawableLeftCompat="@drawable/telephone"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -153,7 +104,6 @@
                     android:layout_height="@dimen/_22sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/teal_700"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:onClick="@{()->handler.onEditProfileClicked()}"
@@ -162,6 +112,7 @@
                     app:icon="@drawable/ic_edit"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
+                    android:backgroundTint="@color/teal_700"
                     app:iconSize="@dimen/_15sdp" />
 
             </RelativeLayout>
@@ -190,7 +141,7 @@
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h5"
                         android:textStyle="bold"
-                        app:drawableLeftCompat="@drawable/ic_calendar" />
+                        app:drawableLeftCompat="@drawable/calendar3" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -201,16 +152,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/section_spacing"
-                        android:text="@string/today_may_12_2022"
+                        android:text="@string/fecha"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h6" />
+                        android:textSize="@dimen/text_size_h6"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/inner_spacing"
                         android:paddingHorizontal="@dimen/section_spacing"
-                        android:text="@string/_01_19_pm_alarm_before_30_minutes"
+                        android:text="@string/hora"
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h5" />
                 </LinearLayout>

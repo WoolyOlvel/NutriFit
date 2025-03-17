@@ -13,13 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-
-import com.cninfotech.swasthyedoctor.util.getStatusBarHeight
+import com.ascrib.nutrifit.util.getStatusBarHeight
 
 import android.app.Activity
 import androidx.activity.result.ActivityResult
 
 import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.core.content.ContextCompat
 import com.ascrib.nutrifit.databinding.FragmentEditProfileBinding
 
 
@@ -48,7 +48,8 @@ class EditProfileFragment : Fragment() {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        binding.toolbar.toolbar.title = ""
+        binding.toolbar.toolbar.title = "Editar"
+        binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
         (requireActivity() as AppCompatActivity).apply {
@@ -65,7 +66,7 @@ class EditProfileFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.home_nav_graph -> {
+                     android.R.id.home -> {
                         findNavController().navigateUp()
                         true
                     }

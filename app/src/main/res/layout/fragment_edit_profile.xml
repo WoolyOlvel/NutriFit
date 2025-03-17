@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/section_spacing"
-                        android:text="@string/edit_profile"
+                        android:text="@string/editProfile"
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h4"
                         android:textStyle="bold" />
@@ -63,7 +63,7 @@
                                 android:layout_height="match_parent"
                                 android:contentDescription="@string/todo"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/nut" />
+                                android:src="@drawable/perfil_prueba2" />
 
                             <TextView
                                 android:layout_width="@dimen/_80sdp"
@@ -74,7 +74,7 @@
                                 android:focusable="true"
                                 android:gravity="center"
                                 android:onClick="@{()->handler.selectImage()}"
-                                android:text="@string/edit"
+                                android:text="@string/cambiarFoto"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_h6" />
                         </RelativeLayout>
@@ -84,9 +84,120 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/firstname"
+                        android:text="@string/Nombres"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/Apellidos"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/edad"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/fechanac"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/UsuarioName"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/CorreoElec"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
 
                     <EditText
                         android:layout_width="match_parent"
@@ -105,72 +216,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/lastname"
+                        android:text="@string/genero"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/username"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/email"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/gender"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
+                        android:textStyle="bold"/>
 
                     <RadioGroup
                         android:layout_width="match_parent"
@@ -180,26 +229,27 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/male" />
+                            android:text="@string/gen1" />
 
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/female" />
+                            android:text="@string/gen2" />
 
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/others" />
+                            android:text="@string/gen_3" />
                     </RadioGroup>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/mobile_number"
+                        android:text="@string/numTelefono"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
 
                     <EditText
                         android:layout_width="match_parent"
@@ -208,7 +258,7 @@
                         android:background="@drawable/background_radius"
                         android:backgroundTint="@color/white"
                         android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
+                        android:inputType="phone"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
@@ -218,9 +268,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/address"
+                        android:text="@string/enfermedad"
                         android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
 
                     <EditText
                         android:layout_width="match_parent"
@@ -229,11 +280,13 @@
                         android:background="@drawable/background_radius"
                         android:backgroundTint="@color/white"
                         android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
                         tools:ignore="LabelFor" />
+
+
 
                 </LinearLayout>
 
@@ -256,7 +309,7 @@
                 android:gravity="center"
                 android:onClick="@{()->handler.saveProfile()}"
                 android:stateListAnimator="@null"
-                android:text="@string/save_profile"
+                android:text="@string/guardarCambios"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18dp" />

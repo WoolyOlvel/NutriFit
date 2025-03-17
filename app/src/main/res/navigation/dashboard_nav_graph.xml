@@ -7,6 +7,8 @@
     <include app:graph="@navigation/home_nav_graph"/>
     <include app:graph="@navigation/doctor_nav_graph"/>
     <include app:graph="@navigation/chat_nav_graph"/>
+    <include app:graph="@navigation/profile_nav_graph" />
+
 
 
 </navigation>

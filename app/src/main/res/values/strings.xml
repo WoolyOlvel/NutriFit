@@ -139,9 +139,9 @@
     <string name="consult">Consult</string>
     <string name="consult_now">Consult Now</string>
 
-    <string name="visiting_time">Visiting Time</string>
-    <string name="today_may_12_2022">Today, May 12 2022</string>
-    <string name="_01_19_pm_alarm_before_30_minutes"><b>01 : 19 PM</b> Alarm Before 30 minutes</string>
+    <string name="visiting_time">Tu próxima cita es:</string>
+    <string name="fecha">Viernes, 28 de marzo del 2025</string>
+    <string name="hora"><b>11 : 11 AM</b> con el Nut. Isabel Medina</string>
 
     <string name="consulting_details">Consulting Details</string>
     <string name="for_her_son_3_years_old">For her son, 3 years old</string>
@@ -195,6 +195,28 @@
     <string name="titleDefNutri2">Memoramas</string>
 
     <string name="titleDefNutri3">Próximos</string>
-<string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
+    <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
+
+    <string name="correoProfile">LyrcaLumina@hotmail.com</string>
+    <string name="nameProfile">Alycra Lumina </string>
+    <string name="telephoneProfile">+52 9961025841</string>
+    <string name="myInformation">Mi Perfil</string>
+
+    <string name="editProfile">Mi información</string>
+    <string name="cambiarFoto">Cambiar</string>
+    <string name="Nombres">Nombre</string>
+    <string name="Apellidos">Apellidos</string>
+    <string name="edad">Edad</string>
+    <string name="fechanac">Fecha Nacimiento</string>
+    <string name="UsuarioName">Nombre Usuario</string>
+    <string name="CorreoElec">Correo Electrónico</string>
+    <string name="genero">Genero</string>
+    <string name="gen1">Masculino</string>
+    <string name="gen2">Femenino</string>
+    <string name="gen_3">Otros</string>
+    <string name="numTelefono">Número Telefónico</string>
+    <string name="enfermedad">¿Padece Alguna Enfermedad?</string>
+
+    <string name="guardarCambios">Guardar Cambios</string>
 
 </resources>

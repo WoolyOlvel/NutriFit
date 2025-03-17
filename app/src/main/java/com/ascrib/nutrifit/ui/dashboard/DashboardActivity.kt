@@ -53,7 +53,8 @@ class DashboardActivity : AppCompatActivity(), NavController.OnDestinationChange
         when(destination.id){
             R.id.homeFragment,
             R.id.chatFragment,
-            R.id.scheduleFragment
+            R.id.scheduleFragment,
+            R.id.profileFragment
              ->{
                     binding.navigationDashboard.visibility = View.VISIBLE
                 } else -> {

@@ -110,7 +110,8 @@ class ChatPersonFragment : Fragment() {
                     "",
                     binding.etMessage.text.toString(),
                     R.drawable.perfil_prueba2,
-                    "Now",
+                    "Ahora",
+                    true,
                     true,
                     true
 

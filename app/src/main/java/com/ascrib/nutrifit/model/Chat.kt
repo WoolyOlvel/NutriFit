@@ -8,5 +8,5 @@ data class Chat(
     var time: String,
     var read: Boolean,
     var isOnline :Boolean,
-
+    var isCurrentUser: Boolean,
 )

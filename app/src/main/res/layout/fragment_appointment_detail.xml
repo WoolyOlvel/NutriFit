@@ -308,7 +308,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/today_may_12_2022"
+                                android:text="@string/guardarCambios"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h6" />
 
@@ -317,7 +317,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/_01_19_pm_alarm_before_30_minutes"
+                                android:text="@string/guardarCambios"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
                         </LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@+id/profileFragment">
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.ascrib.nutrifit.ui.NotificationFragment"
+        android:label="NotifiactionFragment"/>
+
+    <action
+        android:id="@+id/global_notificationFragment"
+        app:destination="@+id/notificationFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ascrib.nutrifit.ui.dashboard.ProfileFragment"
+        android:label="ProfileFragment">
+
+        <action
+            android:id="@+id/action_profileFragment_a_editProfileFragment"
+            app:destination="@+id/editProfileFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.EditProfileFragment"
+        android:label="EditProfileFragment"/>
+
+</navigation>
