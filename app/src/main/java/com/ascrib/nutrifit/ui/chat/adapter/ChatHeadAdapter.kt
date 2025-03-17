@@ -23,23 +23,28 @@ class ChatHeadAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+        val chat = data[position]
+        holder.bind(chat)
         holder.setIsRecyclable(false)
-        if (holder.layoutPosition % 2 === 0) {
+
+        // Usar isCurrentUser para determinar el diseño del mensaje
+        if (chat.isCurrentUser) {
+            // Mensaje enviado por el usuario actual (derecha)
+            holder.binding.tvTimeOfMessage.gravity = Gravity.END
+            holder.binding.cvProfileImage.visibility = View.GONE
+            holder.binding.llChat.gravity = Gravity.END
+            val params: LinearLayout.LayoutParams = holder.binding.tvTimeOfMessage.layoutParams as LinearLayout.LayoutParams
+            params.gravity = Gravity.END
+            holder.binding.tvTimeOfMessage.layoutParams = params
+            holder.binding.tvMessage.setBackgroundColor(Color.parseColor("#00a3c8"))
+            holder.binding.tvMessage.setTextColor(Color.parseColor("#FFFFFF"))
+        } else {
+            // Mensaje recibido (izquierda)
             holder.binding.llChat.gravity = Gravity.START
             holder.binding.tvTimeOfMessage.gravity = Gravity.START
             holder.binding.cvProfileImage.visibility = View.VISIBLE
             holder.binding.tvMessage.setBackgroundColor(Color.parseColor("#f1f1f1"))
             holder.binding.tvMessage.setTextColor(Color.parseColor("#000000"))
-        } else {
-            holder.binding.tvTimeOfMessage.gravity = Gravity.END
-            holder.binding.cvProfileImage.visibility = View.GONE
-            holder.binding.llChat.gravity = Gravity.END
-            val params : LinearLayout.LayoutParams = holder.binding.tvTimeOfMessage.layoutParams as LinearLayout.LayoutParams
-            params.gravity = Gravity.END
-            holder.binding.tvTimeOfMessage.layoutParams = params
-            holder.binding.tvMessage.setBackgroundColor(Color.parseColor("#00a3c8"))
-            holder.binding.tvMessage.setTextColor(Color.parseColor("#FFFFFF"))
         }
     }
 

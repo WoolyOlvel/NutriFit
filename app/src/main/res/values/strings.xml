@@ -123,7 +123,6 @@
     <string name="hi_max_webber"><b>Hola, Alcyra.</b>\n¡Reserva una cita ahora!</string>
 
 
-
     <string name="name_nut">Nut.Wilbert Edward</string>
     <string name="male">Maculino</string>
     <string name="birthday">01/01/1997</string>
@@ -136,6 +135,7 @@
     <string name="_20_33">20.33</string>
     <string name="blood_type">Tipo de sangre</string>
     <string name="b">B+</string>
+
     <string name="consult">Consulta</string>
     <string name="consult_now">Consultar Ahora</string>
 
@@ -163,6 +163,32 @@
     <string name="reject">Rechazar</string>
     <string name="respect_patients_detail_and_privacy_following_the_protocols">Respeta los detalles y la privacidad del paciente siguiendo los protocolos.</string>
 
+    <string name="consult">Consult</string>
+    <string name="consult_now">Consult Now</string>
+
+    <string name="visiting_time">Tu próxima cita es:</string>
+    <string name="fecha">Viernes, 28 de marzo del 2025</string>
+    <string name="hora"><b>11 : 11 AM</b> con el Nut. Isabel Medina</string>
+
+    <string name="consulting_details">Consulting Details</string>
+    <string name="for_her_son_3_years_old">For her son, 3 years old</string>
+    <string name="i_think_my_child_has_been_exposed_to_malaria_what_should_i_do_for_it_any_remedies_to_cure_this_quickly">I think my child has been exposed to malaria what should I do for it? Any remedies to cure this quickly?</string>
+    <string name="uploaded_may_12_2022">Uploaded May 12 2022</string>
+
+    <string name="my_answer">My Answer</string>
+    <string name="answered_01_25_pm_may_12_2022">Answered 01:25 PM May 12 2022</string>
+
+    <string name="additional_information">Additional Information</string>
+    <string name="diagonased_condition">Diagonased Condition</string>
+    <string name="none">None</string>
+    <string name="medication">Medication</string>
+    <string name="allergies">Allergies</string>
+    <string name="review">Review</string>
+    <string name="cancel_appointment">Cancel Appointment</string>
+    <string name="are_you_done_finish_consult_now">Are you done? Finish Consult Now</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="respect_patients_detail_and_privacy_following_the_protocols">Respect Patients Detail and Privacy following the protocols.</string>
 
     <string name="_571_69258841">571-69258841</string>
     <string name="spent_2_56_used_your_service">Gastado $2.56 utilizando su servicio</string>
@@ -200,7 +226,29 @@
     <string name="titleDefNutri2">Memoramas</string>
 
     <string name="titleDefNutri3">Próximos</string>
-<string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
+    <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
+
+    <string name="correoProfile">LyrcaLumina@hotmail.com</string>
+    <string name="nameProfile">Alycra Lumina </string>
+    <string name="telephoneProfile">+52 9961025841</string>
+    <string name="myInformation">Mi Perfil</string>
+
+    <string name="editProfile">Mi información</string>
+    <string name="cambiarFoto">Cambiar</string>
+    <string name="Nombres">Nombre</string>
+    <string name="Apellidos">Apellidos</string>
+    <string name="edad">Edad</string>
+    <string name="fechanac">Fecha Nacimiento</string>
+    <string name="UsuarioName">Nombre Usuario</string>
+    <string name="CorreoElec">Correo Electrónico</string>
+    <string name="genero">Genero</string>
+    <string name="gen1">Masculino</string>
+    <string name="gen2">Femenino</string>
+    <string name="gen_3">Otros</string>
+    <string name="numTelefono">Número Telefónico</string>
+    <string name="enfermedad">¿Padece Alguna Enfermedad?</string>
+
+    <string name="guardarCambios">Guardar Cambios</string>
 
 
 
