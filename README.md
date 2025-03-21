@@ -83,5 +83,5 @@ Después de la instalación, puedes ejecutar el proyecto en un dispositivo o emu
 
 Para más información, no dudes en ponerte en contacto:
 
-- **Correo electrónico**: [tuemail@dominio.com](puc-alan20@hotmail.com)
-- **GitHub**: [@tu_usuario](https://github.com/WoolyOlvel)
+- **Correo electrónico**: [puc-alan20@hotmail.com](puc-alan20@hotmail.com)
+- **GitHub**: [@WoolyOlvel](https://github.com/WoolyOlvel)
