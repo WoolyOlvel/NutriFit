@@ -4,7 +4,7 @@
 
 ---
 
-##Integrantes
+## Integrantes
 - Quintal Pech Carlos Daniel 7647
 - Puc Yam Alan Antony 7637
 - Huchin Yeh Jesus Eduardo 7623
