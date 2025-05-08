@@ -108,23 +108,18 @@ class RegisterFragment : Fragment() {
 
     fun onRegisterClicked() {
         val nombre = binding.nombreEditText.text.toString().trim()
+        val apellidos = binding.apellidosEditText.text.toString().trim()
         val email = binding.emailEditText.text.toString().trim()
         val usuario = binding.usuarioEditText.text.toString().trim()
-        val telefono = binding.telefonoEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
-        val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
 
-        if (nombre.isEmpty() || email.isEmpty() || usuario.isEmpty() || telefono.isEmpty()
-            || password.isEmpty() || confirmPassword.isEmpty()
+
+        if (nombre.isEmpty() || apellidos.isEmpty() ||email.isEmpty() || usuario.isEmpty() || password.isEmpty()
         ) {
             Toast.makeText(requireContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (password != confirmPassword) {
-            Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
-            return
-        }
 
         val passwordPattern = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")
         if (!passwordPattern.matches(password)) {
@@ -133,7 +128,7 @@ class RegisterFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            val result = authRepository.register(nombre, email, password, confirmPassword)
+            val result = authRepository.register(nombre, apellidos, email, usuario, password)
             result.onSuccess {
                 if (it.success) {
                     Toast.makeText(requireContext(), "¡Registro exitoso!", Toast.LENGTH_SHORT).show()

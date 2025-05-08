@@ -72,9 +72,9 @@ class AuthRepository(context: Context) {
     /**
      * Registra un nuevo usuario
      */
-    suspend fun register(name: String, email: String, password: String, passwordConfirmation: String): Result<AuthResponse> {
+    suspend fun register(nombre: String, apellidos: String, email: String, usuario: String, password: String, rol_id: Int = 2): Result<AuthResponse> {
         return try {
-            val registerRequest = RegisterRequest(name, email, password, passwordConfirmation)
+            val registerRequest = RegisterRequest(nombre, apellidos, email, usuario, password, rol_id)
             val response = RetrofitClient.apiService.register(registerRequest)
 
             if (response.isSuccessful) {

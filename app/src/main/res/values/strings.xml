@@ -19,12 +19,11 @@
     <string name="textBottomLoginAcc">Registrate Ahora</string>
 
     <string name="registerText">Únete a NutriFit Planner</string>
-    <string name="FieldRegisterText">Nombre completo</string>
-    <string name="FieldRegisterText2">Correo electrónico</string>
-    <string name="FieldUsuarioText3">Nombre de usuario</string>
-    <string name="FieldTelefonoText4">Número de teléfono</string>
+    <string name="FieldRegisterText">Nombre</string>
+    <string name="FieldRegisterText2">Apellidos</string>
+    <string name="FieldUsuarioText3">Correo Electrónico</string>
+    <string name="FieldTelefonoText4">Usuario</string>
     <string name="FieldContraseñaText5">Contraseña</string>
-    <string name="FieldConfrimContraseñaText6">Confirmar contraseña</string>
     <string name="ButtonRegisterField">Unirme</string>
     <string name="alternativa">O unete con</string>
     <string name="tieneCuenta">¿Ya tiene una cuenta unida?</string>

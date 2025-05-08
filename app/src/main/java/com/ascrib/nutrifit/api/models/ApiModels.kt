@@ -4,10 +4,12 @@ package com.ascrib.nutrifit.api.models
  * Modelo para solicitudes de autenticación
  */
 data class RegisterRequest(
-    val name: String,
+    val nombre: String,
+    val apellidos: String,
     val email: String,
+    val usuario: String,
     val password: String,
-    val password_confirmation: String
+    val rol_id: Int = 2,
 )
 
 /**

@@ -83,7 +83,7 @@
                         android:textSize="@dimen/text_size_h5"/>
 
                     <EditText
-                        android:id="@+id/emailEditText"
+                        android:id="@+id/apellidosEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -105,7 +105,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
-                        android:id="@+id/usuarioEditText"
+                        android:id="@+id/emailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -127,7 +127,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
-                        android:id="@+id/telefonoEditText"
+                        android:id="@+id/usuarioEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -135,7 +135,6 @@
                         android:backgroundTint="@color/white"
                         android:importantForAutofill="no"
                         tools:ignore="LabelFor"
-                        android:inputType="phone"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5" />
@@ -161,26 +160,8 @@
                         tools:ignore="LabelFor"
                         android:textSize="@dimen/text_size_h5" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/FieldConfrimContraseñaText6"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
 
-                    <EditText
-                        android:id="@+id/confirmPasswordEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:importantForAutofill="no"
-                        tools:ignore="LabelFor"
-                        android:textSize="@dimen/text_size_h5" />
+
 
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"

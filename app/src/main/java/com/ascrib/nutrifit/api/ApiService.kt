@@ -37,7 +37,7 @@ interface ApiService {
     ): Response<AuthResponse>
 
     @POST("register")
-    suspend fun register(@Body registerRequest: RegisterRequest): Response<AuthResponse>
+    suspend fun register(@Body request: RegisterRequest): Response<AuthResponse>
 
     @POST("logout")
     suspend fun logout(): Response<ResponseBody>

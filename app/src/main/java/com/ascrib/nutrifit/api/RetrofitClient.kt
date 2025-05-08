@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
  * Cliente Retrofit para las llamadas a la API de NutriFit
  */
 object RetrofitClient {
-    private const val BASE_URL = "http://127.0.0.1:8000"
+    private const val BASE_URL = "http://192.168.1.189:8000/"
     private var token: String? = null
 
     /**
