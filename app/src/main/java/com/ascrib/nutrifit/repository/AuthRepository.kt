@@ -93,6 +93,23 @@ class AuthRepository(context: Context) {
         }
     }
 
+    suspend fun recoverPassword(email: String): Result<Boolean> {
+        return try {
+            val response = RetrofitClient.apiService.recoverPassword(email)
+
+            if (response.isSuccessful) {
+                // Si la respuesta es exitosa, podemos devolver true para indicar que el enlace fue enviado
+                Result.success(true)
+            } else {
+                Result.failure(Exception("Error en la recuperación de contraseña: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
+
     /**
      * Inicia sesión con Google
      */

@@ -76,6 +76,9 @@ interface ApiService {
     @GET("user")
     suspend fun getCurrentUser(): Response<User>
 
+    @POST("forgot-password")
+    suspend fun recoverPassword(@Body email: String): Response<Void>
+
     // ===== PACIENTES =====
 
     @GET("pacientes/listar")

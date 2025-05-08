@@ -17,7 +17,9 @@ data class AuthResponse(
     val success: Boolean,
     val token: String?,
     val user: User?
-)
+) {
+
+}
 
 /**
  * Modelo para login con redes sociales

@@ -61,6 +61,7 @@
                         android:textSize="@dimen/text_size_h5"/>
 
                     <EditText
+                        android:id="@+id/nombreEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -82,6 +83,7 @@
                         android:textSize="@dimen/text_size_h5"/>
 
                     <EditText
+                        android:id="@+id/emailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -103,6 +105,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/usuarioEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -124,6 +127,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/telefonoEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -145,6 +149,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:background="@drawable/background_radius"
@@ -165,6 +170,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/confirmPasswordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:background="@drawable/background_radius"
@@ -208,6 +214,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/googleButton"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@color/white"
@@ -215,6 +222,7 @@
                             android:src="@drawable/googlelogo"/>
 
                         <ImageView
+                            android:id="@+id/facebookButton"
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_marginStart="@dimen/inner_spacing"

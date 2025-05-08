@@ -56,6 +56,7 @@
                     android:textSize="@dimen/text_size_h5"/>
 
                 <EditText
+                    android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginBottom="@dimen/inner_spacing"

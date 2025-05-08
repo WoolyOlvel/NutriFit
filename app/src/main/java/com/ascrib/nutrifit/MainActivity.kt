@@ -4,14 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.ascrib.nutrifit.databinding.ActivityMainBinding
 import com.ascrib.nutrifit.repository.AuthRepository
-import com.ascrib.nutrifit.ui.dashboard.HomeFragment
-import com.ascrib.nutrifit.ui.form.BienvenidaPage
+import com.ascrib.nutrifit.ui.dashboard.DashboardActivity
 import com.ascrib.nutrifit.ui.form.FormActivity
 import com.ascrib.nutrifit.util.Statusbar
 import kotlinx.coroutines.launch
@@ -60,11 +58,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        // Aquí deberías navegar a tu pantalla principal después del login exitoso
-        // Por ejemplo:
         Handler(Looper.getMainLooper()).postDelayed({
-            // Reemplaza HomeActivity::class.java con tu actividad principal
-            startActivity(Intent(applicationContext, HomeFragment::class.java))
+            startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }, 500)
     }
