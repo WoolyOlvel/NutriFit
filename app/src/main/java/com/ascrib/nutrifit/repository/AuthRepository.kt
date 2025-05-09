@@ -72,21 +72,30 @@ class AuthRepository(context: Context) {
     /**
      * Registra un nuevo usuario
      */
-    suspend fun register(nombre: String, apellidos: String, email: String, usuario: String, password: String, rol_id: Int = 2): Result<AuthResponse> {
+    suspend fun register(
+        nombre: String,
+        apellidos: String,
+        email: String,
+        usuario: String,
+        password: String,
+        rol_id: Int = 2
+    ): Result<AuthResponse> {
         return try {
             val registerRequest = RegisterRequest(nombre, apellidos, email, usuario, password, rol_id)
             val response = RetrofitClient.apiService.register(registerRequest)
 
-            if (response.isSuccessful) {
-                val authResponse = response.body()!!
-                if (authResponse.success && authResponse.token != null) {
-                    // Guardar token y usuario
-                    saveAuthToken(authResponse.token)
-                    authResponse.user?.let { saveUser(it) }
-                }
-                Result.success(authResponse)
+            // Registramos la respuesta completa para depuración
+            val responseBody = response.body()
+            val responseCode = response.code()
+            val isSuccessful = response.isSuccessful
+
+            if (isSuccessful && responseBody != null) {
+                // Aquí está el truco: no analizamos el mensaje, solo nos fijamos en el flag success
+                // y pasamos la respuesta tal como está
+                Result.success(responseBody)
             } else {
-                Result.failure(Exception("Error en el registro: ${response.code()}"))
+                val errorBody = response.errorBody()?.string() ?: "Sin cuerpo de error"
+                Result.failure(Exception("Error en el registro: $responseCode - $errorBody"))
             }
         } catch (e: Exception) {
             Result.failure(e)

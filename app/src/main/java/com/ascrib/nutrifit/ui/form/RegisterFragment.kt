@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.launch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import android.os.Handler
+import android.os.Looper
 
 class RegisterFragment : Fragment() {
 
@@ -102,9 +104,6 @@ class RegisterFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun onLoginClicked() {
-        findNavController().navigate(R.id.action_registerFragment_a_loginFragment)
-    }
 
     fun onRegisterClicked() {
         val nombre = binding.nombreEditText.text.toString().trim()
@@ -113,14 +112,13 @@ class RegisterFragment : Fragment() {
         val usuario = binding.usuarioEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
 
-
-        if (nombre.isEmpty() || apellidos.isEmpty() ||email.isEmpty() || usuario.isEmpty() || password.isEmpty()
-        ) {
+        // Verificación de campos vacíos
+        if (nombre.isEmpty() || apellidos.isEmpty() || email.isEmpty() || usuario.isEmpty() || password.isEmpty()) {
             Toast.makeText(requireContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             return
         }
 
-
+        // Validación de la contraseña
         val passwordPattern = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")
         if (!passwordPattern.matches(password)) {
             Toast.makeText(requireContext(), "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número", Toast.LENGTH_LONG).show()
@@ -128,19 +126,56 @@ class RegisterFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            val result = authRepository.register(nombre, apellidos, email, usuario, password)
-            result.onSuccess {
-                if (it.success) {
-                    Toast.makeText(requireContext(), "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_registerFragment_a_verificacionFragment)
-                } else {
-                    Toast.makeText(requireContext(), "Error en el registro", Toast.LENGTH_LONG).show()
+            try {
+                // Mostrar un mensaje de carga
+                val loadingToast = Toast.makeText(requireContext(), "Procesando registro...", Toast.LENGTH_SHORT)
+                loadingToast.show()
+
+                val result = authRepository.register(nombre, apellidos, email, usuario, password)
+
+                // Ocultar mensaje de carga
+                loadingToast.cancel()
+
+                when {
+                    result.isSuccess -> {
+                        val response = result.getOrNull()
+
+                        if (response == null) {
+                            Toast.makeText(requireContext(), "Error: Respuesta vacía del servidor", Toast.LENGTH_LONG).show()
+                            return@launch
+                        }
+
+                        if (response.success) {
+                            // Registro exitoso
+                             Toast.makeText(requireContext(), "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
+
+                            // Usar un Handler para esperar antes de hacer la navegación
+                            findNavController().navigate(R.id.action_registerFragment_a_loginFragment)
+                        } else {
+                            // Respuesta con success=false
+                            val errorMsg = response.message ?: "Error desconocido en el registro"
+                            Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    else -> {
+                        // Respuesta fallida (excepción)
+                        val exception = result.exceptionOrNull()
+                        val errorMessage = exception?.message ?: "Error desconocido en el registro"
+                        Toast.makeText(requireContext(), "Error: $errorMessage", Toast.LENGTH_LONG).show()
+                    }
                 }
-            }.onFailure {
-                Toast.makeText(requireContext(), "Ocurrió un error: ${it.localizedMessage ?: it.toString()}", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                // Manejo de excepciones no capturadas
+                Toast.makeText(requireContext(), "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }
+
+    fun onLoginClicked() {
+        findNavController().navigate(R.id.action_registerFragment_a_loginFragment)
+    }
+
+
 
     fun onGoogleSignInClicked(view: View) {
         val signInIntent = googleSignInClient.signInIntent
