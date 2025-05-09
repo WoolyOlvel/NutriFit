@@ -113,15 +113,19 @@ class LoginFragment : Fragment() {
     fun onLoginClicked() {
         val email = binding.editTextEmail.text.toString().trim()
         val password = binding.editTextPassword.text.toString()
+        val rememberMeChecked = binding.rememberMeCheckbox.isChecked
 
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(requireContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // Guarda el estado de "Recordarme" si es necesario (puedes implementarlo aquí)
+
         // Ejecuta el login en una corrutina
         lifecycleScope.launch {
             val result = authRepository.login(email, password)
+
             if (result.isSuccess) {
                 // Éxito: ir al dashboard
                 Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
@@ -133,6 +137,8 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
+
 
     fun onRegisterClicked() {
         findNavController().navigate(R.id.action_loginFragment_a_registerFragment)

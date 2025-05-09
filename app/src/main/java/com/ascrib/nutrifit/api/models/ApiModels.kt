@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.api.models
 
+
 /**
  * Modelo para solicitudes de autenticación
  */
@@ -16,11 +17,16 @@ data class RegisterRequest(
  * Modelo para recibir respuestas de autenticación
  */
 data class AuthResponse(
-    val success: Boolean,
-    val message: String? = null,
+    val message: String?,
+    val success: Boolean = false,
     val token: String? = null,
+    val rememberToken: String? = null,
     val user: User? = null
-)
+) {
+
+
+
+}
 
 /**
  * Modelo para login con redes sociales
@@ -36,11 +42,10 @@ data class SocialLoginRequest(
  */
 data class User(
     val id: Int? = null,
-    val name: String,
-    val email: String,
-    val email_verified_at: String? = null,
-    val created_at: String? = null,
-    val updated_at: String? = null
+    val name: String? = null,
+    val email: String? = null,
+    val rolId: Int? = null,
+    val rememberTokenExpiresAt: String? = null
 )
 
 /**
@@ -216,4 +221,10 @@ data class PlanList(
     val usuario_id: Int,
     val created_at: String? = null,
     val updated_at: String? = null
+)
+
+data class LoginRequest(
+    val email: String,
+    val password: String,
+    val remember: Boolean
 )

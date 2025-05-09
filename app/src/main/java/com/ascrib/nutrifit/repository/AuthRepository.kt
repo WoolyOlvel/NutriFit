@@ -13,18 +13,17 @@ import com.ascrib.nutrifit.api.models.User
  */
 class AuthRepository(context: Context) {
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
 
     /**
      * Guarda el token de autenticación en SharedPreferences
      */
     private fun saveAuthToken(token: String) {
         sharedPreferences.edit().apply {
-            putString("auth_token", token)
+            putString("remember_token", token)
             apply()
         }
-        // Actualiza el token en el cliente Retrofit
-        RetrofitClient.updateToken(token)
     }
 
     /**
@@ -81,7 +80,8 @@ class AuthRepository(context: Context) {
         rol_id: Int = 2
     ): Result<AuthResponse> {
         return try {
-            val registerRequest = RegisterRequest(nombre, apellidos, email, usuario, password, rol_id)
+            val registerRequest =
+                RegisterRequest(nombre, apellidos, email, usuario, password, rol_id)
             val response = RetrofitClient.apiService.register(registerRequest)
 
             // Registramos la respuesta completa para depuración
@@ -118,11 +118,14 @@ class AuthRepository(context: Context) {
     }
 
 
-
     /**
      * Inicia sesión con Google
      */
-    suspend fun loginWithGoogle(token: String, email: String? = null, name: String? = null): Result<AuthResponse> {
+    suspend fun loginWithGoogle(
+        token: String,
+        email: String? = null,
+        name: String? = null
+    ): Result<AuthResponse> {
         return try {
             val request = SocialLoginRequest(token, email, name)
             val response = RetrofitClient.apiService.googleLogin(request)
@@ -146,7 +149,11 @@ class AuthRepository(context: Context) {
     /**
      * Inicia sesión con Facebook
      */
-    suspend fun loginWithFacebook(token: String, email: String? = null, name: String? = null): Result<AuthResponse> {
+    suspend fun loginWithFacebook(
+        token: String,
+        email: String? = null,
+        name: String? = null
+    ): Result<AuthResponse> {
         return try {
             val request = SocialLoginRequest(token, email, name)
             val response = RetrofitClient.apiService.facebookLogin(request)
@@ -171,24 +178,24 @@ class AuthRepository(context: Context) {
      * Intenta auto-login con el token guardado
      */
     suspend fun autoLogin(): Result<AuthResponse> {
-        val token = getAuthToken() ?: return Result.failure(Exception("No hay token guardado"))
+        val token = sharedPreferences.getString("remember_token", null)
 
-        // Asegurarse de que el token está configurado en el cliente
-        RetrofitClient.updateToken(token)
+        if (token != null) {
+            // Actualiza el token en Retrofit
+            RetrofitClient.updateToken(token)
 
-        return try {
+            // Ahora hacemos la solicitud de auto-login
             val response = RetrofitClient.apiService.autoLogin()
 
-            if (response.isSuccessful) {
+            return if (response.isSuccessful) {
                 Result.success(response.body()!!)
             } else {
-                // Si hay error, limpiamos el token
+                // Si hay error, eliminamos el token y redirigimos al login
                 logout()
                 Result.failure(Exception("Error en auto-login: ${response.code()}"))
             }
-        } catch (e: Exception) {
-            logout()
-            Result.failure(e)
+        } else {
+            return Result.failure(Exception("No hay token guardado"))
         }
     }
 
