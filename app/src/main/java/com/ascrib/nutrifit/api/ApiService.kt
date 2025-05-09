@@ -8,6 +8,7 @@ import com.ascrib.nutrifit.api.models.Desafio
 import com.ascrib.nutrifit.api.models.Divisa
 import com.ascrib.nutrifit.api.models.Estatura
 import com.ascrib.nutrifit.api.models.IdRequest
+import com.ascrib.nutrifit.api.models.LoginRequest
 import com.ascrib.nutrifit.api.models.MedidaCorporal
 import com.ascrib.nutrifit.api.models.Notification
 import com.ascrib.nutrifit.api.models.Paciente
@@ -29,22 +30,19 @@ import retrofit2.http.*
 interface ApiService {
 // ===== AUTENTICACIÓN =====
 
-    @FormUrlEncoded
     @POST("api/login")
-    suspend fun login(
-        @Field("email") email: String,
-        @Field("password") password: String,
-
-    ): Response<AuthResponse>
+    suspend fun login(@Body request: LoginRequest): Response<AuthResponse>
 
     @POST("api/register")
     suspend fun register(@Body request: RegisterRequest): Response<AuthResponse>
 
     @POST("api/logout")
-    suspend fun logout(): Response<ResponseBody>
+    suspend fun logout(
+        @Header("remember-token") token: String
+    ): Response<ResponseBody>
 
     @GET("api/auto-login")
-    suspend fun autoLogin(): Response<AuthResponse>
+    suspend fun autoLogin(@Header("remember-token") token: String): Response<AuthResponse>
 
     // ===== AUTENTICACIÓN SOCIAL =====
 

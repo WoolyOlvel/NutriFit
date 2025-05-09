@@ -16,13 +16,7 @@ data class RegisterRequest(
 /**
  * Modelo para recibir respuestas de autenticación
  */
-data class AuthResponse(
-    val message: String?,
-    val success: Boolean = false,
-    val token: String? = null,
-    val rememberToken: String? = null,
-    val user: User? = null
-) {
+ {
 
 
 
@@ -226,5 +220,28 @@ data class PlanList(
 data class LoginRequest(
     val email: String,
     val password: String,
-    val remember: Boolean
+    val remember: Boolean = true
+)
+
+data class AuthResponse(
+    val message: String,
+    val user: UserResponse,
+    val remember_token: String? = null
+)
+
+data class UserResponse(
+    val id: Int,
+    val nombre: String,
+    val apellidos: String,
+    val email: String,
+    val usuario: String,
+    val rol_id: Int,
+    val activo: Int,
+    val eliminado: Int,
+    val role: RoleResponse?
+)
+
+data class RoleResponse(
+    val id: Int,
+    val nombre: String
 )

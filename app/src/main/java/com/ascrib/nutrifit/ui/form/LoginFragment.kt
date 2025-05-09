@@ -2,76 +2,40 @@ package com.ascrib.nutrifit.ui.form
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentLoginBinding
-import com.ascrib.nutrifit.repository.AuthRepository
 import com.ascrib.nutrifit.ui.dashboard.DashboardActivity
 import com.ascrib.nutrifit.util.getStatusBarHeight
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
+import com.ascrib.nutrifit.api.RetrofitClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineScope
+import com.ascrib.nutrifit.api.models.LoginRequest
+
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
-    private lateinit var authRepository: AuthRepository
-    private lateinit var googleSignInClient: GoogleSignInClient
-
-    // ActivityResultLauncher para Google Sign-In
-    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Registrar ActivityResultLauncher para Google Sign-In
-        googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            Log.d("GoogleSignIn", "Resultado recibido: ${result.resultCode}")
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            handleSignInResult(task)
-        }
-    }
+    lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+    ): View? {
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_login, container, false)
         binding.handler = this
-        authRepository = AuthRepository(requireContext())
         toolbarConfig()
-
-        // Configuración de Google Sign-In
-        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        try {
-            googleSignInClient = GoogleSignIn.getClient(requireActivity(), googleSignInOptions)
-            Log.d("GoogleSignIn", "Cliente de Google Sign-In inicializado correctamente")
-        } catch (e: Exception) {
-            Log.e("GoogleSignIn", "Error al inicializar el cliente de Google Sign-In", e)
-        }
-
         return binding.root
     }
 
@@ -79,18 +43,16 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.layoutForm.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            setMargins(0, requireActivity().getStatusBarHeight().plus(10), 0, 0)
+            setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
 
-        // Si tienes un botón específico para Google en tu layout
-        binding.googleLoginButton?.setOnClickListener {
-            onGoogleSignInClicked(it)
-        }
+        // Intentar hacer un auto-login si hay un remember_token
+        checkAutoLogin()
     }
 
     private fun toolbarConfig() {
         binding.toolbar.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            setMargins(0, requireActivity().getStatusBarHeight().plus(10), 0, 0)
+            setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
         binding.toolbar.toolbar.title = ""
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
@@ -105,35 +67,62 @@ class LoginFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             findNavController().navigateUp()
-            return true
         }
         return super.onOptionsItemSelected(item)
     }
 
     fun onLoginClicked() {
+        // Obtener los valores de los campos de correo y contraseña
         val email = binding.editTextEmail.text.toString().trim()
         val password = binding.editTextPassword.text.toString()
         val rememberMeChecked = binding.rememberMeCheckbox.isChecked
 
+        // Verificar que los campos no estén vacíos
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(requireContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Por favor ingrese su correo y contraseña.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Guarda el estado de "Recordarme" si es necesario (puedes implementarlo aquí)
+        // Crear el objeto LoginRequest con los datos ingresados
+        val loginRequest = LoginRequest(email, password, rememberMeChecked)
 
-        // Ejecuta el login en una corrutina
-        lifecycleScope.launch {
-            val result = authRepository.login(email, password)
 
-            if (result.isSuccess) {
-                // Éxito: ir al dashboard
-                Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                activity?.finishAffinity()
-                startActivity(Intent(requireContext(), DashboardActivity::class.java))
-            } else {
-                // Error: mostrar mensaje
-                Toast.makeText(requireContext(), "Error: ${result.exceptionOrNull()?.message}", Toast.LENGTH_LONG).show()
+        // Llamada Retrofit para realizar el login
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Pasar el objeto LoginRequest a la llamada Retrofit
+                val response = RetrofitClient.apiService.login(loginRequest)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        val data = response.body()
+
+                        // Guardar remember_token si el login es exitoso
+                        data?.remember_token?.let { token ->
+                            val sharedPref = activity?.getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+                            val editor = sharedPref?.edit()
+
+                            // Si "Recordarme" está activado, guardar el token
+                            editor?.putString("remember_token", token)
+
+                            // Si la opción "Recordarme" está seleccionada, también guardamos el estado
+                            editor?.putBoolean("remember_me", rememberMeChecked)
+
+                            editor?.apply()
+                        }
+
+                        // Redirigir a la actividad del Dashboard
+                        startActivity(Intent(context, DashboardActivity::class.java))
+                        activity?.finishAffinity()
+                    } else {
+                        // Mostrar mensaje si la respuesta no es exitosa
+                        Toast.makeText(context, "Error al iniciar sesión. Verifique sus credenciales.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    // Mostrar mensaje si ocurre algún error de conexión
+                    Toast.makeText(context, "Error de conexión. Intente nuevamente.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -148,86 +137,37 @@ class LoginFragment : Fragment() {
         findNavController().navigate(R.id.action_loginFragment_a_olvidoContraFragment)
     }
 
-    // Manejo de Google Sign-In
-    fun onGoogleSignInClicked(view: View) {
-        try {
-            Log.d("GoogleSignIn", "Iniciando proceso de Google Sign-In")
+    private fun checkAutoLogin() {
+        val sharedPref = activity?.getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val rememberToken = sharedPref?.getString("remember_token", null)
 
-            // Asegúrate de que el cliente de Google Sign-In se haya inicializado
-            if (!::googleSignInClient.isInitialized) {
-                val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build()
-                googleSignInClient = GoogleSignIn.getClient(requireActivity(), googleSignInOptions)
-                Log.d("GoogleSignIn", "Cliente de Google Sign-In inicializado en onGoogleSignInClicked")
-            }
+        if (rememberToken != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = RetrofitClient.apiService.autoLogin(rememberToken)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            val data = response.body()
 
-            // Limpiar el estado anterior de inicio de sesión (opcional, pero recomendado)
-            googleSignInClient.signOut().addOnCompleteListener(requireActivity()) {
-                Log.d("GoogleSignIn", "Sign-out completado, iniciando nuevo Sign-In")
+                            // Verificar si la respuesta tiene los datos del usuario
+                            data?.user?.let {
+                                // Mostrar mensaje de éxito
+                                Toast.makeText(context, "Bienvenido de nuevo, ${it.nombre}.", Toast.LENGTH_SHORT).show()
 
-                // Iniciar el flujo de inicio de sesión
-                val signInIntent = googleSignInClient.signInIntent
-                googleSignInLauncher.launch(signInIntent)
-            }
-        } catch (e: Exception) {
-            Log.e("GoogleSignIn", "Error al iniciar Google Sign-In", e)
-            Toast.makeText(requireContext(), "Error al iniciar sesión con Google: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-
-            // Imprimir información de depuración
-            Log.d("GoogleSignIn", "ID Token recibido: ${account?.idToken?.substring(0, 10)}...")
-            Log.d("GoogleSignIn", "Email recibido: ${account?.email}")
-
-            // Éxito en el inicio de sesión con Google
-            val idToken = account?.idToken
-            if (idToken != null) {
-                lifecycleScope.launch {
-                    try {
-                        Log.d("GoogleSignIn", "Iniciando loginWithGoogle en repository")
-                        val result = authRepository.loginWithGoogle(idToken, account.email ?: "", account.displayName ?: "")
-
-                        if (result.isSuccess) {
-                            Log.d("GoogleSignIn", "Login con Google exitoso")
-                            Toast.makeText(requireContext(), "Bienvenido, ${account.displayName}", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(requireContext(), DashboardActivity::class.java))
-                            activity?.finishAffinity()
+                                // Redirigir a la siguiente actividad o pantalla
+                                startActivity(Intent(context, DashboardActivity::class.java))
+                                activity?.finishAffinity()
+                            }
                         } else {
-                            val error = result.exceptionOrNull()
-                            Log.e("GoogleSignIn", "Error en authRepository.loginWithGoogle: ${error?.message}", error)
-                            Toast.makeText(requireContext(), "Error: ${error?.message ?: "Desconocido"}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "No se pudo iniciar sesión automática.", Toast.LENGTH_SHORT).show()
                         }
-                    } catch (e: Exception) {
-                        Log.e("GoogleSignIn", "Excepción en loginWithGoogle", e)
-                        Toast.makeText(requireContext(), "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Error al intentar sesión automática.", Toast.LENGTH_SHORT).show()
                     }
                 }
-            } else {
-                Log.e("GoogleSignIn", "ID Token es nulo")
-                Toast.makeText(requireContext(), "Error: No se pudo obtener el token de Google", Toast.LENGTH_LONG).show()
             }
-        } catch (e: ApiException) {
-            // Manejar errores específicos de Google Sign-In
-            Log.e("GoogleSignIn", "ApiException en Google Sign In. Código: ${e.statusCode}", e)
-
-            val mensaje = when (e.statusCode) {
-                GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> "Inicio de sesión cancelado"
-                GoogleSignInStatusCodes.NETWORK_ERROR -> "Error de red"
-                GoogleSignInStatusCodes.SIGN_IN_FAILED -> "Falló el inicio de sesión"
-                GoogleSignInStatusCodes.SIGN_IN_REQUIRED -> "Se requiere iniciar sesión"
-                else -> "Error al iniciar sesión con Google: ${e.statusCode}"
-            }
-
-            Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            Log.e("GoogleSignIn", "Excepción inesperada", e)
-            Toast.makeText(requireContext(), "Error inesperado: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 }
