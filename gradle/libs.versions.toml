@@ -1,15 +1,19 @@
 [versions]
 agp = "8.8.2"
+facebookLogin = "latest.release"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+loggingInterceptor = "4.9.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
 dotsindicator = "4.3"
+playServicesAuth = "21.3.0"
+retrofit = "2.9.0"
 sdp = "1.0.6"
 ssp = "1.0.6"
 glide = "4.12.0"
@@ -20,19 +24,26 @@ lifecycle = "2.5.0-alpha06"
 circular-progress-view = "0.1.2"
 mpandroidchart = "3.1.0"
 materialcalendarview = "2.0.1"
+gson = "2.10"
+okhttp = "4.10.0"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+facebook-login = { module = "com.facebook.android:facebook-login", version.ref = "facebookLogin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0" }
 dots-indicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "dotsindicator" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 sdp-android = { group = "com.intuit.sdp", name = "sdp-android", version.ref = "sdp" }
 ssp-android = { group = "com.intuit.ssp", name = "ssp-android", version.ref = "ssp" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
@@ -45,6 +56,7 @@ lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", v
 circular-progress = { module = "com.github.VaibhavLakhera:Circular-Progress-View", version.ref = "circular-progress-view" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 materialcalendarview = { module = "com.github.prolificinteractive:material-calendarview", version.ref = "materialcalendarview" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
