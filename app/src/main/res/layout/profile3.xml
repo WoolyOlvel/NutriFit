@@ -69,6 +69,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/mensageWelcome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/nameProfile"
@@ -77,6 +78,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/emailUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_spacing"

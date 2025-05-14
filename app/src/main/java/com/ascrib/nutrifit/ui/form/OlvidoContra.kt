@@ -75,22 +75,7 @@ class OlvidoContra : Fragment() {
         }
 
         // Llamada al repositorio para enviar el correo y obtener el enlace de restablecimiento
-        recoverPassword(email)
     }
 
-    private fun recoverPassword(email: String) {
-        // Aquí llamarías a tu repositorio o API para hacer la solicitud de recuperación de contraseña
-        // Asegúrate de manejarlo en un hilo de fondo (usando CoroutineScope) si es necesario
-        lifecycleScope.launch {
-            val result = authRepository.recoverPassword(email)  // Asume que tienes un método en AuthRepository
-            if (result.isSuccess) {
-                // Mostrar mensaje de éxito
-                Toast.makeText(requireContext(), "Enlace de restablecimiento enviado", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_olvidoContraFragment_a_cambioContraFragment)
-            } else {
-                // Mostrar mensaje de error
-                Toast.makeText(requireContext(), "Error al enviar el enlace de restablecimiento", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+
 }

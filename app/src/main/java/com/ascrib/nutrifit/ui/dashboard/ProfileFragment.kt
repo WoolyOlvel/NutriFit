@@ -40,6 +40,15 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Obtener datos del usuario
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val userName = sharedPref.getString("user_name", "")
+        val userLastName = sharedPref.getString("user_lastname", "")
+        val emailUser = sharedPref.getString("user_email", "")
+        // Actualizar el TextView
+        binding.mensageWelcome.text = " $userName $userLastName "
+        binding.emailUser.text= " $emailUser"
+
         toolbarConfig()
 
     }

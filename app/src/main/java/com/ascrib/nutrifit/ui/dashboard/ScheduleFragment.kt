@@ -55,6 +55,14 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Obtener datos del usuario
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val userName = sharedPref.getString("user_name", "")
+
+        // Actualizar el TextView
+        binding.mensageWelcome.text = "Hola $userName \n¡Reserva una cita ahora!"
+
+
         calendarSetup()
         makeAppointment()
     }

@@ -35,23 +35,6 @@ class AuthRepository(private val context: Context) {
     }
 
 
-    // Método para la recuperación de contraseña
-    suspend fun recoverPassword(email: String): Result<Boolean> {
-        return try {
-            // Realizar la solicitud de recuperación de contraseña a la API
-            val response = RetrofitClient.apiService.recoverPassword(email)
 
-            // Verificar si la respuesta fue exitosa
-            if (response.isSuccessful) {
-                Result.success(true)
-            } else {
-                // Error en la respuesta
-                Result.failure(Exception("Error al enviar el enlace de recuperación"))
-            }
-        } catch (e: Exception) {
-            // Manejar cualquier excepción que ocurra
-            Result.failure(e)
-        }
-    }
 }
 

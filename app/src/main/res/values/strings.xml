@@ -225,6 +225,9 @@
     <string name="Nombres">Nombre</string>
     <string name="Apellidos">Apellidos</string>
     <string name="edad">Edad</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="localidad">Localidad</string>
+
     <string name="fechanac">Fecha Nacimiento</string>
     <string name="UsuarioName">Nombre Usuario</string>
     <string name="CorreoElec">Correo Electrónico</string>

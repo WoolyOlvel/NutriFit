@@ -1,23 +1,18 @@
 package com.ascrib.nutrifit.api
 
-import com.ascrib.nutrifit.api.models.Appointment
 import com.ascrib.nutrifit.api.models.AuthResponse
-import com.ascrib.nutrifit.api.models.Chat
-import com.ascrib.nutrifit.api.models.ComposicionCorporal
-import com.ascrib.nutrifit.api.models.Desafio
-import com.ascrib.nutrifit.api.models.Divisa
-import com.ascrib.nutrifit.api.models.Estatura
-import com.ascrib.nutrifit.api.models.IdRequest
 import com.ascrib.nutrifit.api.models.LoginRequest
-import com.ascrib.nutrifit.api.models.MedidaCorporal
-import com.ascrib.nutrifit.api.models.Notification
-import com.ascrib.nutrifit.api.models.Paciente
-import com.ascrib.nutrifit.api.models.PlanList
+import com.ascrib.nutrifit.api.models.PacienteResponse
+import com.ascrib.nutrifit.api.models.ProfileResponse
 import com.ascrib.nutrifit.api.models.RegisterRequest
-import com.ascrib.nutrifit.api.models.SistemaMetrico
 import com.ascrib.nutrifit.api.models.SocialLoginRequest
-import com.ascrib.nutrifit.api.models.Talla
-import com.ascrib.nutrifit.api.models.User
+import com.ascrib.nutrifit.api.models.UpdatePacienteRequest
+import com.ascrib.nutrifit.api.models.UpdateProfileRequest
+import com.ascrib.nutrifit.api.models.UserResponse
+
+
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -52,237 +47,70 @@ interface ApiService {
     @POST("api/social-login/facebook")
     suspend fun facebookLogin(@Body socialLoginRequest: SocialLoginRequest): Response<AuthResponse>
 
-    // ===== USUARIOS =====
 
-    @GET("api/usuarios")
-    suspend fun getUsers(): Response<List<User>>
+    // ===== PROFILE ======
+
+    @GET("api/users/{user_id}/profile")
+    suspend fun getProfileUser(@Path("user_id") userId: Int): Response<ProfileResponse>
+
+    @PUT("api/users/{user_id}/update")
+    suspend fun updateUserProfile(
+        @Path("user_id") userId: Int,
+        @Body request: UpdateProfileRequest
+    ): Response<AuthResponse>
+
+    @Multipart
+    @POST("api/pacientes/create")
+    suspend fun createPaciente(
+        @Part foto: MultipartBody.Part?,
+        @Part("nombre") nombre: RequestBody,
+        @Part("apellidos") apellidos: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("telefono") telefono: RequestBody,
+        @Part("genero") genero: RequestBody,
+        @Part("usuario") usuario: RequestBody,
+        @Part("rol_id") rol_id: RequestBody,
+        @Part("enfermedad") enfermedad: RequestBody,
+        @Part("status") status: RequestBody,
+        @Part("estado") estado: RequestBody,
+        @Part("ciudad") ciudad: RequestBody,
+        @Part("localidad") localidad: RequestBody,
+        @Part("edad") edad: RequestBody,
+        @Part("fecha_nacimiento") fecha_nacimiento: RequestBody,
+        @Part("fecha_creacion") fecha_creacion: RequestBody
+    ): Response<ResponseBody>
+
+
+    // En tu ApiService.kt, agrega este nuevo endpoint
+    @GET("api/pacientest/por-email")
+    suspend fun getPacienteByEmail(
+        @Query("email") email: String
+    ): Response<PacienteResponse>
+
+    // Cambia los endpoints para que usen email en lugar de paciente_id
+    @PUT("api/pacientest/update-by-email")
+    suspend fun updatePacienteByEmail(
+        @Query("email") email: String,
+        @Body request: UpdatePacienteRequest
+    ): Response<ResponseBody>
+
+    @Multipart
+    @PUT("api/pacientest/update-with-photo-by-email")
+    suspend fun updatePacienteWithPhotoByEmail(
+        @Query("email") email: String,
+        @Part foto: MultipartBody.Part,
+        @Part("nombre") nombre: RequestBody,
+        @Part("apellidos") apellidos: RequestBody,
+        @Part("telefono") telefono: RequestBody,
+        @Part("genero") genero: RequestBody,
+        @Part("usuario") usuario: RequestBody,
+        @Part("enfermedad") enfermedad: RequestBody,
+        @Part("ciudad") ciudad: RequestBody,
+        @Part("localidad") localidad: RequestBody,
+        @Part("edad") edad: RequestBody,
+        @Part("fecha_nacimiento") fecha_nacimiento: RequestBody
+    ): Response<ResponseBody>
+
+    // ===== FIN PROFILE =====
 
-    @GET("api/usuarios/{id}")
-    suspend fun getUser(@Path("id") userId: Int): Response<User>
-
-    @POST("api/usuarios")
-    suspend fun createUser(@Body user: User): Response<User>
-
-    @PUT("api/usuarios/{id}")
-    suspend fun updateUser(@Path("id") userId: Int, @Body user: User): Response<User>
-
-    @PATCH("api/usuarios/{id}")
-    suspend fun updateUserPartially(@Path("id") userId: Int, @Body partialUser: Map<String, Any>): Response<User>
-
-    @DELETE("api/usuarios/{id}")
-    suspend fun deleteUser(@Path("id") userId: Int): Response<ResponseBody>
-
-    @GET("api/user")
-    suspend fun getCurrentUser(): Response<User>
-
-    @POST("api/forgot-password")
-    suspend fun recoverPassword(@Body email: String): Response<Void>
-
-    // ===== PACIENTES =====
-
-    @GET("api/pacientes/listar")
-    suspend fun listPacientes(): Response<List<Paciente>>
-
-    @POST("api/pacientes/guardar_editar")
-    suspend fun savePaciente(@Body paciente: Paciente): Response<Paciente>
-
-    @POST("api/pacientes/mostrar")
-    suspend fun showPaciente(@Body request: IdRequest): Response<Paciente>
-
-    @POST("api/pacientes/eliminar")
-    suspend fun deletePaciente(@Body request: IdRequest): Response<ResponseBody>
-
-    // ===== MIS PACIENTES =====
-
-    @GET("api/misPacientes/listar")
-    suspend fun listMisPacientes(): Response<List<Paciente>>
-
-    @POST("api/misPacientes/guardar_editar")
-    suspend fun saveMiPaciente(@Body paciente: Paciente): Response<Paciente>
-
-    @POST("api/misPacientes/mostrar")
-    suspend fun showMiPaciente(@Body request: IdRequest): Response<Paciente>
-
-    @POST("api/misPacientes/eliminar")
-    suspend fun deleteMiPaciente(@Body request: IdRequest): Response<ResponseBody>
-
-    // ===== APPOINTMENTS =====
-
-    @GET("api/appointments")
-    suspend fun getAppointments(): Response<List<Appointment>>
-
-    @GET("api/appointments/{id}")
-    suspend fun getAppointment(@Path("id") appointmentId: Int): Response<Appointment>
-
-    @POST("api/appointments")
-    suspend fun createAppointment(@Body appointment: Appointment): Response<Appointment>
-
-    @PUT("api/appoitnments/{id}")  // Nota: Hay un error en la ruta original ("appoitnments")
-    suspend fun updateAppointment(@Path("id") appointmentId: Int, @Body appointment: Appointment): Response<Appointment>
-
-    @PATCH("api/appointments/{id}")
-    suspend fun updateAppointmentPartially(@Path("id") appointmentId: Int, @Body partialAppointment: Map<String, Any>): Response<Appointment>
-
-    @DELETE("api/appointments/{id}")
-    suspend fun deleteAppointment(@Path("id") appointmentId: Int): Response<ResponseBody>
-
-    // ===== CHATS =====
-
-    @GET("api/chats")
-    suspend fun getChats(): Response<List<Chat>>
-
-    @GET("api/chats/{id}")
-    suspend fun getChat(@Path("id") chatId: Int): Response<Chat>
-
-    @POST("api/chats")
-    suspend fun createChat(@Body chat: Chat): Response<Chat>
-
-    @PUT("api/chats/{id}")
-    suspend fun updateChat(@Path("id") chatId: Int, @Body chat: Chat): Response<Chat>
-
-    @PATCH("api/chats/{id}")
-    suspend fun updateChatPartially(@Path("id") chatId: Int, @Body partialChat: Map<String, Any>): Response<Chat>
-
-    @DELETE("api/chats/{id}")
-    suspend fun deleteChat(@Path("id") chatId: Int): Response<ResponseBody>
-
-    // ===== DESAFÍOS =====
-
-    @GET("api/desafios")
-    suspend fun getDesafios(): Response<List<Desafio>>
-
-    @GET("api/desafios/{id}")
-    suspend fun getDesafio(@Path("id") desafioId: Int): Response<Desafio>
-
-    @POST("api/desafios")
-    suspend fun createDesafio(@Body desafio: Desafio): Response<Desafio>
-
-    @PUT("api/desafios/{id}")
-    suspend fun updateDesafio(@Path("id") desafioId: Int, @Body desafio: Desafio): Response<Desafio>
-
-    @PATCH("api/desafios/{id}")
-    suspend fun updateDesafioPartially(@Path("id") desafioId: Int, @Body partialDesafio: Map<String, Any>): Response<Desafio>
-
-    @DELETE("api/desafios/{id}")
-    suspend fun deleteDesafio(@Path("id") desafioId: Int): Response<ResponseBody>
-
-    // ===== NOTIFICATIONS =====
-
-    @GET("api/notifications")
-    suspend fun getNotifications(): Response<List<Notification>>
-
-    @GET("api/notifications/{id}")
-    suspend fun getNotification(@Path("id") notificationId: Int): Response<Notification>
-
-    @POST("api/notifications")
-    suspend fun createNotification(@Body notification: Notification): Response<Notification>
-
-    @PUT("api/notifications/{id}")
-    suspend fun updateNotification(@Path("id") notificationId: Int, @Body notification: Notification): Response<Notification>
-
-    @PATCH("api/notifications/{id}")
-    suspend fun updateNotificationPartially(@Path("id") notificationId: Int, @Body partialNotification: Map<String, Any>): Response<Notification>
-
-    @DELETE("api/notifications/{id}")
-    suspend fun deleteNotification(@Path("id") notificationId: Int): Response<ResponseBody>
-
-    // ===== UTILIDADES =====
-
-    // Tallas
-    @GET("api/talla/listar")
-    suspend fun getTallas(): Response<List<Talla>>
-
-    @POST("api/talla/guardar_editar")
-    suspend fun saveTalla(@Body talla: Talla): Response<Talla>
-
-    @POST("api/talla/mostrar")
-    suspend fun showTalla(@Body request: IdRequest): Response<Talla>
-
-    @POST("api/talla/eliminar")
-    suspend fun deleteTalla(@Body request: IdRequest): Response<ResponseBody>
-
-    // Sistema Métrico
-    @GET("api/sistema_metrico/listar")
-    suspend fun getSistemaMetricos(): Response<List<SistemaMetrico>>
-
-    @POST("api/sistema_metrico/guardar_editar")
-    suspend fun saveSistemaMetrico(@Body sistemaMetrico: SistemaMetrico): Response<SistemaMetrico>
-
-    @POST("api/sistema_metrico/mostrar")
-    suspend fun showSistemaMetrico(@Body request: IdRequest): Response<SistemaMetrico>
-
-    @POST("api/sistema_metrico/eliminar")
-    suspend fun deleteSistemaMetrico(@Body request: IdRequest): Response<ResponseBody>
-
-    // Medidas Corporales
-    @GET("api/medidas_corporales/listar")
-    suspend fun getMedidasCorporales(): Response<List<MedidaCorporal>>
-
-    @POST("api/medidas_corporales/guardar_editar")
-    suspend fun saveMedidaCorporal(@Body medidaCorporal: MedidaCorporal): Response<MedidaCorporal>
-
-    @POST("api/medidas_corporales/mostrar")
-    suspend fun showMedidaCorporal(@Body request: IdRequest): Response<MedidaCorporal>
-
-    @POST("api/medidas_corporales/eliminar")
-    suspend fun deleteMedidaCorporal(@Body request: IdRequest): Response<ResponseBody>
-
-    // Composición Corporal
-    @GET("api/composicion_corporal/listar")
-    suspend fun getComposicionCorporal(): Response<List<ComposicionCorporal>>
-
-    @POST("api/composicion_corporal/guardar_editar")
-    suspend fun saveComposicionCorporal(@Body composicionCorporal: ComposicionCorporal): Response<ComposicionCorporal>
-
-    @POST("api/composicion_corporal/mostrar")
-    suspend fun showComposicionCorporal(@Body request: IdRequest): Response<ComposicionCorporal>
-
-    @POST("api/composicion_corporal/eliminar")
-    suspend fun deleteComposicionCorporal(@Body request: IdRequest): Response<ResponseBody>
-
-    // Estatura
-    @GET("api/estatura/listar")
-    suspend fun getEstaturas(): Response<List<Estatura>>
-
-    @POST("api/estatura/guardar_editar")
-    suspend fun saveEstatura(@Body estatura: Estatura): Response<Estatura>
-
-    @POST("api/estatura/mostrar")
-    suspend fun showEstatura(@Body request: IdRequest): Response<Estatura>
-
-    @POST("api/estatura/eliminar")
-    suspend fun deleteEstatura(@Body request: IdRequest): Response<ResponseBody>
-
-    // Divisas
-    @GET("api/divisas/listar")
-    suspend fun getDivisas(): Response<List<Divisa>>
-
-    @POST("api/divisas/guardar_editar")
-    suspend fun saveDivisa(@Body divisa: Divisa): Response<Divisa>
-
-    @POST("api/divisas/mostrar")
-    suspend fun showDivisa(@Body request: IdRequest): Response<Divisa>
-
-    @POST("api/divisas/eliminar")
-    suspend fun deleteDivisa(@Body request: IdRequest): Response<ResponseBody>
-
-    // ===== PLAN LISTS =====
-
-    @GET("api/plan_lists")
-    suspend fun getPlanLists(): Response<List<PlanList>>
-
-    @GET("api/plan_lists/{id}")
-    suspend fun getPlanList(@Path("id") planListId: Int): Response<PlanList>
-
-    @POST("api/plan_lists")
-    suspend fun createPlanList(@Body planList: PlanList): Response<PlanList>
-
-    @PUT("api/plan_lists/{id}")
-    suspend fun updatePlanList(@Path("id") planListId: Int, @Body planList: PlanList): Response<PlanList>
-
-    @PATCH("api/plan_lists/{id}")
-    suspend fun updatePlanListPartially(@Path("id") planListId: Int, @Body partialPlanList: Map<String, Any>): Response<PlanList>
-
-    @DELETE("api/plan_lists/{id}")
-    suspend fun deletePlanList(@Path("id") planListId: Int): Response<ResponseBody>
 }

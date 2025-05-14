@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
         }
 
         // Crear el objeto LoginRequest con los datos ingresados
-        val loginRequest = LoginRequest(email, password, rememberMeChecked)
+        val loginRequest = LoginRequest(email, password, rememberMeChecked, is_mobile = true)
 
 
         // Llamada Retrofit para realizar el login
@@ -96,7 +96,25 @@ class LoginFragment : Fragment() {
                     if (response.isSuccessful) {
                         val data = response.body()
 
-                        // Guardar remember_token si el login es exitoso
+                        data?.let {
+                            // Guardar datos del usuario
+                            val sharedPref = activity?.getSharedPreferences(
+                                "user_data",
+                                AppCompatActivity.MODE_PRIVATE
+                            )
+                            sharedPref?.edit()?.apply {
+                                putString("user_name", it.user?.nombre)
+                                putString("user_lastname", it.user?.apellidos)
+                                putString("user_email", it.user?.email)
+                                putInt("user_rol_id", it.user?.rol_id ?: 2)
+                                it.user?.id?.let { it1 -> putInt("user_id", it1) }
+                                apply()
+                            }
+                        }
+
+
+
+                            // Guardar remember_token si el login es exitoso
                         data?.remember_token?.let { token ->
                             val sharedPref = activity?.getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
                             val editor = sharedPref?.edit()
@@ -150,21 +168,33 @@ class LoginFragment : Fragment() {
                             val data = response.body()
 
                             // Verificar si la respuesta tiene los datos del usuario
-                            data?.user?.let {
-                                // Mostrar mensaje de éxito
-                                Toast.makeText(context, "Bienvenido de nuevo, ${it.nombre}.", Toast.LENGTH_SHORT).show()
+                            data?.user?.let { user ->
+                                // Guardar datos del usuario (igual que en login normal)
+                                sharedPref?.edit()?.apply {
+                                    putString("user_name", user.nombre)
+                                    putString("user_lastname", user.apellidos)
+                                    putString("user_email", user.email)
+                                    putInt("user_rol_id", user.rol_id ?: 2)
+                                    putInt("user_id", user.id)
+                                    apply()
+                                }
 
-                                // Redirigir a la siguiente actividad o pantalla
+                                // Mostrar mensaje de éxito
+                                Toast.makeText(context, "Bienvenido de nuevo, ${user.nombre}.", Toast.LENGTH_SHORT).show()
+
+                                // Redirigir
                                 startActivity(Intent(context, DashboardActivity::class.java))
                                 activity?.finishAffinity()
                             }
                         } else {
-                            Toast.makeText(context, "No se pudo iniciar sesión automática.", Toast.LENGTH_SHORT).show()
+                            // Limpiar token inválido
+                            sharedPref?.edit()?.remove("remember_token")?.apply()
+                            Toast.makeText(context, "Sesión expirada, por favor inicie sesión nuevamente.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error al intentar sesión automática.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Error de conexión. Intente nuevamente.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

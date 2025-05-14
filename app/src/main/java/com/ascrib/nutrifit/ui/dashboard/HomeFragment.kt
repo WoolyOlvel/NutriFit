@@ -63,6 +63,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        // Obtener datos del usuario
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val userName = sharedPref.getString("user_name", "")
+
+        // Actualizar el TextView
+        binding.mensageWelcome.text = "Hola $userName ¡Bienvenido/a \nEstamos encantados de tenerte aquí!"
+
+
         binding.progressView.setProgress(55, true)
 
         val pagerAdapter = SliderAdapter(context as FragmentActivity)
