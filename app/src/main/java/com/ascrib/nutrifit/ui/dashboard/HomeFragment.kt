@@ -24,7 +24,11 @@ import com.ascrib.nutrifit.ui.form.adapter.SliderAdapter
 import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
 import android.os.Looper
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.ascrib.nutrifit.api.RetrofitClient
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -66,11 +70,20 @@ class HomeFragment : Fragment() {
 
         // Obtener datos del usuario
         val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val userId = sharedPref.getInt("user_id", 0)
         val userName = sharedPref.getString("user_name", "")
+        val emailUser = sharedPref.getString("user_email", "")
 
         // Actualizar el TextView
         binding.mensageWelcome.text = "Hola $userName ¡Bienvenido/a \nEstamos encantados de tenerte aquí!"
-
+        if (userId != 0) {
+            fetchUserProfile(userId)
+        }
+        emailUser?.let { email ->
+            if (email.isNotEmpty()) {
+                fetchPacienteData(email)
+            }
+        }
 
         binding.progressView.setProgress(55, true)
 
@@ -90,6 +103,63 @@ class HomeFragment : Fragment() {
 
         // Inicia el desplazamiento automático
         startAutoSlide()
+    }
+
+    private fun fetchPacienteData(email: String) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.apiService.getPacienteByEmail(email)
+                if (response.isSuccessful) {
+                    val paciente = response.body()?.paciente
+                    paciente?.let {
+                        // Cargar la foto del paciente con Glide
+                        it.foto?.let { fotoUrl ->
+                            Glide.with(requireContext())
+                                .load(fotoUrl)
+                                .placeholder(R.drawable.userdummy) // Imagen por defecto
+                                .error(R.drawable.usererrror) // Imagen si hay error
+                                .into(binding.foto)
+                        }
+                    }
+                } else {
+                    // Manejar error de respuesta
+                    val errorBody = response.errorBody()?.string()
+                    // Log.e("ProfileFragment", "Error fetching paciente: $errorBody")
+                }
+            } catch (e: Exception) {
+                // Manejar excepciones
+                // Log.e("ProfileFragment", "Error: ${e.message}")
+            }
+        }
+    }
+
+    private fun fetchUserProfile(userId: Int) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.apiService.getProfileUser(userId)
+                if (response.isSuccessful) {
+                    val userProfile = response.body()?.user
+                    userProfile?.let { user ->
+                        // Actualizar la UI con los datos frescos
+                        binding.mensageWelcome.text = "Hola ${user.nombre} ¡Bienvenido/a \nEstamos encantados de tenerte aquí!"
+
+                        // Opcional: Actualizar SharedPreferences con los nuevos datos
+                        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("user_name", user.nombre)
+                            apply()
+                        }
+                    }
+                } else {
+                    // Manejar error de respuesta
+                    val errorBody = response.errorBody()?.string()
+                    // Log.e("HomeFragment", "Error fetching profile: $errorBody")
+                }
+            } catch (e: Exception) {
+                // Manejar excepciones
+                // Log.e("HomeFragment", "Error: ${e.message}")
+            }
+        }
     }
 
     // Método para iniciar el desplazamiento automático

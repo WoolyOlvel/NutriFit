@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.api
 
 import com.ascrib.nutrifit.api.models.AuthResponse
+import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
 import com.ascrib.nutrifit.api.models.PacienteResponse
 import com.ascrib.nutrifit.api.models.ProfileResponse
@@ -112,5 +113,13 @@ interface ApiService {
     ): Response<ResponseBody>
 
     // ===== FIN PROFILE =====
+
+    // ===== INICIO RESERVACIONES
+
+    @GET("api/nutriologos")
+    suspend fun getNutriologos(): Response<ListaNutriologosResponse>
+
+
+    // === FIN RESERVACIONES
 
 }

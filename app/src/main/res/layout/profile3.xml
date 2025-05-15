@@ -46,11 +46,12 @@
                     app:cardCornerRadius="@dimen/_25sdp">
 
                     <ImageView
+                        android:id="@+id/foto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/perfil_prueba2" />
+                        android:src="@drawable/userdummy" />
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
@@ -90,6 +91,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/telefono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_spacing"

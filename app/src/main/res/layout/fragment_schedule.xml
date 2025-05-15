@@ -37,11 +37,12 @@
                 app:cardCornerRadius="@dimen/_12sdp">
 
                 <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
+                    android:id="@+id/foto"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:contentDescription="@string/todo"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/perfil_prueba" />
+                    android:src="@drawable/userdummy" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -75,14 +76,14 @@
             android:layout_below="@id/calendarView"
             android:layout_margin="@dimen/section_spacing" />
 
-        <!-- RecyclerView para citas en progreso -->
+        <!-- RecyclerView para nutriologo con disponibilidad Disponibles -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewInProgress"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/recyclerviewNextConsults" />
 
-        <!-- RecyclerView para citas próximas -->
+        <!-- RecyclerView para nutriologos con disponibilidad Pocos Cupos -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewNextConsults"
             android:layout_width="0dp"
@@ -90,7 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerviewInProgress"
             app:layout_constraintBottom_toTopOf="@+id/recyclerviewPastConsults" />
 
-        <!-- RecyclerView para citas pasadas -->
+        <!-- RecyclerView para nutiologos con disponibilidad No Disponible -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewPastConsults"
             android:layout_width="0dp"

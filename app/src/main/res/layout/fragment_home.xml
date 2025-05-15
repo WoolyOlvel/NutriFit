@@ -45,11 +45,12 @@
                     app:cardCornerRadius="@dimen/_12sdp">
 
                     <ImageView
+                        android:id="@+id/foto"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/perfil_prueba2"/>
+                        android:src="@drawable/userdummy"/>
 
                 </androidx.cardview.widget.CardView>
 

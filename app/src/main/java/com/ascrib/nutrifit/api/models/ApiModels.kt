@@ -118,6 +118,20 @@ data class UpdatePacienteRequest(
     val fecha_nacimiento: String?
 )
 
+data class ListaNutriologosResponse(
+    val success: Boolean,
+    val data: List<NutriologoData>
+)
+
+data class NutriologoData(
+    val user_id: Int,
+    val foto: String?,
+    val nombre_nutriologo: String,
+    val apellido_nutriologo: String,
+    val modalidad: String?,
+    val disponibilidad: String?,
+    val especialidad: String?
+)
 
 data class LoginRequest(
     val email: String,
