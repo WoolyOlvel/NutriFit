@@ -95,7 +95,7 @@ interface ApiService {
     ): Response<ResponseBody>
 
     @Multipart
-    @PUT("api/pacientest/update-with-photo-by-email")
+    @POST("api/pacientest/update-with-photo-by-email")
     suspend fun updatePacienteWithPhotoByEmail(
         @Query("email") email: String,
         @Part foto: MultipartBody.Part,
