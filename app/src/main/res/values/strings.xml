@@ -135,7 +135,9 @@
     <string name="exp">Experiencia</string>
     <string name="exp2">3 años</string>
     <string name="_20_33">20.33</string>
-    <string name="Esp">Espicialidad</string>
+    <string name="Esp">Perfil</string>
+    <string name="Esp3">Especialidad</string>
+
     <string name="Esp2">Autoinmune</string>
     <string name="b">B+</string>
 

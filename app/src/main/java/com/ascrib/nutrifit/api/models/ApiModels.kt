@@ -1,5 +1,7 @@
 package com.ascrib.nutrifit.api.models
 
+import java.util.Date
+
 /**
  * Modelo para solicitudes de autenticación
  */
@@ -126,12 +128,68 @@ data class ListaNutriologosResponse(
 data class NutriologoData(
     val user_id: Int,
     val foto: String?,
-    val nombre_nutriologo: String,
-    val apellido_nutriologo: String,
+    val nombre_nutriologo: String?,
+    val apellido_nutriologo: String?,
     val modalidad: String?,
     val disponibilidad: String?,
     val especialidad: String?
 )
+
+data class NutriologoDetailResponse(
+    val success: Boolean,
+    val data: NutriologoDetailData
+)
+
+data class NutriologoDetailData(
+    val user_id: Int,
+    val foto: String?,
+    val nombre_nutriologo: String?,
+    val apellido_nutriologo: String?,
+    val modalidad: String?,
+    val disponibilidad: String?,
+    val especialidad: String?,
+    val edad: Int?,
+    val fecha_nacimiento: String?,
+    val especializacion: String?,
+    val experiencia: Int?,
+    val pacientes_tratados: Int?,
+    val horario_antencion: String?,
+    val descripcion_nutriologo: String?,
+    val ciudad: String?,
+    val estado: String?,
+    val genero: String?,
+    val enfermedades_tratadas: String?
+)
+
+data class NutriologoDetailsResponse(
+    val success: Boolean,
+    val data: NutriologoDetailsData
+)
+
+data class NutriologoDetailsData(
+    val user_id: Int,
+    val foto: String?,
+    val nombre_nutriologo: String?,
+    val apellido_nutriologo: String?,
+    val especialidad: String?,
+    val edad: Int?,
+    val fecha_nacimiento: String?,
+    val especializacion: String?,
+    val experiencia: Int?,
+    val pacientes_tratados: Int?,
+    val horario_antencion: String?,
+    val descripcion_nutriologo: String?,
+    val ciudad: String?,
+    val estado: String?,
+    val genero: String?,
+    val telefono: String?,
+    var displomados: String?,
+    var profesion: String?,
+    var universidad: String?,
+    var descripcion_especialziacion: String?
+)
+
+
 
 data class LoginRequest(
     val email: String,

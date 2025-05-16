@@ -26,7 +26,7 @@ import com.ascrib.nutrifit.databinding.FragmentDesafiosNutriBinding
 import com.ascrib.nutrifit.handler.DesafioNutriHandler
 import com.ascrib.nutrifit.model.Appointment
 import com.ascrib.nutrifit.model.Desafio
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+//import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
 import com.ascrib.nutrifit.ui.dashboard.adapter.DesafioAdapter
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModel
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModelFactory

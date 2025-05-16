@@ -21,7 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentHistoryNutriListBinding
 import com.ascrib.nutrifit.databinding.FragmentHistoryNutriListInfoBinding
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+//import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModel
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModelFactory
 import com.ascrib.nutrifit.util.getStatusBarHeight
@@ -33,7 +33,7 @@ class PlanListDetailFragment : Fragment() {
 
     lateinit var model: DashboardViewModel
 
-    lateinit var appointmentAdapter: AppointmentAdapter
+//    lateinit var appointmentAdapter: AppointmentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,

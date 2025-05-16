@@ -20,14 +20,16 @@ import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.api.RetrofitClient
 import com.ascrib.nutrifit.databinding.FragmentScheduleBinding
 import com.ascrib.nutrifit.handler.AppointmentHandler
+import com.ascrib.nutrifit.handler.NutriologoHandler
 import com.ascrib.nutrifit.model.Appointment
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+import com.ascrib.nutrifit.model.Nutriologo
+import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologoAdapter
 import com.ascrib.nutrifit.util.getStatusBarHeight
 import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarMode
 import kotlinx.coroutines.launch
 
-class ScheduleFragment : Fragment(), AppointmentHandler {
+class ScheduleFragment : Fragment(), NutriologoHandler {
     companion object schedule {
         var status = false
     }
@@ -35,9 +37,9 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
     lateinit var binding: FragmentScheduleBinding
     lateinit var model: DashboardViewModel
 
-    lateinit var appointmentAdapter: AppointmentAdapter
+    private lateinit var nutriologoAdapter: NutriologoAdapter
+    private var nutriologosList: List<Nutriologo> = listOf()
 
-    private var newAppointmentsList: List<Appointment> = listOf()
 
 
     override fun onCreateView(
@@ -51,7 +53,7 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
 
         binding.handler = this
 
-        model = ViewModelProvider(this, DashboardViewModelFactory())[DashboardViewModel::class.java]
+
 
         return binding.root
     }
@@ -80,7 +82,7 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
 
 
         calendarSetup()
-        makeAppointment()
+        loadNutriologos()
     }
 
     private fun fetchPacienteData(email: String) {
@@ -140,7 +142,7 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
         }
     }
 
-    fun calendarSetup() {
+    fun calendarSetup() { //Este no tocar por el momento
         binding.calendarView.setOnTitleClickListener(View.OnClickListener {
             if (status) {
                 binding.calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS)
@@ -156,7 +158,7 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
         binding.calendarView.state().edit().isCacheCalendarPositionEnabled(true)
     }
 
-    private fun toolbarConfig() {
+    private fun toolbarConfig() { //Este no tocar por el momento
         binding.toolbar.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
@@ -193,49 +195,80 @@ class ScheduleFragment : Fragment(), AppointmentHandler {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun makeAppointment() {
-        // Usa las listas filtradas de citas según su estado
-        val inProgressAdapter = AppointmentAdapter(ArrayList(model.getInProgressAppointments()), this)
-        val nextConsultsAdapter = AppointmentAdapter(ArrayList(model.getNextAppointments()), this)
-        val pastConsultsAdapter = AppointmentAdapter(ArrayList(model.getPastAppointments()), this)
+    private fun loadNutriologos() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.apiService.getNutriologos()
+                if (response.isSuccessful) {
+                    nutriologosList = response.body()?.data?.map { nutriologoData ->
+                        Nutriologo(
+                            user_id_nutriologo = nutriologoData.user_id,
+                            foto = nutriologoData.foto,
+                            nombre_nutriologo = nutriologoData.nombre_nutriologo,
+                            apellido_nutriologo = nutriologoData.apellido_nutriologo,
+                            modalidad = nutriologoData.modalidad,
+                            disponibilidad = nutriologoData.disponibilidad,
+                            especialidad = nutriologoData.especialidad
+                        )
+                    } ?: listOf()
 
-        // Establece la lista de citas nuevas
-        newAppointmentsList = model.getNewAppointmentList()  // Aquí puedes cambiar la lógica según lo que necesites
+                    setupNutriologosRecyclers()
+                }
+            } catch (e: Exception) {
+                // Manejar error
+            }
+        }
+    }
 
-        // Asigna el adaptador para mostrar la lista de citas nuevas
-        appointmentAdapter = AppointmentAdapter(newAppointmentsList, this)
+    private fun setupNutriologosRecyclers() {
+        // Todos los nutriólogos
+        nutriologoAdapter = NutriologoAdapter(nutriologosList, this)
         binding.recyclerviewAppointments.apply {
-            adapter = appointmentAdapter
+            adapter = nutriologoAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        // Nutriólogos disponibles
+        val disponiblesAdapter = NutriologoAdapter(
+            nutriologosList.filter { it.disponibilidad.equals("Disponibles", ignoreCase = true) },
+            this
+        )
         binding.recyclerviewInProgress.apply {
-            adapter = inProgressAdapter
+            adapter = disponiblesAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        // Nutriólogos con pocos cupos
+        val pocosCuposAdapter = NutriologoAdapter(
+            nutriologosList.filter { it.disponibilidad.equals("Pocos Cupos", ignoreCase = true) },
+            this
+        )
         binding.recyclerviewNextConsults.apply {
-            adapter = nextConsultsAdapter
+            adapter = pocosCuposAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
+        // Nutriólogos no disponibles
+        val noDisponiblesAdapter = NutriologoAdapter(
+            nutriologosList.filter { it.disponibilidad.equals("No Disponible", ignoreCase = true) },
+            this
+        )
         binding.recyclerviewPastConsults.apply {
-            adapter = pastConsultsAdapter
+            adapter = noDisponiblesAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
-    override fun appointmentClicked(appointment: Appointment) {
-        if (appointment.statusType in listOf(1, 2, 3)) {
-            // Si el estado es 1, 2 o 3, navega a global_appointmentDetailFragment
-            findNavController().navigate(
-                R.id.global_appointmentDetailFragment,
-                bundleOf("appointment" to appointment.statusType)
-            )
-        } else {
-            // Si el estado es 4 (o cualquier otro si lo decides), no navega
-            // Puedes agregar una notificación aquí si lo deseas
-        }
+    override fun nutriologoClicked(nutriologo: Nutriologo) {
+        // Guardar el user_id_nutriologo en SharedPreferences
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        sharedPref.edit().putInt("user_id_nutriologo", nutriologo.user_id_nutriologo ?: 0).apply()
+
+        // Navegar al detalle o realizar otra acción
+        findNavController().navigate(
+            R.id.global_appointmentDetailFragment,
+            bundleOf("nutriologo_id" to (nutriologo.user_id_nutriologo ?: 0))
+        )
     }
 
 } 

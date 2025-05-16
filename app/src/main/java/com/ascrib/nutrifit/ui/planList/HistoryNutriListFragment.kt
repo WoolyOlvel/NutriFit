@@ -23,7 +23,7 @@ import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentHistoryNutriListBinding
 import com.ascrib.nutrifit.handler.AppointmentHandler
 import com.ascrib.nutrifit.model.Appointment
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+//import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModel
 import com.ascrib.nutrifit.ui.dashboard.viewmodel.DashboardViewModelFactory
 import com.ascrib.nutrifit.util.getStatusBarHeight
@@ -34,7 +34,7 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
 
     lateinit var model: DashboardViewModel
 
-    lateinit var appointmentAdapter: AppointmentAdapter
+//    lateinit var appointmentAdapter: AppointmentAdapter
 
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        makeAppointment()
+//        makeAppointment()
     }
 
     private fun toolbarConfig() {
@@ -95,26 +95,26 @@ class HistoryNutriListFragment : Fragment(), AppointmentHandler {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun makeAppointment() {
-        val inProgressAdapter = AppointmentAdapter(ArrayList(model.getInProgressAppointments()), this)
-        val nextConsultsAdapter = AppointmentAdapter(ArrayList(model.getNextAppointments()), this)
-        val pastConsultsAdapter = AppointmentAdapter(ArrayList(model.getPastAppointments()), this)
-
-        binding.recyclerviewInProgress.apply {
-            adapter = inProgressAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.recyclerviewNextConsults.apply {
-            adapter = nextConsultsAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.recyclerviewPastConsults.apply {
-            adapter = pastConsultsAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-    }
+//    fun makeAppointment() {
+//        val inProgressAdapter = AppointmentAdapter(ArrayList(model.getInProgressAppointments()), this)
+//        val nextConsultsAdapter = AppointmentAdapter(ArrayList(model.getNextAppointments()), this)
+//        val pastConsultsAdapter = AppointmentAdapter(ArrayList(model.getPastAppointments()), this)
+//
+//        binding.recyclerviewInProgress.apply {
+//            adapter = inProgressAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//
+//        binding.recyclerviewNextConsults.apply {
+//            adapter = nextConsultsAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//
+//        binding.recyclerviewPastConsults.apply {
+//            adapter = pastConsultsAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//    }
 
     override fun appointmentClicked(appointment: Appointment) {
         // Verifica si el estado de la cita es 3 o 4

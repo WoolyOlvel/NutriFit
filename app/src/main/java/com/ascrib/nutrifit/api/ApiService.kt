@@ -3,6 +3,8 @@ package com.ascrib.nutrifit.api
 import com.ascrib.nutrifit.api.models.AuthResponse
 import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
+import com.ascrib.nutrifit.api.models.NutriologoDetailResponse
+import com.ascrib.nutrifit.api.models.NutriologoDetailsResponse
 import com.ascrib.nutrifit.api.models.PacienteResponse
 import com.ascrib.nutrifit.api.models.ProfileResponse
 import com.ascrib.nutrifit.api.models.RegisterRequest
@@ -119,6 +121,15 @@ interface ApiService {
     @GET("api/nutriologos")
     suspend fun getNutriologos(): Response<ListaNutriologosResponse>
 
+    @GET("api/nutriologos/byId")
+    suspend fun getNutriologoById(
+        @Query("user_id") userId: Int
+    ): Response<NutriologoDetailResponse>
+
+    @GET("api/nutriologos/detalles/byId")
+    suspend fun getNutriologoDetallesById(
+        @Query("user_id") userId: Int
+    ): Response<NutriologoDetailsResponse>
 
     // === FIN RESERVACIONES
 

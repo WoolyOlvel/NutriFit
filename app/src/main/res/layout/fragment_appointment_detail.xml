@@ -8,6 +8,12 @@
         <variable
             name="handler"
             type="com.ascrib.nutrifit.ui.patient.AppointmentDetailFragment" />
+
+        <variable
+            name="nutriologo"
+            type="com.ascrib.nutrifit.model.NutriologoInfo" />
+        <import type="android.text.TextUtils" />
+
     </data>
 
     <RelativeLayout
@@ -48,7 +54,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:onClick="@{()->handler.onProfileClicked()}"
+                            android:onClick="@{()->handler.onProfileClicked(nutriologo)}"
                             android:padding="@dimen/section_spacing">
 
                             <androidx.cardview.widget.CardView
@@ -58,11 +64,12 @@
                                 app:cardCornerRadius="@dimen/_10sdp">
 
                                 <ImageView
+                                    android:id="@+id/foto"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:contentDescription="@string/todo"
                                     android:scaleType="centerCrop"
-                                    android:src="@drawable/perfil_nutri" />
+                                    app:imageUrl="@{nutriologo.foto}" />
                             </androidx.cardview.widget.CardView>
 
                             <LinearLayout
@@ -77,39 +84,43 @@
                                 android:paddingHorizontal="@dimen/section_spacing">
 
                                 <TextView
+                                    android:id="@+id/nombreCompleto"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/name_nut"
+                                    android:text="@{nutriologo.nombreCompleto}"
                                     android:textColor="@color/colorVariant"
                                     android:textSize="@dimen/text_size_h5"
                                     android:textStyle="bold" />
 
                                 <TextView
+                                    android:id="@+id/genero"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
-                                    android:text="@string/male"
+                                    android:text="@{nutriologo.genero}"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6" />
 
                                 <TextView
+                                    android:id="@+id/fecha_nacimiento"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
                                     android:drawablePadding="@dimen/inner_spacing"
                                     android:gravity="center_vertical"
-                                    android:text="@string/birthday"
+                                    app:fechaNacimiento="@{nutriologo.fecha_nacimiento}"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
                                     app:drawableLeftCompat="@drawable/fech" />
 
                                 <TextView
+                                    android:id="@+id/CiudadEstado"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
                                     android:drawablePadding="@dimen/inner_spacing"
                                     android:gravity="center_vertical"
-                                    android:text="@string/ubication"
+                                    android:text="@{nutriologo.ciudadEstado}"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
                                     app:drawableLeftCompat="@drawable/loc" />
@@ -139,9 +150,10 @@
                                         tools:ignore="TooDeepLayout" />
 
                                     <TextView
+                                        android:id="@+id/edad"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/Edad3"
+                                        android:text="@{nutriologo.edad}"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -161,9 +173,10 @@
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
+                                        android:id="@+id/pacientes_tratados"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/paciente2"
+                                        android:text="@{nutriologo.pacientes_tratados}"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -183,9 +196,10 @@
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
+                                        android:id="@+id/experiencia"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/exp2"
+                                        android:text="@{nutriologo.experiencia}"
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -202,15 +216,25 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/Esp"
                                         android:textColor="@color/grey"
-                                        android:textSize="@dimen/text_size_h6" />
+                                        android:textSize="@dimen/text_size_h6"
+                                        android:autoSizeTextType="uniform"
+                                        android:autoSizeMinTextSize="12sp"
+                                        android:autoSizeMaxTextSize="18sp"
+                                        android:autoSizeStepGranularity="1sp"/>
 
                                     <TextView
+                                        android:id="@+id/especializacion"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/Esp2"
+                                        android:text="@{nutriologo.especializacion}"
                                         android:textColor="@color/colorVariant"
-                                        android:textSize="@dimen/text_size_h5"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+
+
+                                    android:autoSizeTextType="uniform"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeStepGranularity="1sp" />
                                 </LinearLayout>
                             </LinearLayout>
                         </RelativeLayout>
@@ -318,21 +342,14 @@
                                 android:background="@color/lightGrey" />
 
                             <TextView
+                                android:id="@+id/horario_antencion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/horarios"
+                                android:text="@{nutriologo.horario_antencion}"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/inner_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/horas"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h5" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -378,11 +395,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/descripcion_nutriologo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/description"
+                                android:text="@{nutriologo.descripcion_nutriologo}"
                                 android:justificationMode="inter_word"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6" />
@@ -430,60 +448,15 @@
                                 android:background="@color/lightGrey" />
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad1"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold" />
-
-                            <TextView
+                                android:id="@+id/enfermedades_tratadas"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad2"
+                                app:htmlText="@{nutriologo.enfermedades_tratadas}"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/section_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad3"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/inner_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad4"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h5" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/section_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad5"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/inner_spacing"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/Enfermedad6"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h5" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

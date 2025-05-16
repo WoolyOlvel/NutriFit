@@ -73,6 +73,7 @@ class LoginFragment : Fragment() {
 
     fun onLoginClicked() {
         // Obtener los valores de los campos de correo y contraseña
+
         val email = binding.editTextEmail.text.toString().trim()
         val password = binding.editTextPassword.text.toString()
         val rememberMeChecked = binding.rememberMeCheckbox.isChecked
@@ -104,6 +105,7 @@ class LoginFragment : Fragment() {
                             )
                             sharedPref?.edit()?.apply {
                                 putString("user_name", it.user?.nombre)
+                                putString("usuario", it.user?.usuario)
                                 putString("user_lastname", it.user?.apellidos)
                                 putString("user_email", it.user?.email)
                                 putInt("user_rol_id", it.user?.rol_id ?: 2)
@@ -173,6 +175,7 @@ class LoginFragment : Fragment() {
                                 sharedPref?.edit()?.apply {
                                     putString("user_name", user.nombre)
                                     putString("user_lastname", user.apellidos)
+                                    putString("usuario", user.usuario)
                                     putString("user_email", user.email)
                                     putInt("user_rol_id", user.rol_id ?: 2)
                                     putInt("user_id", user.id)
