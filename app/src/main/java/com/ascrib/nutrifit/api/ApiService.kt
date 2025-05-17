@@ -8,7 +8,9 @@ import com.ascrib.nutrifit.api.models.NutriologoDetailsResponse
 import com.ascrib.nutrifit.api.models.PacienteResponse
 import com.ascrib.nutrifit.api.models.ProfileResponse
 import com.ascrib.nutrifit.api.models.RegisterRequest
+import com.ascrib.nutrifit.api.models.ReservacionResponse
 import com.ascrib.nutrifit.api.models.SocialLoginRequest
+import com.ascrib.nutrifit.api.models.TipoConsultaResponse
 import com.ascrib.nutrifit.api.models.UpdatePacienteRequest
 import com.ascrib.nutrifit.api.models.UpdateProfileRequest
 import com.ascrib.nutrifit.api.models.UserResponse
@@ -130,6 +132,31 @@ interface ApiService {
     suspend fun getNutriologoDetallesById(
         @Query("user_id") userId: Int
     ): Response<NutriologoDetailsResponse>
+
+
+
+    @GET("api/tipo_consulta")
+    suspend fun getTiposConsulta(): Response<TipoConsultaResponse>
+
+    @POST("api/reservaciones/create")
+    suspend fun createReservacion(
+        @Query("Paciente_ID") pacienteId: Int,
+        @Query("nombre_paciente") nombrePaciente: String,
+        @Query("apellidos") apellidos: String?,
+        @Query("telefono") telefono: String?,
+        @Query("genero") genero: String?,
+        @Query("usuario") usuario: String?,
+        @Query("edad") edad: Int?,
+        @Query("precio_cita") precioCita: Double,
+        @Query("motivo_consulta") motivoConsulta: String,
+        @Query("nombre_nutriologo") nombreNutriologo: String,
+        @Query("fecha_consulta") fechaConsulta: String,
+        @Query("origen") origen: String,
+        @Query("estado_proximaConsulta") estadoProximaConsulta: Int,
+        @Query("user_id") userId: Int // Añade este parámetro
+    ): Response<ReservacionResponse>
+
+
 
     // === FIN RESERVACIONES
 

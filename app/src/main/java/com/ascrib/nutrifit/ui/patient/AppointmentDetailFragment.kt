@@ -186,12 +186,14 @@ class AppointmentDetailFragment : Fragment() {
 
     }
 
-    fun onChatClicked(){
-        findNavController().navigate(R.id.global_chat_patient)
+    fun onCallClicked() {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val nutriologoId = sharedPref.getInt("user_id_nutriologo", 0)
+        findNavController().navigate(R.id.serviceFragment, bundleOf("nutriologo_id" to nutriologoId))
     }
 
-    fun onCallClicked(){
-        findNavController().navigate(R.id.serviceFragment,)
+    fun onChatClicked(){
+        findNavController().navigate(R.id.global_chat_patient)
     }
 
     private fun showBottomSheetReply() {

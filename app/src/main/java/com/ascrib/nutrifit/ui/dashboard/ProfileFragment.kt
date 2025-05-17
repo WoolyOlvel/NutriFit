@@ -74,9 +74,22 @@ class ProfileFragment : Fragment() {
                 val response = RetrofitClient.apiService.getPacienteByEmail(email)
                 if (response.isSuccessful) {
                     val paciente = response.body()?.paciente
+
                     paciente?.let {
+                        val sharedPref = activity?.getSharedPreferences(
+                            "user_data",
+                            AppCompatActivity.MODE_PRIVATE
+                        )
+                        sharedPref?.edit()?.apply {
+                            putInt("Paciente_ID", it.Paciente_ID ?: 0)
+                            putString("user_telefono", it.telefono)
+                            apply() // Don't forget to apply the changes
+                        }
+
                         // Actualizar UI con los datos del paciente
                         binding.telefono.text = it.telefono ?: "No disponible"
+
+
 
                         // Cargar la foto del paciente con Glide
                         it.foto?.let { fotoUrl ->

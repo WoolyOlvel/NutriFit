@@ -38,6 +38,7 @@
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_consulta_por_app"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/section_spacing"
@@ -49,16 +50,29 @@
                             android:padding="@dimen/section_spacing"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/text_size_h5"
-                                android:textStyle="bold"
-                                android:drawablePadding="@dimen/inner_spacing"
-                                android:text="@string/send_message"
-                                android:textColor="@color/colorVariant"
-                                app:drawableLeftCompat="@drawable/chat2"
-                                app:drawableTint="@color/colorPrimary" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:textSize="@dimen/text_size_h5"
+                                    android:textStyle="bold"
+                                    android:drawablePadding="@dimen/inner_spacing"
+                                    android:text="@string/send_message"
+                                    android:textColor="@color/colorVariant"
+                                    app:drawableLeftCompat="@drawable/chat2" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_send_message"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:buttonTint="@color/colorPrimary" />
+                            </RelativeLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -70,6 +84,119 @@
                                 android:text="@string/service_price_240_consulted"/>
 
                             <EditText
+                                android:id="@+id/total_pago_consulta_por_app"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:enabled="false"
+                                android:importantForAutofill="no"
+                                android:inputType="textEmailAddress"
+                                android:paddingHorizontal="@dimen/section_spacing"
+
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textStyle="bold"
+                                tools:ignore="LabelFor" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_30_minutes"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/inner_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/description_res"/>
+
+                            <EditText
+                                android:id="@+id/motivoConsultaApp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/inner_spacing"
+                                android:background="@drawable/background_radius"
+                                android:backgroundTint="#f1f1f1"
+                                android:inputType="textMultiLine"
+                                android:importantForAutofill="no"
+                                tools:ignore="LabelFor"
+                                android:gravity="start"
+                                android:hint="@string/send_multiple_messages_attachments_get_first_reponse_within_4_hours"
+                                android:minHeight="@dimen/_80sdp"
+                                android:padding="@dimen/section_spacing"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/text_size_h6" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_8ssp"
+                                android:layout_gravity="end"
+                                android:textColor="@color/grey"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:includeFontPadding="false"
+                                android:text="@string/rate_per_32_minutes"/>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_consulta_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/section_spacing"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:textSize="@dimen/text_size_h5"
+                                    android:textStyle="bold"
+                                    android:drawablePadding="@dimen/inner_spacing"
+                                    android:text="@string/send_message2"
+                                    android:textColor="@color/colorVariant"
+                                    app:drawableLeftCompat="@drawable/presencial" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_send_message2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:buttonTint="@color/colorPrimary" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_h6"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="@dimen/section_spacing"
+                                android:paddingVertical="@dimen/inner_spacing"
+                                android:text="@string/service_price_240_consulted"/>
+
+                            <EditText
+                                android:id="@+id/total_pago_consulta_normal"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginVertical="@dimen/inner_spacing"
@@ -77,7 +204,7 @@
                                 android:backgroundTint="#f1f1f1"
                                 android:inputType="textEmailAddress"
                                 android:importantForAutofill="no"
-                                android:text="@string/_45"
+
                                 android:textStyle="bold"
                                 android:enabled="false"
                                 tools:ignore="LabelFor"
@@ -105,6 +232,7 @@
                                 android:text="@string/description_res"/>
 
                             <EditText
+                                android:id="@+id/motivoConsultaPresencial"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/inner_spacing"
@@ -135,6 +263,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_consulta_por_llamada"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/section_spacing"
@@ -146,16 +275,29 @@
                             android:padding="@dimen/section_spacing"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/text_size_h5"
-                                android:textStyle="bold"
-                                android:drawablePadding="@dimen/inner_spacing"
-                                android:text="@string/personal_call"
-                                android:textColor="@color/colorVariant"
-                                app:drawableLeftCompat="@drawable/tel"
-                                app:drawableTint="@color/colorPrimary" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:textSize="@dimen/text_size_h5"
+                                    android:textStyle="bold"
+                                    android:drawablePadding="@dimen/inner_spacing"
+                                    android:text="@string/personal_call"
+                                    android:textColor="@color/colorVariant"
+                                    app:drawableLeftCompat="@drawable/tel" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_personal_call"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:buttonTint="@color/colorPrimary" />
+                            </RelativeLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -167,6 +309,7 @@
                                 android:text="@string/service_price_103_consulted"/>
 
                             <EditText
+                                android:id="@+id/total_pago_consulta_por_llamada"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginVertical="@dimen/inner_spacing"
@@ -176,7 +319,7 @@
                                 android:enabled="false"
                                 android:textStyle="bold"
                                 android:importantForAutofill="no"
-                                android:text="@string/_40"
+
                                 tools:ignore="LabelFor"
                                 android:paddingHorizontal="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"
@@ -202,6 +345,7 @@
                                 android:text="@string/description_res"/>
 
                             <EditText
+                                android:id="@+id/motivoConsultaLlamada"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/inner_spacing"
@@ -211,7 +355,7 @@
                                 android:importantForAutofill="no"
                                 tools:ignore="LabelFor"
                                 android:gravity="start"
-                                android:hint="@string/description_consult"
+                                android:hint="@string/send_multiple_messages_attachments_get_first_reponse_within_4_hours"
                                 android:minHeight="@dimen/_80sdp"
                                 android:padding="@dimen/section_spacing"
                                 android:textColorHint="@color/grey"

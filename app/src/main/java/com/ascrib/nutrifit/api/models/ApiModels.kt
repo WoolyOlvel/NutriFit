@@ -117,7 +117,8 @@ data class UpdatePacienteRequest(
     val ciudad: String?,
     val localidad: String?,
     val edad: Int?,
-    val fecha_nacimiento: String?
+    val fecha_nacimiento: String?,
+    var  user_id: Int? = null// Agregar este campo
 )
 
 data class ListaNutriologosResponse(
@@ -189,6 +190,50 @@ data class NutriologoDetailsData(
     var descripcion_especialziacion: String?
 )
 
+data class ReservacionResponse(
+    val success: Boolean,
+    val data: ReservacionData
+)
+
+data class ReservacionData(
+    val paciente_id: Int?,
+    val user_id: Int?,
+    val nombre_nutriologo: String?,
+    val nombre_paciente: String?,
+    val apellidos: String?,
+    val telefono: String?,
+    val genero: String?,
+    val usuario: String?,
+    val edad: Int?,
+    val precio_cita: Int?,
+    val motivo_consulta: String?,
+    val fecha_consulta:String?,
+    val origen:String?,
+    val estado_proximaConsulta: Int?,
+)
+
+data class TipoConsultaResponse(
+    val success: Boolean,
+    val data: List<TipoConsulta>
+)
+
+data class TipoConsulta(
+    val Tipo_Consulta_ID: Int,
+    val Nombre: String,
+    val total_pago: Double,
+    val Precio: String?,
+    val Duracion: String?
+)
+
+data class NotificacionesResponse(
+    val success: Boolean,
+    val data: List<Notificaciones>
+)
+
+data class Notificaciones(
+    var Notificacion_ID: Int?,
+
+)
 
 
 data class LoginRequest(

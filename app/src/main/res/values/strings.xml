@@ -247,19 +247,22 @@
 
 
 
-    <string name="send_message">Reservar Cita</string>
+    <string name="send_message">Reservar Consulta Por App</string>
+    <string name="send_message2">Reservar Consulta Presencial </string>
+
     <string name="service_price_240_consulted">Precio por la cita</string>
-    <string name="_45">100 USD</string>
-    <string name="_40">50 USD</string>
+    <string name="_45">585.00 MXN</string>
+    <string name="_46">600.00 MXN</string>
+    <string name="_40">292.00 MXN</string>
     <string name="rate_per_30_minutes">Tarifa por 1 hora</string>
-    <string name="rate_per_32_minutes">El especialista te contactará para coordinar el método de pago</string>
+    <string name="rate_per_32_minutes">El especialista se pondrá en contacto contigo para coordinar el método de pago y, si es necesario, proporcionarte la información sobre la clínica y su ubicación.</string>
     <string name="rate_per_20_minutes">Tarifa por 30 minutos</string>
-    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía mensajes y adjuntos, y describe el motivo de tu cita. Recibe la primera respuesta en un máximo de 2 horas.</string>
-    <string name="personal_call">Llamada Personal</string>
+    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía tu mensaje detallando el motivo de tu cita y recibe una respuesta en un máximo de 2 horas. La comunicación será ágil y efectiva para garantizar una atención rápida y precisa.</string>
+    <string name="personal_call">Consulta Por Llamada</string>
     <string name="service_price_103_consulted">Precio del Servicio</string>
     <string name="available_time">Horario Disponible</string>
     <string name="_30_minutes_call_durations_get_first_reponse_within_30_minutes">Duración de la llamada: 30 minutos. </string>
-    <string name="save">Guardar</string>
+    <string name="save">Generar Cita</string>
     <string name="description_res">Motivo de la cita</string>
     <string name="description_consult">Consulta médica en línea con un especialista.</string>
     <string name="horario_consult">Horarios de reservaciones</string>
