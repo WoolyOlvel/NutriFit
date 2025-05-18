@@ -1,7 +1,10 @@
 package com.ascrib.nutrifit.ui.profile
 
 import android.app.TimePickerDialog
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -34,7 +37,12 @@ import androidx.media3.common.util.Log
 import com.ascrib.nutrifit.api.RetrofitClient
 import com.ascrib.nutrifit.api.models.TipoConsulta
 import com.ascrib.nutrifit.api.models.UpdatePacienteRequest
+import com.ascrib.nutrifit.repository.NotificacionRepository
+import com.ascrib.nutrifit.ui.dashboard.ProfileFragment
+import com.ascrib.nutrifit.util.Statusbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ServiceFragment : Fragment(), OnDateSelectedListener {
     lateinit var binding: FragmentServicesBinding
@@ -60,6 +68,8 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             DataBindingUtil.inflate(inflater, R.layout.fragment_services, container, false)
 
         binding.handler = this
+
+
         toolbarConfig()
         setupCalendar()
 
@@ -73,6 +83,7 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         setupCheckboxListeners()
         setupTextWatchers()
     }
+
 
     private fun loadTiposConsulta() {
         lifecycleScope.launch {

@@ -27,6 +27,7 @@ materialcalendarview = "2.0.1"
 gson = "2.10"
 okhttp = "4.10.0"
 media3CommonKtx = "1.6.1"
+common = "18.11.0"
 
 
 [libraries]
@@ -58,6 +59,7 @@ circular-progress = { module = "com.github.VaibhavLakhera:Circular-Progress-View
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 materialcalendarview = { module = "com.github.prolificinteractive:material-calendarview", version.ref = "materialcalendarview" }
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
+common = { group = "com.google.mlkit", name = "common", version.ref = "common" }
 
 
 

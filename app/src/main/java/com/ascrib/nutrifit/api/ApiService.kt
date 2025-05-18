@@ -3,6 +3,8 @@ package com.ascrib.nutrifit.api
 import com.ascrib.nutrifit.api.models.AuthResponse
 import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
+import com.ascrib.nutrifit.api.models.NotificacionesCountResponse
+import com.ascrib.nutrifit.api.models.NotificacionesResponse
 import com.ascrib.nutrifit.api.models.NutriologoDetailResponse
 import com.ascrib.nutrifit.api.models.NutriologoDetailsResponse
 import com.ascrib.nutrifit.api.models.PacienteResponse
@@ -159,5 +161,41 @@ interface ApiService {
 
 
     // === FIN RESERVACIONES
+
+    // === INICIO NOTIFICACIONES
+
+    @GET("api/movil/notificaciones/{pacienteId}")
+    suspend fun getNotificaciones(@Path("pacienteId") pacienteId: Int): Response<NotificacionesResponse>
+
+    @PUT("api/movil/notificaciones/marcar-leida/{notificacionId}/{pacienteId}")
+    suspend fun marcarNotificacionLeida(
+        @Path("notificacionId") notificacionId: Int,
+        @Path("pacienteId") pacienteId: Int
+    ): Response<ResponseBody>
+
+    @PUT("api/movil/notificaciones/marcar-todas-leidas/{pacienteId}")
+    suspend fun marcarTodasNotificacionesLeidas(
+        @Path("pacienteId") pacienteId: Int
+    ): Response<ResponseBody>
+
+    @PUT("api/movil/notificaciones/eliminar/{pacienteId}")
+    suspend fun eliminarNotificaciones(
+        @Path("pacienteId") pacienteId: Int
+    ): Response<ResponseBody>
+
+    @GET("api/movil/notificaciones/contar/{pacienteId}")
+    suspend fun contarNotificaciones(
+        @Path("pacienteId") pacienteId: Int
+    ): Response<NotificacionesCountResponse>
+
+    @GET("api/movil/reservaciones/verificar-seguimiento/{reservacionId}/{pacienteId}")
+    suspend fun verificarReservacionSeguimiento(
+        @Path("reservacionId") reservacionId: Int,
+        @Path("pacienteId") pacienteId: Int
+    ): Response<ReservacionResponse>
+
+
+
+    // === FIN NOTIFICACIONES
 
 }

@@ -78,3 +78,8 @@ fun setHtmlText(textView: TextView, html: String?) {
         textView.text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 }
+
+@BindingAdapter("imageResource")
+fun setImageResource(imageView: ImageView, resource: Int) {
+    imageView.setImageResource(resource)
+}

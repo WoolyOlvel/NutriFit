@@ -1,7 +1,10 @@
+
 package com.ascrib.nutrifit.ui.dashboard
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,23 +19,40 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.ascrib.nutrifit.R
+import com.ascrib.nutrifit.api.RetrofitClient
 import com.ascrib.nutrifit.databinding.FragmentHomeBinding
-import com.ascrib.nutrifit.ui.form.adapter.BienvenidaAdapter
+import com.ascrib.nutrifit.repository.NotificacionRepository
+import com.ascrib.nutrifit.ui.dashboard.ScheduleFragment.schedule
 import com.ascrib.nutrifit.ui.form.adapter.SliderAdapter
 import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
-import android.os.Looper
-import androidx.lifecycle.lifecycleScope
-import androidx.viewpager2.widget.ViewPager2
-import com.ascrib.nutrifit.api.RetrofitClient
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
+    companion object schedule {
+        var status = false
+        // Añadir variable estática para mantener el conteo entre instancias del fragmento
+        private var lastNotificationCount = 0
+        // Añadir bandera para indicar si es la primera carga del fragmento en la sesión
+        private var isInitialLoad = true
+    }
+
+    private val notificacionRepository = NotificacionRepository()
+    private val notificationHandler = Handler(Looper.getMainLooper())
+    private var notificationRunnable: Runnable? = null
+    private val pollingInterval = 15000L // 15 segundos
+    private var isPollingActive = false
+    private var mediaPlayer: MediaPlayer? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,11 +67,11 @@ class HomeFragment : Fragment() {
             requireActivity().window,
             R.color.lightGrey,
             binding.root
-
         )
+        mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil)
 
         toolbarConfig()
-        return  binding.root
+        return binding.root
     }
 
     private val sliderHandler = Handler(Looper.getMainLooper())
@@ -66,7 +86,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         // Obtener datos del usuario
         val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
@@ -103,6 +122,95 @@ class HomeFragment : Fragment() {
 
         // Inicia el desplazamiento automático
         startAutoSlide()
+
+        // Cargar contador de notificaciones
+        startNotificationPolling()
+        loadNotificationCount()
+    }
+
+
+    private fun startNotificationPolling() {
+        if (isPollingActive) return
+
+        isPollingActive = true
+        notificationRunnable = object : Runnable {
+            override fun run() {
+                loadNotificationCount()
+                notificationHandler.postDelayed(this, pollingInterval)
+            }
+        }
+        notificationHandler.post(notificationRunnable!!)
+    }
+
+    private fun stopNotificationPolling() {
+        isPollingActive = false
+        notificationRunnable?.let {
+            notificationHandler.removeCallbacks(it)
+        }
+    }
+
+    private fun loadNotificationCount() {
+        if (!isAdded || activity == null) return
+
+        lifecycleScope.launch {
+            try {
+                val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+                val pacienteId = sharedPref.getInt("Paciente_ID", 0)
+                if (pacienteId == 0) return@launch
+
+                val count = withContext(Dispatchers.IO) {
+                    notificacionRepository.contarNotificacionesNoLeidas(pacienteId)
+                }
+
+                activity?.runOnUiThread {
+                    // Reproducir sonido solo si hay nuevas notificaciones
+                    // Y no es la carga inicial del fragmento
+                    if (count > HomeFragment.lastNotificationCount && !HomeFragment.isInitialLoad) {
+                        playNotificationSound()
+                    }
+
+                    // Actualizar el contador estático
+                    HomeFragment.lastNotificationCount = count
+
+                    // Actualizar la bandera después de la primera carga
+                    HomeFragment.isInitialLoad = false
+
+                    NotificationBadgeUtils.updateBadgeCount(count)
+                    requireActivity().invalidateOptionsMenu()
+                }
+            } catch (e: Exception) {
+                // Reintentar más rápido si hay error
+                if (isPollingActive) {
+                    notificationHandler.postDelayed({ loadNotificationCount() }, 5000)
+                }
+            }
+        }
+    }
+
+    private fun playNotificationSound() {
+        try {
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil).apply {
+                    setOnCompletionListener {
+                        it.release()
+                        mediaPlayer = null
+                    }
+                }
+            }
+            mediaPlayer?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Liberar recursos del MediaPlayer
+        stopNotificationPolling()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
     private fun fetchPacienteData(email: String) {
@@ -170,12 +278,20 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         sliderHandler.removeCallbacks(sliderRunnable)
+        stopNotificationPolling()
+
     }
 
     // Reinicia el desplazamiento automático cuando el fragmento vuelve a ser visible
     override fun onResume() {
         super.onResume()
         startAutoSlide()
+
+        if (!isPollingActive) {
+            startNotificationPolling()
+        }
+        // Carga inmediata al volver
+        loadNotificationCount()
     }
 
     private fun toolbarConfig() {
@@ -194,7 +310,11 @@ class HomeFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
-                menuInflater.inflate(R.menu.header_menu,menu)
+                menuInflater.inflate(R.menu.header_menu, menu)
+                // Configuración segura del badge
+                menu.findItem(R.id.action_notification)?.let { menuItem ->
+                    NotificationBadgeUtils.setupBadge(requireActivity() as AppCompatActivity, menuItem)
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -203,7 +323,7 @@ class HomeFragment : Fragment() {
                         findNavController().navigateUp()
                         true
                     }
-                    R.id.action_notification ->{
+                    R.id.action_notification -> {
                         findNavController().navigate(R.id.global_notificationFragment)
                         return true
                     }
@@ -213,26 +333,23 @@ class HomeFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun onMyProgessClicked(){
+    fun onMyProgessClicked() {
         findNavController().navigate(R.id.action_homeFragment_a_myProgressFragment)
     }
 
-    fun onPlanAlimentClicked(){
+    fun onPlanAlimentClicked() {
         findNavController().navigate(R.id.global_planListFragment)
     }
 
-    fun onNutriDefOnClicked(){
+    fun onNutriDefOnClicked() {
         findNavController().navigate(R.id.global_desafioNutriFragment)
     }
 
-    fun onReportSaludClicked(){
+    fun onReportSaludClicked() {
         findNavController().navigate(R.id.action_homeFragment_a_myPersonSaludFragment)
     }
 
-    fun onHistorialNutriClicked(){
+    fun onHistorialNutriClicked() {
         findNavController().navigate(R.id.action_homeFragment_a_historyNutriListFragment)
     }
-
-
-
 }

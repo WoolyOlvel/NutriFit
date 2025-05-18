@@ -4,12 +4,12 @@
 
     <data>
         <variable
-            name="notification"
-            type="com.ascrib.nutrifit.model.Notification" />
+            name="notificaciones"
+            type="com.ascrib.nutrifit.model.Notificaciones" />
 
         <variable
             name="handler"
-            type="com.ascrib.nutrifit.ui.dashboard.adapter.NotificationAdapter" />
+            type="com.ascrib.nutrifit.ui.dashboard.adapter.NotificacionesAdapter" />
 
     </data>
 
@@ -35,12 +35,13 @@
                 app:cardElevation="0dp">
 
                 <ImageView
-                    imageLoad="@{notification.image}"
+                    android:id="@+id/notification_image"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:contentDescription="@string/todo"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:imageResource="@{notificaciones.foto}" />
 
             </androidx.cardview.widget.CardView>
 
@@ -53,19 +54,21 @@
                 android:paddingBottom="@dimen/inner_spacing">
 
                 <TextView
+                    android:id="@+id/notification_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/inner_spacing"
-                    android:text="@{notification.title}"
+                    android:text="@{notificaciones.title}"
                     android:textColor="@color/colorVariant"
                     android:textSize="@dimen/text_size_h5"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/notification_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="@{notification.message}"
+                    android:text="@{notificaciones.message}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_h6" />
 

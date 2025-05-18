@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.api
 
+import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,9 +31,11 @@ object RetrofitClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .connectionPool(ConnectionPool(15, 15, TimeUnit.MINUTES)) // Pool de conexiones
             .build()
     }
 

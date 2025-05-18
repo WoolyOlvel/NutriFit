@@ -60,6 +60,7 @@ dependencies {
 
     implementation(libs.glide)
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.common)
     kapt("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.ripplebackground)
     implementation(libs.smoothbottombar)

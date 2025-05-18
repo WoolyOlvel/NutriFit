@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.api.models
 
+import com.ascrib.nutrifit.model.Notificaciones
 import java.util.Date
 
 /**
@@ -208,6 +209,7 @@ data class ReservacionData(
     val precio_cita: Int?,
     val motivo_consulta: String?,
     val fecha_consulta:String?,
+    val motivoConsulta: String? = null,
     val origen:String?,
     val estado_proximaConsulta: Int?,
 )
@@ -227,14 +229,33 @@ data class TipoConsulta(
 
 data class NotificacionesResponse(
     val success: Boolean,
-    val data: List<Notificaciones>
+    val notificaciones: List<NotificacionData>,
+    val total: Int
 )
 
-data class Notificaciones(
-    var Notificacion_ID: Int?,
+data class NotificacionData(
+    val Notificacion_ID: Int?,
+    val Reservacion_ID: Int?,
+    val Paciente_ID: Int?,
+    var user_id: Int?,
+    val tipo_notificacion: Int?,
+    val nombre_nutriologo: String?,
+    val status_movil: Int?,
+    val estado_movil: Int?,
+    val descripcion_mensaje: String?,
+    val fecha_creacion: String?,
+    val reservacion: ReservacionesData? // Añade este campo
+)
+data class ReservacionesData(
+    val estado_proximaConsulta: Int?,
+    val origen: String?,
+    val motivoConsulta: String?,
 
 )
-
+data class NotificacionesCountResponse(
+    val success: Boolean,
+    val total: Int
+)
 
 data class LoginRequest(
     val email: String,
