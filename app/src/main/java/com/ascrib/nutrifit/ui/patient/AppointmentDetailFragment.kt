@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.ui.patient
 
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -38,7 +39,6 @@ import androidx.databinding.BindingAdapter
 import com.ascrib.nutrifit.model.Nutriologo
 import com.ascrib.nutrifit.repository.NotificacionRepository
 import com.ascrib.nutrifit.ui.dashboard.ScheduleFragment
-import com.ascrib.nutrifit.ui.dashboard.ScheduleFragment.schedule
 import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologoAdapter
 import com.ascrib.nutrifit.util.Statusbar
 import kotlinx.coroutines.Dispatchers
@@ -50,12 +50,13 @@ class AppointmentDetailFragment : Fragment() {
     private lateinit var binding: FragmentAppointmentDetailBinding
     private val repository = NutriologoDetailRepository()
     private lateinit var nutriologoInfo: NutriologoInfo
-    companion object schedule {
+    companion object {
         var status = false
-        // Añadir variable estática para mantener el conteo entre instancias del fragmento
         private var lastNotificationCount = 0
-        // Añadir bandera para indicar si es la primera carga del fragmento en la sesión
         private var isInitialLoad = true
+
+        // Nueva lista para mantener los conteos por paciente
+        private val notificationCounts = mutableMapOf<Int, Int>()
     }
 
     private lateinit var nutriologoAdapter: NutriologoAdapter
@@ -136,33 +137,75 @@ class AppointmentDetailFragment : Fragment() {
         }
     }
 
+    private fun getAllPacienteIds(sharedPref: SharedPreferences): List<Int> {
+        // 1. Obtener el ID principal
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        // 2. Obtener IDs adicionales de SharedPreferences
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        // 3. Combinar y eliminar duplicados
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
+
+    private fun checkForNewNotifications(newCounts: Map<Int, Int>): Boolean {
+        // Caso inicial (primera carga)
+        if (notificationCounts.isEmpty()) return false
+
+        // Verificar si algún paciente tiene más notificaciones que antes
+        for ((pacienteId, count) in newCounts) {
+            val previousCount = notificationCounts[pacienteId] ?: 0
+            if (count > previousCount) {
+                return true
+            }
+        }
+        return false
+    }
+
     private fun loadNotificationCount() {
         if (!isAdded || activity == null) return
 
         lifecycleScope.launch {
             try {
                 val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
-                val pacienteId = sharedPref.getInt("Paciente_ID", 0)
-                if (pacienteId == 0) return@launch
 
-                val count = withContext(Dispatchers.IO) {
-                    notificacionRepository.contarNotificacionesNoLeidas(pacienteId)
+                // 1. Obtener todos los IDs de paciente
+                val pacienteIds = getAllPacienteIds(sharedPref)
+                if (pacienteIds.isEmpty()) return@launch
+
+                var totalCount = 0
+                val newCounts = mutableMapOf<Int, Int>()
+
+                // 2. Contar notificaciones para cada paciente
+                for (pacienteId in pacienteIds) {
+                    val count = withContext(Dispatchers.IO) {
+                        notificacionRepository.contarNotificacionesNoLeidas(pacienteId)
+                    }
+                    newCounts[pacienteId] = count
+                    totalCount += count
                 }
 
                 activity?.runOnUiThread {
-                    // Reproducir sonido solo si hay nuevas notificaciones
-                    // Y no es la carga inicial del fragmento
-                    if (count > AppointmentDetailFragment.lastNotificationCount && !AppointmentDetailFragment.isInitialLoad) {
+                    // 3. Verificar si hay nuevas notificaciones
+                    val hasNewNotifications = checkForNewNotifications(newCounts)
+
+                    // 4. Reproducir sonido si hay nuevas notificaciones
+                    if (hasNewNotifications && !isInitialLoad) {
                         playNotificationSound()
                     }
 
-                    // Actualizar el contador estático
-                    AppointmentDetailFragment.lastNotificationCount = count
+                    // 5. Actualizar los conteos
+                    notificationCounts.clear()
+                    notificationCounts.putAll(newCounts)
+                    lastNotificationCount = totalCount
+                    isInitialLoad = false
 
-                    // Actualizar la bandera después de la primera carga
-                    AppointmentDetailFragment.isInitialLoad = false
-
-                    NotificationBadgeUtils.updateBadgeCount(count)
+                    // 6. Actualizar el badge
+                    NotificationBadgeUtils.updateBadgeCount(totalCount)
                     requireActivity().invalidateOptionsMenu()
                 }
             } catch (e: Exception) {

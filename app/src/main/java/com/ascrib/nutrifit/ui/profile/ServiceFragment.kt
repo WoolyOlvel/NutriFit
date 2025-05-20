@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.ui.profile
 
 import android.app.TimePickerDialog
+import android.content.ContentValues.TAG
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -32,9 +33,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.annotation.OptIn
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.util.Log
+import androidx.media3.common.util.UnstableApi
 import com.ascrib.nutrifit.api.RetrofitClient
+import com.ascrib.nutrifit.api.models.Paciente
 import com.ascrib.nutrifit.api.models.TipoConsulta
 import com.ascrib.nutrifit.api.models.UpdatePacienteRequest
 import com.ascrib.nutrifit.repository.NotificacionRepository
@@ -371,6 +375,8 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         })
     }
 
+
+    @OptIn(UnstableApi::class)
     fun saveAccount() {
         binding.checkboxSendMessage.isChecked = binding.checkboxSendMessage.isChecked
         binding.checkboxSendMessage2.isChecked = binding.checkboxSendMessage2.isChecked
@@ -411,11 +417,10 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
 
         lifecycleScope.launch {
             try {
-                // 1. Obtener email del paciente desde SharedPreferences
                 val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
                 val email = sharedPref.getString("user_email", "") ?: ""
 
-                // 2. Obtener datos del paciente por email
+                // 1. Obtener paciente actual
                 val pacienteResponse = RetrofitClient.apiService.getPacienteByEmail(email)
                 if (!pacienteResponse.isSuccessful || pacienteResponse.body()?.paciente == null) {
                     Toast.makeText(context, "Error al obtener datos del paciente", Toast.LENGTH_SHORT).show()
@@ -423,70 +428,134 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
                 }
                 val paciente = pacienteResponse.body()!!.paciente
 
-                // 3. Obtener datos del nutriólogo
-                val nutriologoResponse = RetrofitClient.apiService.getNutriologoById(nutriologoId)
-                if (!nutriologoResponse.isSuccessful || nutriologoResponse.body()?.data == null) {
-                    Toast.makeText(context, "Error al obtener datos del nutriólogo", Toast.LENGTH_SHORT).show()
-                    return@launch
-                }
-                val nutriologo = nutriologoResponse.body()!!.data
-
-                // 4. Actualizar user_id del paciente
-                val updateResponse = RetrofitClient.apiService.updatePacienteByEmail(
-                    email,
-                    UpdatePacienteRequest(
-                        foto = paciente.foto,
-                        nombre = paciente.nombre,
-                        apellidos = paciente.apellidos,
-                        telefono = paciente.telefono,
-                        genero = paciente.genero,
-                        usuario = paciente.usuario,
-                        enfermedad = paciente.enfermedad,
-                        ciudad = paciente.ciudad,
-                        localidad = paciente.localidad,
-                        edad = paciente.edad,
-                        fecha_nacimiento = paciente.fecha_nacimiento,
-                        email = paciente.email
-                    ).apply {
-                        // Actualizar el user_id con el del nutriólogo
-                        this.user_id = nutriologoId
+                // 2. Verificar si ya tiene reservaciones con otro nutriólogo
+                val currentNutriologoId = paciente.user_id
+                if (currentNutriologoId != null && currentNutriologoId != 0 && currentNutriologoId != nutriologoId) {
+                    // Mostrar diálogo de confirmación
+                    withContext(Dispatchers.Main) {
+                        showChangeNutriologoDialog(paciente, email)
                     }
-                )
-
-                if (!updateResponse.isSuccessful) {
-                    Toast.makeText(context, "Error al actualizar paciente", Toast.LENGTH_SHORT).show()
-                    return@launch
-                }
-
-                // 5. Crear reservación
-                val reservacionResponse = RetrofitClient.apiService.createReservacion(
-                    pacienteId = paciente.Paciente_ID ?: 0,
-                    nombrePaciente = paciente.nombre,
-                    apellidos = paciente.apellidos,
-                    telefono = paciente.telefono,
-                    genero = paciente.genero,
-                    usuario = paciente.usuario,
-                    edad = paciente.edad,
-                    precioCita = selectedPrecio,
-                    motivoConsulta = selectedMotivo,
-                    nombreNutriologo = "${nutriologo.nombre_nutriologo} ${nutriologo.apellido_nutriologo}",
-                    fechaConsulta = getFormattedDateTime(),
-                    origen = "movil",
-                    estadoProximaConsulta = 4,
-                    userId = nutriologoId
-                )
-
-                if (reservacionResponse.isSuccessful) {
-                    Toast.makeText(context, "Cita generada exitosamente", Toast.LENGTH_SHORT).show()
-                    findNavController().navigateUp()
                 } else {
-                    Toast.makeText(context, "Error al crear reservación", Toast.LENGTH_SHORT).show()
+                    // Proceder directamente con la reservación
+                    proceedWithReservation(paciente, email)
                 }
-
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Error en lifecycleScope:", e)
+
             }
         }
+    }
+
+    private fun showChangeNutriologoDialog(paciente: Paciente, email: String) {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle("¿Continuar con otro nutriólogo?")
+            .setMessage("Ya tienes una reservación con otro nutriólogo. ¿Deseas continuar con este nuevo nutriólogo?")
+            .setPositiveButton("Sí") { _, _ ->
+                lifecycleScope.launch {
+                    // Duplicar paciente para el nuevo nutriólogo
+                    duplicatePacienteForNewNutriologo(paciente, email)
+                }
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    @OptIn(UnstableApi::class)
+    private suspend fun duplicatePacienteForNewNutriologo(paciente: Paciente, email: String) {
+        try {
+            // 1. Duplicar paciente para el nuevo nutriólogo
+            val duplicateResponse = RetrofitClient.apiService.duplicarPaciente(
+                email = email,
+                userIdNutriologo = nutriologoId
+            )
+
+            if (!duplicateResponse.isSuccessful || duplicateResponse.body()?.paciente == null) {
+                Toast.makeText(context, "Error al duplicar paciente", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val nuevoPaciente = duplicateResponse.body()!!.paciente
+
+            // 2. Actualizar SharedPreferences con la lista de nutriólogo
+            updateNutriologosListInPrefs(nutriologoId, nuevoPaciente.Paciente_ID ?: 0)
+            proceedWithReservation(nuevoPaciente, email)
+            // 3. Proceder con la reservación
+            proceedWithReservation(nuevoPaciente, email)
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Log.e(TAG, "Error en duplicatePacienteForNewNutriologo()", e)
+
+        }
+    }
+
+    @OptIn(UnstableApi::class)
+    private suspend fun proceedWithReservation(paciente: Paciente, email: String) {
+        try {
+            // Obtener datos del nutriólogo
+            val nutriologoResponse = RetrofitClient.apiService.getNutriologoById(nutriologoId)
+            if (!nutriologoResponse.isSuccessful || nutriologoResponse.body()?.data == null) {
+                Toast.makeText(context, "Error al obtener datos del nutriólogo", Toast.LENGTH_SHORT).show()
+                return
+            }
+            val nutriologo = nutriologoResponse.body()!!.data
+
+            // Crear reservación
+            val reservacionResponse = RetrofitClient.apiService.createReservacion(
+                pacienteId = paciente.Paciente_ID ?: 0,
+                nombrePaciente = paciente.nombre,
+                apellidos = paciente.apellidos,
+                telefono = paciente.telefono,
+                genero = paciente.genero,
+                usuario = paciente.usuario,
+                edad = paciente.edad,
+                precioCita = selectedPrecio,
+                motivoConsulta = selectedMotivo,
+                nombreNutriologo = "${nutriologo.nombre_nutriologo} ${nutriologo.apellido_nutriologo}",
+                fechaConsulta = getFormattedDateTime(),
+                origen = "movil",
+                estadoProximaConsulta = 4,
+                userId = nutriologoId
+            )
+
+            if (reservacionResponse.isSuccessful) {
+                Toast.makeText(context, "Cita generada exitosamente", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            } else {
+                Toast.makeText(context, "Error al crear reservación", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+
+            Log.e(TAG, "Error en saveAccount()", e)
+            // 3) (Opcional) También puedes imprimir en consola directa
+            e.printStackTrace()
+        }
+    }
+
+    private fun updateNutriologosListInPrefs(newNutriologoId: Int, nuevoPacienteId: Int) {
+        val prefs = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val editor = prefs.edit()
+
+        // Guardar lista de nutriólogos
+        val nutriologoIds = try {
+            prefs.getStringSet("user_id_nutriologo", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        } catch (e: ClassCastException) {
+            mutableSetOf<String>()
+        }
+        nutriologoIds.add(newNutriologoId.toString())
+        editor.putStringSet("user_id_nutriologo", nutriologoIds)
+
+        // Guardar lista de pacientes (esto es lo nuevo)
+        val pacienteIds = try {
+            prefs.getStringSet("paciente_ids", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        } catch (e: ClassCastException) {
+            mutableSetOf<String>()
+        }
+        pacienteIds.add(nuevoPacienteId.toString())
+        editor.putStringSet("paciente_ids", pacienteIds)
+
+        editor.apply()
     }
 
     // Clase para deshabilitar fechas pasadas

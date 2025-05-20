@@ -90,7 +90,11 @@
                                     android:text="@{nutriologo.nombreCompleto}"
                                     android:textColor="@color/colorVariant"
                                     android:textSize="@dimen/text_size_h5"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:autoSizeTextType="uniform"
+                                    android:autoSizeMinTextSize="12sp"
+                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeStepGranularity="1sp" />
 
                                 <TextView
                                     android:id="@+id/genero"
@@ -232,8 +236,8 @@
 
 
                                     android:autoSizeTextType="uniform"
-                                    android:autoSizeMinTextSize="12sp"
-                                    android:autoSizeMaxTextSize="18sp"
+                                    android:autoSizeMinTextSize="11sp"
+                                    android:autoSizeMaxTextSize="15sp"
                                     android:autoSizeStepGranularity="1sp" />
                                 </LinearLayout>
                             </LinearLayout>

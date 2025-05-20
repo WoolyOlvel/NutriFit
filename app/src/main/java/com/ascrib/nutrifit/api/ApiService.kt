@@ -1,6 +1,8 @@
 package com.ascrib.nutrifit.api
 
 import com.ascrib.nutrifit.api.models.AuthResponse
+import com.ascrib.nutrifit.api.models.DuplicarPacienteRequest
+import com.ascrib.nutrifit.api.models.DuplicarPacienteResponse
 import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
 import com.ascrib.nutrifit.api.models.NotificacionesCountResponse
@@ -84,8 +86,10 @@ interface ApiService {
         @Part("localidad") localidad: RequestBody,
         @Part("edad") edad: RequestBody,
         @Part("fecha_nacimiento") fecha_nacimiento: RequestBody,
-        @Part("fecha_creacion") fecha_creacion: RequestBody
+        @Part("fecha_creacion") fecha_creacion: RequestBody,
+        //@Part("user_id") userId: RequestBody
     ): Response<ResponseBody>
+
 
 
     // En tu ApiService.kt, agrega este nuevo endpoint
@@ -135,7 +139,13 @@ interface ApiService {
         @Query("user_id") userId: Int
     ): Response<NutriologoDetailsResponse>
 
+    // En ApiService.kt
 
+    @POST("api/pacientest/duplicar-para-nutriologo")
+    suspend fun duplicarPaciente(
+        @Query("email") email: String,
+        @Query("user_id_nutriologo") userIdNutriologo: Int
+    ): Response<PacienteResponse>
 
     @GET("api/tipo_consulta")
     suspend fun getTiposConsulta(): Response<TipoConsultaResponse>

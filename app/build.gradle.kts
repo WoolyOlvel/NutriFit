@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("kotlin-parcelize")
-
 }
 
 
@@ -70,9 +69,6 @@ dependencies {
     implementation(libs.circular.progress)
     implementation(libs.materialcalendarview)
     implementation(libs.mpandroidchart)
-
-
-
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -84,66 +84,48 @@ class NotificationFragment : Fragment() {
         }
     }
 
+
+    private fun getAllPacienteIds(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+
+        // Obtener el ID principal (original)
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        // Obtener la lista de pacientes adicionales
+        val pacienteIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        // Combinar todos los IDs (principal + adicionales)
+        return listOf(mainPacienteId) + pacienteIds
+    }
+
+
+
     private fun loadNotifications() {
-        val pacienteId = getPacienteId()
-        if (pacienteId == 0) return
+        val pacienteIds = getAllPacienteIds().distinct() // Asegurarse de no tener duplicados
+        if (pacienteIds.isEmpty()) {
+            showToast("No se encontraron IDs de paciente")
+            return
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = repository.getNotificaciones(pacienteId)
-                withContext(Dispatchers.Main) {
+                val allNotifications = mutableListOf<NotificacionData>()
+
+                for (pacienteId in pacienteIds) {
+                    val response = repository.getNotificaciones(pacienteId)
                     if (response.isSuccessful && response.body()?.success == true) {
-                        val notificacionesData = response.body()?.notificaciones ?: emptyList()
-
-                        // Procesar notificaciones agrupadas por Reservacion_ID
-                        val notificacionesProcesadas = mutableListOf<Notificaciones>()
-                        val notificacionesPorReservacion = notificacionesData.groupBy { it.Reservacion_ID }
-
-                        notificacionesPorReservacion.forEach { (reservacionId, notifs) ->
-                            if (reservacionId != null) {
-                                // Ordenar por ID descendente para tener la más reciente primero
-                                val notifsOrdenadas = notifs.sortedByDescending { it.Notificacion_ID ?: 0 }
-
-                                // Tomar la notificación más reciente
-                                val ultimaNotif = notifsOrdenadas.firstOrNull()
-
-                                // Verificar si es una reservación de seguimiento (estado 3)
-                                val esSeguimiento = ultimaNotif?.reservacion?.estado_proximaConsulta == 3
-
-                                if (esSeguimiento) {
-                                    // Buscar la notificación de la nueva reservación de seguimiento
-                                    val nuevaReservacionId = buscarReservacionSeguimiento(pacienteId, reservacionId)
-                                    if (nuevaReservacionId != null) {
-                                        val notifSeguimiento = notificacionesData.firstOrNull {
-                                            it.Reservacion_ID == nuevaReservacionId
-                                        }
-                                        notifSeguimiento?.let { notificacionesProcesadas.add(convertirNotificacion(it)) }
-                                    }
-                                } else {
-                                    // Para casos normales, tomar solo la más reciente
-                                    ultimaNotif?.let { notificacionesProcesadas.add(convertirNotificacion(it)) }
-
-                                    // Marcar las anteriores como leídas
-                                    if (notifsOrdenadas.size > 1) {
-                                        marcarNotificacionesAnterioresComoLeidas(
-                                            notifsOrdenadas.drop(1),
-                                            pacienteId
-                                        )
-                                    }
-                                }
-                            }
+                        response.body()?.notificaciones?.let { notifs ->
+                            allNotifications.addAll(notifs)
                         }
-
-                        // Filtrar solo no leídas y actualizar el adaptador
-                        val notificacionesNoLeidas = notificacionesProcesadas
-                            .filter { it.status_movil != 1 && it.estado_movil != 0 } // Filtra por ambos campos
-                            .sortedByDescending { it.id }
-
-                        notificacionesAdapter.updateList(notificacionesNoLeidas)
-                        loadUnreadNotificationsCount()
-                    } else {
-                        showToast("Error al cargar notificaciones")
                     }
+                }
+
+                withContext(Dispatchers.Main) {
+                    processNotifications(allNotifications, pacienteIds)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -151,6 +133,46 @@ class NotificationFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private suspend fun processNotifications(allNotifications: List<NotificacionData>, pacienteIds: List<Int>) {
+        if (allNotifications.isEmpty()) {
+            notificacionesAdapter.updateList(emptyList())
+            showToast("No hay notificaciones")
+            return
+        }
+
+        val notificacionesProcesadas = mutableListOf<Notificaciones>()
+        val notificacionesPorReservacion = allNotifications.groupBy { it.Reservacion_ID }
+
+        notificacionesPorReservacion.forEach { (reservacionId, notifs) ->
+            if (reservacionId != null) {
+                val notifsOrdenadas = notifs.sortedByDescending { it.Notificacion_ID ?: 0 }
+                val ultimaNotif = notifsOrdenadas.firstOrNull()
+                val esSeguimiento = ultimaNotif?.reservacion?.estado_proximaConsulta == 3
+
+                if (esSeguimiento) {
+                    val nuevaReservacionId = buscarReservacionSeguimiento(pacienteIds.first(), reservacionId)
+                    nuevaReservacionId?.let { id ->
+                        allNotifications.firstOrNull { it.Reservacion_ID == id }?.let {
+                            notificacionesProcesadas.add(convertirNotificacion(it))
+                        }
+                    }
+                } else {
+                    ultimaNotif?.let { notificacionesProcesadas.add(convertirNotificacion(it)) }
+                    if (notifsOrdenadas.size > 1) {
+                        marcarNotificacionesAnterioresComoLeidas(notifsOrdenadas.drop(1), pacienteIds.first())
+                    }
+                }
+            }
+        }
+
+        val notificacionesNoLeidas = notificacionesProcesadas
+            .filter { it.status_movil != 1 && it.estado_movil != 0 }
+            .sortedByDescending { it.id }
+
+        notificacionesAdapter.updateList(notificacionesNoLeidas)
+        loadUnreadNotificationsCount()
     }
 
     // Función auxiliar para convertir NotificacionData a Notificaciones
@@ -204,20 +226,22 @@ class NotificationFragment : Fragment() {
         }
     }
 
+
     private fun loadUnreadNotificationsCount() {
         lifecycleScope.launch {
             try {
-                val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
-                val pacienteId = sharedPref.getInt("Paciente_ID", 0)
-                if (pacienteId == 0) return@launch
+                val pacienteIds = getAllPacienteIds()
+                if (pacienteIds.isEmpty()) return@launch
 
-                val count = withContext(Dispatchers.IO) {
-                    repository.contarNotificacionesNoLeidas(pacienteId)
+                var totalCount = 0
+                for (pacienteId in pacienteIds) {
+                    val count = withContext(Dispatchers.IO) {
+                        repository.contarNotificacionesNoLeidas(pacienteId)
+                    }
+                    totalCount += count
                 }
 
-                NotificationBadgeUtils.updateBadgeCount(count)
-
-                // Actualizar opciones de menú para refrescar el badge
+                NotificationBadgeUtils.updateBadgeCount(totalCount)
                 requireActivity().invalidateOptionsMenu()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -244,23 +268,24 @@ class NotificationFragment : Fragment() {
 
     private fun setupButtons() {
         binding.buttonReadAll.setOnClickListener {
-            val pacienteId = getPacienteId()
-            if (pacienteId != 0) markAllNotificationsAsRead(pacienteId)
+            markAllNotificationsAsRead()
         }
 
         binding.buttonClear.setOnClickListener {
-            val pacienteId = getPacienteId()
-            if (pacienteId != 0) deleteAllNotifications(pacienteId)
+            deleteAllNotifications()
         }
     }
 
-    private fun markAllNotificationsAsRead(pacienteId: Int) {
+    private fun markAllNotificationsAsRead() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                repository.marcarTodasLeidas(pacienteId)
+                val pacienteIds = getAllPacienteIds()
+                pacienteIds.forEach { pacienteId ->
+                    repository.marcarTodasLeidas(pacienteId)
+                }
                 withContext(Dispatchers.Main) {
                     loadNotifications()
-                    loadUnreadNotificationsCount() // Actualizar contador después de marcar todas como leídas
+                    loadUnreadNotificationsCount()
                     showToast("Todas las notificaciones marcadas como leídas")
                 }
             } catch (e: Exception) {
@@ -271,14 +296,18 @@ class NotificationFragment : Fragment() {
         }
     }
 
-    private fun deleteAllNotifications(pacienteId: Int) {
+
+    private fun deleteAllNotifications() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                repository.eliminarNotificaciones(pacienteId)
+                val pacienteIds = getAllPacienteIds()
+                pacienteIds.forEach { pacienteId ->
+                    repository.eliminarNotificaciones(pacienteId)
+                }
                 withContext(Dispatchers.Main) {
                     notificacionesAdapter.updateList(emptyList())
                     loadNotifications()
-                    loadUnreadNotificationsCount() // Actualizar contador después de eliminar
+                    loadUnreadNotificationsCount()
                     showToast("Notificaciones eliminadas")
                 }
             } catch (e: Exception) {

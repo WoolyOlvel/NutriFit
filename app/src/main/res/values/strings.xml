@@ -8,6 +8,9 @@
     <string name="bienvenida_slider3_p">Nutrición basada en la evidencia.</string>
     <string name="todo">TODO</string>
 
+    <string name="default_notification_channel_id">default_channel_id</string>
+    <string name="default_notification_channel_name">Notificaciones</string>
+
     <string name="loginText">Bienvenido de nuevo</string>
     <string name="FieldLogin1">Correo Electronico / Usuario</string>
     <string name="FieldLogin2">Contraseña</string>

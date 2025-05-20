@@ -45,7 +45,7 @@ data class Paciente(
     val genero: String? = null,
     val usuario: String? = null,
     val rol_id: Int? = null,
-    val user_id: Int? = null,
+    val user_id: Int?,
     val enfermedad: String? = null,
     val status: Int? = null,
     val estado: Int? = null,
@@ -86,6 +86,7 @@ data class UpdateProfileRequest(
 data class CreatePacienteRequest(
     val foto: String?,
     val nombre: String,
+    val user_id: Int?,
     val apellidos: String,
     val email: String?,
     val telefono: String?,
@@ -103,7 +104,20 @@ data class CreatePacienteRequest(
 )
 
 data class PacienteResponse(
-    val paciente: Paciente
+    val paciente: Paciente,
+    val user_id: Int?
+)
+
+data class DuplicarPacienteRequest(
+    val email: String,
+    val user_id_nutriologo: Int
+)
+
+data class DuplicarPacienteResponse(
+    val success: Boolean,
+    val message: String?,
+    val paciente: Paciente?,
+    val nuevo: Boolean?
 )
 
 data class UpdatePacienteRequest(
