@@ -1,8 +1,13 @@
 package com.ascrib.nutrifit.api
 
+import com.ascrib.nutrifit.api.models.ApiResponse
 import com.ascrib.nutrifit.api.models.AuthResponse
+import com.ascrib.nutrifit.api.models.ConsultaDetalleResponse
+import com.ascrib.nutrifit.api.models.ConsultaResponse
+import com.ascrib.nutrifit.api.models.ConsultaResponse2
 import com.ascrib.nutrifit.api.models.DuplicarPacienteRequest
 import com.ascrib.nutrifit.api.models.DuplicarPacienteResponse
+import com.ascrib.nutrifit.api.models.GenericResponse
 import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
 import com.ascrib.nutrifit.api.models.NotificacionesCountResponse
@@ -12,6 +17,7 @@ import com.ascrib.nutrifit.api.models.NutriologoDetailsResponse
 import com.ascrib.nutrifit.api.models.PacienteResponse
 import com.ascrib.nutrifit.api.models.ProfileResponse
 import com.ascrib.nutrifit.api.models.RegisterRequest
+import com.ascrib.nutrifit.api.models.ReservacionData
 import com.ascrib.nutrifit.api.models.ReservacionResponse
 import com.ascrib.nutrifit.api.models.SocialLoginRequest
 import com.ascrib.nutrifit.api.models.TipoConsultaResponse
@@ -91,14 +97,11 @@ interface ApiService {
     ): Response<ResponseBody>
 
 
-
-    // En tu ApiService.kt, agrega este nuevo endpoint
     @GET("api/pacientest/por-email")
     suspend fun getPacienteByEmail(
         @Query("email") email: String
     ): Response<PacienteResponse>
 
-    // Cambia los endpoints para que usen email en lugar de paciente_id
     @PUT("api/pacientest/update-by-email")
     suspend fun updatePacienteByEmail(
         @Query("email") email: String,
@@ -139,8 +142,6 @@ interface ApiService {
         @Query("user_id") userId: Int
     ): Response<NutriologoDetailsResponse>
 
-    // En ApiService.kt
-
     @POST("api/pacientest/duplicar-para-nutriologo")
     suspend fun duplicarPaciente(
         @Query("email") email: String,
@@ -167,8 +168,6 @@ interface ApiService {
         @Query("estado_proximaConsulta") estadoProximaConsulta: Int,
         @Query("user_id") userId: Int // Añade este parámetro
     ): Response<ReservacionResponse>
-
-
 
     // === FIN RESERVACIONES
 
@@ -204,8 +203,27 @@ interface ApiService {
         @Path("pacienteId") pacienteId: Int
     ): Response<ReservacionResponse>
 
-
-
     // === FIN NOTIFICACIONES
+
+// === INICIO HISTORIAL NUTRICIONAL ====
+
+    @GET("api/historial/consultas-por-paciente")
+    suspend fun getConsultasPorPaciente(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ConsultaResponse2>
+
+    @GET("api/historial/detalle-consulta/{consultaId}")
+    suspend fun getDetalleConsulta(
+        @Path("consultaId") consultaId: Int,
+        @Query("pacienteIds[]") pacienteIds: List<Int>
+    ): Response<ApiResponse<ConsultaDetalleResponse>>
+
+    @GET("api/historial/consultas-por-paciente")
+    suspend fun getFotoPaciente(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ConsultaResponse2>
+// === FIN HISTORIAL NUTRICIONAL ====
 
 }

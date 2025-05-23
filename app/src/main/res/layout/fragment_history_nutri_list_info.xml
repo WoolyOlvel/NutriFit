@@ -7,6 +7,9 @@
         <variable
             name="handler"
             type="com.ascrib.nutrifit.ui.planList.PlanListDetailFragment" />
+        <variable
+            name="consulta"
+            type="com.ascrib.nutrifit.model.Consulta" />
     </data>
 
     <RelativeLayout
@@ -57,11 +60,12 @@
                                 app:cardCornerRadius="@dimen/_10sdp">
 
                                 <ImageView
+                                    android:id="@+id/foto"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:contentDescription="@string/todo"
                                     android:scaleType="centerCrop"
-                                    android:src="@drawable/perfil_prueba2"/>
+                                    android:src="@drawable/userdummy"/>
 
                             </androidx.cardview.widget.CardView>
 
@@ -77,40 +81,44 @@
                                 android:paddingHorizontal="@dimen/section_spacing">
 
                                 <TextView
+                                    android:id="@+id/nombre_completo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/consultaInfo"
+
                                     android:textColor="@color/colorVariant"
                                     android:textSize="@dimen/text_size_h5"
                                     android:textStyle="bold" />
                                 <TextView
+                                    android:id="@+id/genero"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
-                                    android:text="@string/consultaInfo2"
+
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
                                     android:textStyle="bold"/>
 
                                 <TextView
+                                    android:id="@+id/fecha_nacimiento"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
                                     android:drawablePadding="@dimen/inner_spacing"
                                     android:gravity="center_vertical"
-                                    android:text="@string/consultaInfo3"
+
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
                                     app:drawableLeftCompat="@drawable/fech"
                                     android:textStyle="bold"/>
 
                                 <TextView
+                                    android:id="@+id/EstadoCiudad"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/inner_spacing"
                                     android:drawablePadding="@dimen/inner_spacing"
                                     android:gravity="center_vertical"
-                                    android:text="@string/consultaInfo4"
+
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
                                     app:drawableLeftCompat="@drawable/loc"
@@ -143,9 +151,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/peso"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_1"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -167,9 +176,10 @@
                                         android:textSize="@dimen/text_size_h6"
                                         android:textStyle="bold"/>
                                     <TextView
+                                        android:id="@+id/talla"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_2"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -191,9 +201,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/cintura"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_3"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -213,9 +224,10 @@
                                         android:textSize="@dimen/text_size_h6" />
 
                                     <TextView
+                                        android:id="@+id/cadera"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_4"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -247,9 +259,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/gc"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_5"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -271,9 +284,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/mm"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_6"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -295,9 +309,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/em"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_7"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -319,9 +334,10 @@
                                         android:textStyle="bold"/>
 
                                     <TextView
+                                        android:id="@+id/altura"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/consultaSubInfo1_8"
+
                                         android:textColor="@color/colorVariant"
                                         android:textSize="@dimen/text_size_h5"
                                         android:textStyle="bold" />
@@ -363,20 +379,12 @@
                                 android:background="@color/lightGrey" />
 
                             <TextView
+                                android:id="@+id/fecha_consulta"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubInfo2_1"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:justificationMode="inter_word"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubInfo2_2"
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -426,11 +434,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/detalles_diagnostico"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubPInfo_1"
+
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold"/>
@@ -451,11 +460,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/resultados_evaluacion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/section_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubPInfo_1"
+
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold"/>
@@ -475,11 +485,12 @@
                                 android:textSize="@dimen/text_size_h5"
                                 android:textStyle="bold" />
                             <TextView
+                                android:id="@+id/analisis_nutricional"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/section_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubPInfo_1"
+
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/text_size_h6"
                                 android:textStyle="bold"/>
@@ -530,11 +541,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/objetivo_descripcion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubPInfo_1"
+
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 
@@ -575,20 +587,12 @@
                                 android:background="@color/lightGrey" />
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubInfo5_1"
-                                android:textColor="@color/colorVariant"
-                                android:textSize="@dimen/text_size_h6"
-                                android:textStyle="bold"/>
-
-                            <TextView
+                                android:id="@+id/proxima_consulta"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/inner_spacing"
                                 android:paddingHorizontal="@dimen/section_spacing"
-                                android:text="@string/consultaSubInfo5_2"
+
                                 android:textColor="@color/colorVariant"
                                 android:textSize="@dimen/text_size_h5" />
 

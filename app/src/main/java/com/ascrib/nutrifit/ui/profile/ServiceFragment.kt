@@ -118,13 +118,16 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
                 "Consulta Por App " -> {
                     binding.totalPagoConsultaPorApp.setText(formatPrecio(tipo.total_pago))
                 }
-                "Consulta Normal" -> {
-                    binding.totalPagoConsultaNormal.setText(formatPrecio(tipo.total_pago))
-                }
+
                 "Consulta Por Llamada" -> {
                     binding.totalPagoConsultaPorLlamada.setText(formatPrecio(tipo.total_pago))
 
                 }
+
+                "Consulta Normal" -> {
+                    binding.totalPagoConsultaNormal.setText(formatPrecio(tipo.total_pago))
+                }
+
             }
         }
     }
@@ -167,6 +170,10 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
                 hideOtherCards(binding.checkboxPersonalCall)
             }
         }
+
+
+
+
     }
 
     private fun hideOtherCards(selectedCheckbox: CheckBox) {
@@ -537,15 +544,6 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         val prefs = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
         val editor = prefs.edit()
 
-        // Guardar lista de nutriólogos
-        val nutriologoIds = try {
-            prefs.getStringSet("user_id_nutriologo", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
-        } catch (e: ClassCastException) {
-            mutableSetOf<String>()
-        }
-        nutriologoIds.add(newNutriologoId.toString())
-        editor.putStringSet("user_id_nutriologo", nutriologoIds)
-
         // Guardar lista de pacientes (esto es lo nuevo)
         val pacienteIds = try {
             prefs.getStringSet("paciente_ids", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
@@ -554,6 +552,15 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         }
         pacienteIds.add(nuevoPacienteId.toString())
         editor.putStringSet("paciente_ids", pacienteIds)
+
+        // Guardar lista de nutriólogos
+        val nutriologoIds = try {
+            prefs.getStringSet("user_id_nutriologo", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        } catch (e: ClassCastException) {
+            mutableSetOf<String>()
+        }
+        nutriologoIds.add(newNutriologoId.toString())
+        editor.putStringSet("user_id_nutriologo", nutriologoIds)
 
         editor.apply()
     }

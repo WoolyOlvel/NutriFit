@@ -67,9 +67,9 @@
 
     <string name="listAlimen">Lista de tus planes alimenticios</string>
 
-    <string name="consultasAhora">Reservaciones en progreso</string>
-    <string name="consultaProximas">Próximas Reservaciones</string>
-    <string name="consultaPasadas">Reservaciones Anteriores</string>
+    <string name="consultasAhora">Reservaciones En Espera</string>
+    <string name="consultaProximas">Reservaciones Confirmadas / En Progreso</string>
+    <string name="consultaPasadas">Reservaciones Concluidas</string>
     <string name="historialConsulta">Tu Historial Nutricional Personalizado</string>
 
     <string name="type_your_message">Escribe tu mensaje</string>
