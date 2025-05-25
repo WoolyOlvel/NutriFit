@@ -11,7 +11,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -21,11 +24,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.api.RetrofitClient
+import com.ascrib.nutrifit.api.models.ConsultaData
 import com.ascrib.nutrifit.databinding.FragmentEditProfileBinding
 import com.ascrib.nutrifit.databinding.Profile3Binding
 import com.ascrib.nutrifit.repository.NotificacionRepository
+import com.ascrib.nutrifit.ui.dashboard.adapter.ReservacionesAdapter
 import com.ascrib.nutrifit.ui.patient.AppointmentDetailFragment
 import com.ascrib.nutrifit.ui.patient.PatientFragment
 import com.ascrib.nutrifit.util.Statusbar
@@ -53,6 +60,11 @@ class ProfileFragment : Fragment() {
     private val pollingInterval = 15000L // 15 segundos
     private var isPollingActive = false
     private var mediaPlayer: MediaPlayer? = null
+
+    private lateinit var reservacionesAdapter: ReservacionesAdapter
+    private val reservacionesList = mutableListOf<ConsultaData>()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,7 +114,121 @@ class ProfileFragment : Fragment() {
         // después de la creación de la vista
         loadNotificationCount()
 
+        binding.layoutHeader.post {
+            setupReservacionesRecyclerView()
+            loadReservaciones()
+        }
+    }
 
+    private fun setupReservacionesRecyclerView() {
+        reservacionesAdapter = ReservacionesAdapter(reservacionesList)
+        binding.reservacionesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = reservacionesAdapter
+            setHasFixedSize(true)
+        }
+    }
+
+    private fun getPacienteIdsFromSharedPref(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
+
+    private fun getNutriologoIdsFromSharedPref(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val ids = mutableListOf<Int>()
+
+        // 1. Obtener el ID principal del nutriólogo (guardado como Int)
+        val mainNutriologoId = sharedPref.getInt("nutriologo_id", 0)
+        if (mainNutriologoId != 0) {
+            ids.add(mainNutriologoId)
+        }
+
+        // 2. Intentar obtener como Set<String>
+        try {
+            val nutriologoIdsSet = sharedPref.getStringSet("user_id_nutriologo", null)
+            nutriologoIdsSet?.forEach {
+                try {
+                    ids.add(it.toInt())
+                } catch (e: NumberFormatException) {
+                    // Ignorar valores no numéricos
+                }
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, intentar otras formas
+        }
+
+        // 3. Intentar obtener como String individual
+        try {
+            val singleIdStr = sharedPref.getString("user_id_nutriologo", null)
+            singleIdStr?.toIntOrNull()?.let { ids.add(it) }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        // 4. Intentar obtener como Int individual (último recurso)
+        try {
+            val singleIdInt = sharedPref.getInt("user_id_nutriologo", 0)
+            if (singleIdInt != 0) {
+                ids.add(singleIdInt)
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        return ids.distinct()
+    }
+
+
+    private fun loadReservaciones() {
+        lifecycleScope.launch {
+            try {
+                val pacienteIds = getPacienteIdsFromSharedPref()
+                val nutriologoIds = getNutriologoIdsFromSharedPref()
+
+                if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
+                    return@launch
+                }
+
+                val response = RetrofitClient.apiService.getConsultasPorPaciente2(
+                    pacienteIds = pacienteIds,
+                    nutriologoIds = nutriologoIds
+                )
+
+                if (response.isSuccessful) {
+                    response.body()?.data?.let { consultas ->
+                        reservacionesList.clear()
+                        reservacionesList.addAll(consultas)
+                        reservacionesAdapter.notifyDataSetChanged()
+
+                        if (consultas.isEmpty()) {
+                            showNoReservacionesMessage()
+                        }
+                    }
+                } else {
+                    showErrorLoadingReservaciones()
+                }
+            } catch (e: Exception) {
+                showErrorLoadingReservaciones()
+            }
+        }
+    }
+
+    private fun showNoReservacionesMessage() {
+        // Puedes mostrar un mensaje cuando no hay reservaciones
+        Toast.makeText(requireContext(), "No tienes citas programadas", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showErrorLoadingReservaciones() {
+        Toast.makeText(requireContext(), "Error al cargar las citas", Toast.LENGTH_SHORT).show()
     }
 
     private fun startNotificationPolling() {

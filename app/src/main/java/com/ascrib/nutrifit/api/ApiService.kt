@@ -2,6 +2,7 @@ package com.ascrib.nutrifit.api
 
 import com.ascrib.nutrifit.api.models.ApiResponse
 import com.ascrib.nutrifit.api.models.AuthResponse
+import com.ascrib.nutrifit.api.models.ConsultaData
 import com.ascrib.nutrifit.api.models.ConsultaDetalleResponse
 import com.ascrib.nutrifit.api.models.ConsultaResponse
 import com.ascrib.nutrifit.api.models.ConsultaResponse2
@@ -12,9 +13,11 @@ import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
 import com.ascrib.nutrifit.api.models.NotificacionesCountResponse
 import com.ascrib.nutrifit.api.models.NotificacionesResponse
+import com.ascrib.nutrifit.api.models.NutriDesafiosResponse
 import com.ascrib.nutrifit.api.models.NutriologoDetailResponse
 import com.ascrib.nutrifit.api.models.NutriologoDetailsResponse
 import com.ascrib.nutrifit.api.models.PacienteResponse
+import com.ascrib.nutrifit.api.models.PlanAlimenticioResponse
 import com.ascrib.nutrifit.api.models.ProfileResponse
 import com.ascrib.nutrifit.api.models.RegisterRequest
 import com.ascrib.nutrifit.api.models.ReservacionData
@@ -225,5 +228,36 @@ interface ApiService {
         @Query("nutriologoIds[]") nutriologoIds: List<Int>
     ): Response<ConsultaResponse2>
 // === FIN HISTORIAL NUTRICIONAL ====
+
+    // === INICIO PLANES ALIMENTICIOS
+
+    @GET("api/consulta/planes-alimenticios")
+    suspend fun getPlanesAlimenticios(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ApiResponse<List<PlanAlimenticioResponse>>>
+
+    @GET
+    suspend fun downloadFile(@Url fileUrl: String): Response<ResponseBody>
+
+    // === FIN PLANES ALIMENTICIOS
+
+    // === INICIO NUTRIDESAFIOS
+
+    @GET("api/nutri-desafios")
+    suspend fun getNutriDesafios(): Response<GenericResponse<List<NutriDesafiosResponse>>>
+
+    // === FIN NUTRIDESAFIOS
+
+
+    //==ANEXO PROFILE
+    @GET("api/historial/consultas-por-paciente2")
+    suspend fun getConsultasPorPaciente2(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<GenericResponse<List<ConsultaData>>>
+
+    //== FIN ANEXO PROFILE
+
 
 }

@@ -203,7 +203,7 @@ class HistoryNutriListFragment : Fragment(), ConsultaHandler {
             // Si falla, intentar otras formas
         }
 
-        // 3. Intentar obtener como String individual (para compatibilidad con versiones anteriores)
+        // 3. Intentar obtener como String individual
         try {
             val singleIdStr = sharedPref.getString("user_id_nutriologo", null)
             singleIdStr?.toIntOrNull()?.let { ids.add(it) }

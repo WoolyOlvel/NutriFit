@@ -35,7 +35,7 @@ object RetrofitClient {
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
-            .connectionPool(ConnectionPool(40, 40, TimeUnit.MINUTES)) // Pool de conexiones
+            .connectionPool(ConnectionPool(45, 45, TimeUnit.MINUTES)) // Pool de conexiones
             .build()
     }
 

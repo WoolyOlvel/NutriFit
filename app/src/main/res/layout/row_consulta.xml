@@ -62,11 +62,10 @@
                         android:id="@+id/text_tipo_consulta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:text="@{consulta.tipo_consulta}"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h6"
-                        tools:text="Consulta inicial"/>
+                        tools:text="Consulta inicial" />
 
                     <TextView
                         android:id="@+id/text_status_type"

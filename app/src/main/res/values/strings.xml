@@ -1,4 +1,6 @@
 <resources>
+
+
     <string name="app_name">NutriFit</string>
     <string name="bienvenida_slider">¡Bienvenidos a NutriFit Planner!</string>
     <string name="bienvenida_slider_p">Tu plataforma integral para citas y planes nutricionales.</string>
@@ -214,10 +216,10 @@
         <item>8 PM</item>
     </string-array>
 
-    <string name="titleDefNutri1">Sopa de letras</string>
+    <string name="titleDefNutri1">Los Más Recientes</string>
     <string name="titleDefNutri2">Memoramas</string>
 
-    <string name="titleDefNutri3">Próximos</string>
+    <string name="titleDefNutri3">Próximas A Publicar</string>
     <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
 
     <string name="correoProfile">Cargando...</string>

@@ -44,20 +44,9 @@
                     android:nestedScrollingEnabled="false"
                     android:paddingHorizontal="@dimen/section_spacing" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/section_spacing"
-                    android:text="@string/titleDefNutri2"
-                    android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_next_consults"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/section_spacing" />
+
+
 
                 <TextView
                     android:layout_width="wrap_content"

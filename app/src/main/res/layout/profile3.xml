@@ -121,56 +121,13 @@
 
             </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reservacionesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/section_spacing"
-                android:backgroundTint="@color/white"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/section_spacing">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/inner_spacing"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:paddingTop="@dimen/inner_spacing"
-                        android:text="@string/horario2"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5"
-                        android:textStyle="bold"
-                        app:drawableLeftCompat="@drawable/calendar3" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="@dimen/section_spacing"
-                        android:background="@color/lightGrey" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:text="@string/fecha"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h6"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/inner_spacing"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:text="@string/hora"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:orientation="vertical"
+                tools:listitem="@layout/item_reservacion" />
         </LinearLayout>
     </ScrollView>
 </layout>

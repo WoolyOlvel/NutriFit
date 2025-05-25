@@ -118,7 +118,7 @@ class AppointmentDetailFragment : Fragment() {
     }
 
     private fun startNotificationPolling() {
-        if (isPollingActive) return
+            if (isPollingActive) return
 
         isPollingActive = true
         notificationRunnable = object : Runnable {

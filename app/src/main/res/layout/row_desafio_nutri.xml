@@ -6,11 +6,11 @@
     <data>
         <variable
             name="handler"
-            type="com.ascrib.nutrifit.ui.dashboard.adapter.DesafioAdapter" />
+            type="com.ascrib.nutrifit.ui.dashboard.adapter.NutriDesafiosAdapter" />
 
         <variable
             name="desafio"
-            type="com.ascrib.nutrifit.model.Desafio" />
+            type="com.ascrib.nutrifit.model.NutriDesafios" />
 
     </data>
 
@@ -19,15 +19,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/inner_spacing"
         android:backgroundTint="@color/white"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="@{desafio.status != 2}"
+        android:focusable="@{desafio.status != 2}"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->handler.DesafioNutriClicked(desafio)}"
+            android:onClick="@{()->handler.nutriDesafiosClicked(desafio)}"
             android:orientation="horizontal"
             android:padding="@dimen/section_spacing">
 
@@ -37,9 +37,10 @@
                 app:cardCornerRadius="@dimen/_5sdp">
 
                 <ImageView
-                    imageLoad="@{desafio.image}"
+                    android:id="@+id/foto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:imageUrl="@{desafio.foto}"
                     android:contentDescription="@string/todo"
                     android:scaleType="centerCrop"/>
 
@@ -58,19 +59,20 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="@{desafio.type}"
+                        android:text="@{desafio.tipo}"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h6" />
 
                     <TextView
-                        android:id="@+id/text_status_type"
+                        android:id="@+id/textStatusType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="@{desafio.status}"
+                        android:text="@{desafio.statusText}"
                         android:textColor="@color/colorSecondary"
                         android:textSize="@dimen/text_size_h6"
                         tools:ignore="RelativeOverlap" />
@@ -78,13 +80,26 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/_2sdp"
-                    android:text="@{desafio.name}"
+                    android:text="@{desafio.nombre}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_h5"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fecha_creacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/inner_spacing"
+                    android:gravity="center_vertical"
+                    android:text="@{desafio.fechaDisplay}"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h6"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    />
 
             </LinearLayout>
 
