@@ -10,7 +10,9 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import androidx.databinding.BindingConversion
 import com.ascrib.nutrifit.R
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 @BindingAdapter("imageLoad")
@@ -82,4 +84,20 @@ fun setHtmlText(textView: TextView, html: String?) {
 @BindingAdapter("imageResource")
 fun setImageResource(imageView: ImageView, resource: Int) {
     imageView.setImageResource(resource)
+}
+
+@BindingAdapter("formattedDate")
+fun TextView.setFormattedDate(dateString: String?) {
+    text = if (dateString.isNullOrEmpty()) {
+        "Fecha no disponible"
+    } else {
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            dateString
+        }
+    }
 }

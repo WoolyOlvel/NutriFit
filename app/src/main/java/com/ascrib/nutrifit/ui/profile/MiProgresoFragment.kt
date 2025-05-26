@@ -18,26 +18,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColorInt
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.setMargins
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.api.ApiService
 import com.ascrib.nutrifit.api.RetrofitClient
-import com.ascrib.nutrifit.api.models.ConsultaData
-import com.ascrib.nutrifit.databinding.FragmentMyprogressBinding
+import com.ascrib.nutrifit.api.models.MiProgresoResponse
+import com.ascrib.nutrifit.databinding.FragmentMiprogresoBinding
 import com.ascrib.nutrifit.repository.NotificacionRepository
-import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologosAdapter
-import com.ascrib.nutrifit.ui.planList.HistoryNutriListFragment
 import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
 import com.github.mikephil.charting.animation.Easing
@@ -49,12 +43,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProgressFragment : Fragment() {
+class MiProgresoFragment: Fragment() {
 
-    private lateinit var binding: FragmentMyprogressBinding
+    lateinit var binding: FragmentMiprogresoBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var apiService: ApiService
-    private lateinit var adapter: NutriologosAdapter
+    private var consultaId: Int = 0
+    private var pacienteId: Int = 0
+    private var nutriologoId: Int = 0
     companion object {
         var status = false
         private var lastNotificationCount = 0
@@ -75,7 +71,7 @@ class ProgressFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_myprogress, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_miprogreso, container, false)
         sharedPref = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
         apiService = RetrofitClient.apiService
         Statusbar.setStatusbarTheme(
@@ -85,8 +81,13 @@ class ProgressFragment : Fragment() {
             binding.root
         )
         mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil)
-        setupRecyclerView()
-        loadConsultas()
+        // Obtener argumentos
+        arguments?.let { bundle ->
+            consultaId = bundle.getInt("consultaId", 0)
+            pacienteId = bundle.getInt("pacienteId", 0)
+            nutriologoId = bundle.getInt("nutriologoId", 0)
+        }
+
         toolbarConfig()
         return binding.root
 
@@ -94,10 +95,10 @@ class ProgressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        loadGcMmData()
         startNotificationPolling()
         loadNotificationCount()
+
 
     }
 
@@ -123,11 +124,11 @@ class ProgressFragment : Fragment() {
 
     private fun checkForNewNotifications(newCounts: Map<Int, Int>): Boolean {
         // Caso inicial (primera carga)
-        if (ProgressFragment.notificationCounts.isEmpty()) return false
+        if (MiProgresoFragment.notificationCounts.isEmpty()) return false
 
         // Verificar si algún paciente tiene más notificaciones que antes
         for ((pacienteId, count) in newCounts) {
-            val previousCount = ProgressFragment.notificationCounts[pacienteId] ?: 0
+            val previousCount = MiProgresoFragment.notificationCounts[pacienteId] ?: 0
             if (count > previousCount) {
                 return true
             }
@@ -178,15 +179,15 @@ class ProgressFragment : Fragment() {
                     val hasNewNotifications = checkForNewNotifications(newCounts)
 
                     // 4. Reproducir sonido si hay nuevas notificaciones
-                    if (hasNewNotifications && !ProgressFragment.isInitialLoad) {
+                    if (hasNewNotifications && !MiProgresoFragment.isInitialLoad) {
                         playNotificationSound()
                     }
 
                     // 5. Actualizar los conteos
-                    ProgressFragment.notificationCounts.clear()
-                    ProgressFragment.notificationCounts.putAll(newCounts)
-                    ProgressFragment.lastNotificationCount = totalCount
-                    ProgressFragment.isInitialLoad = false
+                    MiProgresoFragment.notificationCounts.clear()
+                    MiProgresoFragment.notificationCounts.putAll(newCounts)
+                    MiProgresoFragment.lastNotificationCount = totalCount
+                    MiProgresoFragment.isInitialLoad = false
 
                     // 6. Actualizar el badge
                     NotificationBadgeUtils.updateBadgeCount(totalCount)
@@ -240,120 +241,26 @@ class ProgressFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        adapter = NutriologosAdapter(emptyList()) { consulta ->
-            onConsultaClicked(consulta)
-        }
 
-        binding.recyclerViewNutriologos.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewNutriologos.adapter = adapter
-    }
-
-    private fun loadConsultas() {
+    private fun loadGcMmData() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val pacienteIds = getPacienteIdsFromSharedPref()
-                val nutriologoIds = getNutriologoIdsFromSharedPref()
-
-                if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
-                    showMessage("No se encontraron IDs de paciente o nutriólogo")
-                    return@launch
-                }
-
-                val response = apiService.getConsultasPorPaciente3(pacienteIds, nutriologoIds)
+                val response = apiService.getGcMmPorConsulta(
+                    pacienteIds = listOf(pacienteId),
+                    nutriologoIds = listOf(nutriologoId),
+                    consultaIds = listOf(consultaId)
+                )
 
                 if (response.isSuccessful && response.body()?.success == true) {
-                    val consultas = response.body()?.data ?: emptyList()
-                    adapter = NutriologosAdapter(consultas) { consulta ->
-                        onConsultaClicked(consulta)
-                    }
-                    binding.recyclerViewNutriologos.adapter = adapter
+                    val progresoResponse = response.body()!!
+                    updateChart(progresoResponse)
                 } else {
-                    showMessage("Error al obtener consultas: ${response.message()}")
+                    showMessage("Error al obtener datos de progreso")
                 }
             } catch (e: Exception) {
                 showMessage("Error: ${e.message}")
+                Log.d("Error", "Al Cargar: ${e.message}")
             }
-        }
-    }
-
-
-
-    fun onConsultaClicked(consulta: ConsultaData) {
-        // Guardar los IDs necesarios en SharedPreferences o pasarlos como argumentos
-        sharedPref.edit().apply {
-            putInt("CONSULTA_ID", consulta.consulta_id)
-            putInt("PACIENTE_ID", consulta.paciente_id)
-            putInt("NUTRIOLOGO_ID", consulta.nutriologo_id)
-            apply()
-        }
-
-        findNavController().navigate(
-            R.id.miProgresoFragment,
-            bundleOf(
-                "consultaId" to consulta.consulta_id,
-                "pacienteId" to consulta.paciente_id,
-                "nutriologoId" to consulta.nutriologo_id
-            )
-        )
-    }
-
-    private fun getPacienteIdsFromSharedPref(): List<Int> {
-        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
-
-        val additionalIds = try {
-            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
-        } catch (e: ClassCastException) {
-            emptyList()
-        }
-
-        return (listOf(mainPacienteId) + additionalIds).distinct()
-    }
-
-    private fun getNutriologoIdsFromSharedPref(): List<Int> {
-        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
-        val ids = mutableListOf<Int>()
-
-        // 1. Obtener el ID principal del nutriólogo (guardado como Int)
-        val mainNutriologoId = sharedPref.getInt("nutriologo_id", 0)
-        if (mainNutriologoId != 0) {
-            ids.add(mainNutriologoId)
-        }
-
-        // 2. Intentar obtener como Set<String>
-        try {
-            val nutriologoIdsSet = sharedPref.getStringSet("user_id_nutriologo", null)
-            nutriologoIdsSet?.forEach {
-                try {
-                    ids.add(it.toInt())
-                } catch (e: NumberFormatException) {
-                    // Ignorar valores no numéricos
-                }
-            }
-        } catch (e: ClassCastException) {
-            // Si falla, intentar otras formas
-        }
-
-        // 3. Intentar obtener como String individual
-        try {
-            val singleIdStr = sharedPref.getString("user_id_nutriologo", null)
-            singleIdStr?.toIntOrNull()?.let { ids.add(it) }
-        } catch (e: ClassCastException) {
-            // Si falla, continuar
-        }
-
-        // 4. Intentar obtener como Int individual (último recurso)
-        try {
-            val singleIdInt = sharedPref.getInt("user_id_nutriologo", 0)
-            if (singleIdInt != 0) {
-                ids.add(singleIdInt)
-            }
-        } catch (e: ClassCastException) {
-            // Si falla, continuar
-        }
-
-        return ids.distinct().also {
-            Log.d("NutriologoIds", "IDs obtenidos: $it")
         }
     }
 
@@ -361,11 +268,72 @@ class ProgressFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun updateChart(progresoData: MiProgresoResponse) {
+        // Encontrar la consulta específica
+        val consulta = progresoData.data.flatMap { it.consultas }
+            .firstOrNull { it.consulta_id == consultaId }
+
+        consulta?.let {
+            val gcValue = it.gc.toFloatOrNull() ?: 0f
+            val mmValue = it.mm.toFloatOrNull() ?: 0f
+
+            // Calcular porcentajes
+            val total = gcValue + mmValue
+            val gcPercent = (gcValue / total) * 100
+            val mmPercent = (mmValue / total) * 100
+
+            makePieChart(gcPercent, mmPercent)
+            updateTextViews(gcValue, mmValue, gcPercent, mmPercent)
+        }
+    }
+
+    private fun makePieChart(gcPercent: Float, mmPercent: Float) {
+        setupPieChart()
+
+        val entries = ArrayList<PieEntry>().apply {
+            add(PieEntry(gcPercent, "Grasa \nCorporal"))
+            add(PieEntry(mmPercent, "Masa \nMuscular"))
+        }
+
+        val colors = ArrayList<Int>().apply {
+            add(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+            add(ContextCompat.getColor(requireContext(), R.color.colorSecondary))
+        }
+
+        val dataSet = PieDataSet(entries, "").apply {
+            this.colors = colors
+            valueTextSize = 12f
+            valueTextColor = Color.WHITE
+        }
+
+        val data = PieData(dataSet).apply {
+            setValueTextSize(10f)
+            setValueTypeface(Typeface.SERIF)
+            setValueTextColor(Color.WHITE)
+        }
+
+        binding.chartMyProgress.apply {
+            this.data = data
+            invalidate()
+            animateY(1500, Easing.EaseInOutQuart)
+        }
+    }
+
+    private fun updateTextViews(gcValue: Float, mmValue: Float, gcPercent: Float, mmPercent: Float) {
+        // Actualizar los TextViews con los valores y porcentajes
+        binding.apply {
+            textGcValue.text = "%.1f%%".format(gcPercent)
+            textMmValue.text = "%.1f%%".format(mmPercent)
+            textGcDetail.text = "Grasa Corporal:\n %.1f kg".format(gcValue)
+            textMmDetail.text = "Masa Muscular:\n %.1f kg".format(mmValue)
+        }
+    }
+
     private fun toolbarConfig(){
         binding.toolbar.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10),0,0)
         }
-        binding.toolbar.toolbar.title = "Mis Seguimientos"
+        binding.toolbar.toolbar.title = "Mi Progreso"
         binding.toolbar.toolbar.setTitleTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar.toolbar)
 
@@ -401,4 +369,45 @@ class ProgressFragment : Fragment() {
 
     }
 
+    fun makePieChart() {
+        setupPieChart()
+        loadPieChartData()
+    }
+    private fun setupPieChart() {
+        binding.chartMyProgress.isDrawHoleEnabled = true
+        binding.chartMyProgress.setUsePercentValues(false)
+        binding.chartMyProgress.setEntryLabelTextSize(12f)
+        binding.chartMyProgress.setEntryLabelColor(Color.WHITE)
+        binding.chartMyProgress.description.isEnabled = false
+        val l : Legend = binding.chartMyProgress.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
+        l.setDrawInside(false)
+        l.isEnabled = false
+    }
+    private fun loadPieChartData() {
+        val entries: ArrayList<PieEntry> = ArrayList()
+        entries.add(PieEntry(201f, "Peso"))
+        entries.add(PieEntry(300f, "No Datos"))
+        entries.add(PieEntry(320f, "No Datos"))
+        entries.add(PieEntry(420f, "No Datos"))
+        val colors: ArrayList<Int> = ArrayList()
+
+        colors.add(ContextCompat.getColor(requireContext(),R.color.colorSecondary))
+        colors.add(ContextCompat.getColor(requireContext(),R.color.colorPrimary))
+        colors.add(ContextCompat.getColor(requireContext(),R.color.colorVariant))
+        colors.add(ContextCompat.getColor(requireContext(),R.color.colorVariant2))
+
+        val dataSet = PieDataSet(entries, "")
+        dataSet.colors = colors
+        val data = PieData(dataSet)
+        data.setDrawValues(true)
+        data.setValueTextSize(10f)
+        data.setValueTypeface(Typeface.SERIF)
+        data.setValueTextColor(Color.WHITE)
+        binding.chartMyProgress.data = data
+        binding.chartMyProgress.invalidate()
+        binding.chartMyProgress.animateY(3000, Easing.EaseInOutQuart)
+    }
 }

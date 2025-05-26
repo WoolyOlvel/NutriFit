@@ -11,6 +11,7 @@ import com.ascrib.nutrifit.api.models.DuplicarPacienteResponse
 import com.ascrib.nutrifit.api.models.GenericResponse
 import com.ascrib.nutrifit.api.models.ListaNutriologosResponse
 import com.ascrib.nutrifit.api.models.LoginRequest
+import com.ascrib.nutrifit.api.models.MiProgresoResponse
 import com.ascrib.nutrifit.api.models.NotificacionesCountResponse
 import com.ascrib.nutrifit.api.models.NotificacionesResponse
 import com.ascrib.nutrifit.api.models.NutriDesafiosResponse
@@ -259,5 +260,22 @@ interface ApiService {
 
     //== FIN ANEXO PROFILE
 
+
+    // == MI PROGRESO
+    @GET("api/historial/consultas-por-paciente3")
+    suspend fun getConsultasPorPaciente3(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ConsultaResponse2>
+
+
+    @GET("api/historial/consultas-por-pacienteD")
+    suspend fun getGcMmPorConsulta(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>,
+        @Query("consultaIds[]") consultaIds: List<Int>
+    ): Response<MiProgresoResponse>
+
+    // == FIN MI PROGRESO
 
 }

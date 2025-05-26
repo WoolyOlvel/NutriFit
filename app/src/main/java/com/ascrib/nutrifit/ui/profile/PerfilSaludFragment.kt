@@ -325,8 +325,6 @@ class PerfilSaludFragment : Fragment() {
         return listOf("14/02", "21/02", "26/02", "03/03", "13/03")
     }
 
-
-
     class CustomMarkerView(context: Context, layoutResource: Int, private val chartType: String = "default") :
         MarkerView(context, layoutResource) {
 
@@ -345,31 +343,31 @@ class PerfilSaludFragment : Fragment() {
                         // Para proteína, mantener un decimal
                         tvContent.text = String.format("%.1f%%", e.y)
                     }"masa_esqueletico" ->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"grasa_visceral"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }"masa_muscular"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"perdida_grasa"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"grasa_subcutanea"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"musculo_esqueletico"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"bmr"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }"grasa_corporal"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"agua"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"peso"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"imc"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }else -> {
-                        // Formato predeterminado
-                        tvContent.text = String.format("%.1f", e.y)
-                    }
+                    tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                }"grasa_visceral"->{
+                    tvContent.text = String.format("%.1f ", e.y.toDouble())
+                }"masa_muscular"->{
+                    tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                }"perdida_grasa"->{
+                    tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                }"grasa_subcutanea"->{
+                    tvContent.text = String.format("%.1f%%", e.y)
+                }"musculo_esqueletico"->{
+                    tvContent.text = String.format("%.1f%%", e.y)
+                }"bmr"->{
+                    tvContent.text = String.format("%.1f ", e.y.toDouble())
+                }"grasa_corporal"->{
+                    tvContent.text = String.format("%.1f%%", e.y)
+                }"agua"->{
+                    tvContent.text = String.format("%.1f%%", e.y)
+                }"peso"->{
+                    tvContent.text = String.format("%.1f Kg", e.y.toDouble())
+                }"imc"->{
+                    tvContent.text = String.format("%.1f ", e.y.toDouble())
+                }else -> {
+                    // Formato predeterminado
+                    tvContent.text = String.format("%.1f", e.y)
+                }
                 }
             }
             super.refreshContent(e, highlight)
@@ -384,6 +382,5 @@ class PerfilSaludFragment : Fragment() {
     private fun getEdadCorporalData(): List<Float> {
         return listOf(15.5f, 15.7f, 15.3f, 16.1f, 16.2f) // Datos de ejemplo para el segundo gráfico
     }
-
 
 }

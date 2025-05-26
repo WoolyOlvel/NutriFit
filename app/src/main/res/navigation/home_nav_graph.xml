@@ -78,7 +78,28 @@
     <fragment
         android:id="@+id/myProgressFragment"
         android:name="com.ascrib.nutrifit.ui.profile.ProgressFragment"
-        android:label="MyProgress"/>
+        android:label="MyProgress">
+        <action
+            android:id="@+id/action_progressFragment_to_miProgresoFragment"
+            app:destination="@id/miProgresoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/miProgresoFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.MiProgresoFragment"
+        android:label="MiProgresoFragment">
+        <argument
+            android:name="consultaId"
+            app:argType="integer" />
+        <argument
+            android:name="pacienteId"
+            app:argType="integer" />
+        <argument
+            android:name="nutriologoId"
+            app:argType="integer" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/planListFragment"

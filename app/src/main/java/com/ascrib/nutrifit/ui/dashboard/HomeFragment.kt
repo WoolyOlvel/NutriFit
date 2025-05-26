@@ -1,4 +1,3 @@
-
 package com.ascrib.nutrifit.ui.dashboard
 
 import android.content.Context
@@ -7,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -26,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.api.RetrofitClient
+import com.ascrib.nutrifit.api.models.MiProgresoResponse
 import com.ascrib.nutrifit.databinding.FragmentHomeBinding
 import com.ascrib.nutrifit.repository.NotificacionRepository
 import com.ascrib.nutrifit.ui.form.adapter.SliderAdapter
@@ -54,7 +55,8 @@ class HomeFragment : Fragment() {
     private val pollingInterval = 15000L // 15 segundos
     private var isPollingActive = false
     private var mediaPlayer: MediaPlayer? = null
-
+    private var lastGcValue = 0f
+    private var lastMmValue = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,7 +108,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.progressView.setProgress(55, true)
+        fetchProgressData() // Llamar a la nueva función
 
         val pagerAdapter = SliderAdapter(context as FragmentActivity)
         binding.vpWelcome.adapter = pagerAdapter
@@ -130,6 +132,253 @@ class HomeFragment : Fragment() {
         loadNotificationCount()
     }
 
+    // FUNCIONES PARA OBTENER IDs - USAR ESTAS EN LUGAR DE LAS DUPLICADAS
+    private fun getPacienteIdsFromSharedPref(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
+
+    private fun getNutriologoIdsFromSharedPref(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val ids = mutableListOf<Int>()
+
+        // 1. Obtener el ID principal del nutriólogo (guardado como Int)
+        val mainNutriologoId = sharedPref.getInt("nutriologo_id", 0)
+        if (mainNutriologoId != 0) {
+            ids.add(mainNutriologoId)
+        }
+
+        // 2. Intentar obtener como Set<String>
+        try {
+            val nutriologoIdsSet = sharedPref.getStringSet("user_id_nutriologo", null)
+            nutriologoIdsSet?.forEach {
+                try {
+                    ids.add(it.toInt())
+                } catch (e: NumberFormatException) {
+                    // Ignorar valores no numéricos
+                }
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, intentar otras formas
+        }
+
+        // 3. Intentar obtener como String individual
+        try {
+            val singleIdStr = sharedPref.getString("user_id_nutriologo", null)
+            singleIdStr?.toIntOrNull()?.let { ids.add(it) }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        // 4. Intentar obtener como Int individual (último recurso)
+        try {
+            val singleIdInt = sharedPref.getInt("user_id_nutriologo", 0)
+            if (singleIdInt != 0) {
+                ids.add(singleIdInt)
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        return ids.distinct().also {
+            Log.d("NutriologoIds", "IDs obtenidos: $it")
+        }
+    }
+
+    private fun fetchProgressData() {
+        val pacienteIds = getPacienteIdsFromSharedPref()
+        val nutriologoIds = getNutriologoIdsFromSharedPref()
+
+        Log.d("ProgressData", "Paciente IDs: $pacienteIds, Nutriologo IDs: $nutriologoIds")
+
+        if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
+            Log.e("ProgressData", "IDs no válidos - Pacientes: $pacienteIds, Nutriologos: $nutriologoIds")
+            binding.progressView.setProgress(0, true)
+            return
+        }
+
+        // Primero obtenemos las consultas para luego obtener sus IDs
+        lifecycleScope.launch {
+            try {
+                Log.d("ProgressData", "Obteniendo consultas...")
+
+                val responseConsultas = withContext(Dispatchers.IO) {
+                    RetrofitClient.apiService.getConsultasPorPaciente3(
+                        pacienteIds = pacienteIds,
+                        nutriologoIds = nutriologoIds
+                    )
+                }
+
+                if (responseConsultas.isSuccessful && responseConsultas.body()?.success == true) {
+                    val consultas = responseConsultas.body()?.data ?: emptyList()
+                    val consultaIds = consultas.map { it.consulta_id }
+
+                    Log.d("ProgressData", "Consulta IDs obtenidos: $consultaIds")
+
+                    if (consultaIds.isEmpty()) {
+                        Log.w("ProgressData", "No hay consultas disponibles")
+                        binding.progressView.setProgress(0, true)
+                        return@launch
+                    }
+
+                    // Ahora obtenemos los datos de GC y MM
+                    val responseGcMm = withContext(Dispatchers.IO) {
+                        RetrofitClient.apiService.getGcMmPorConsulta(
+                            pacienteIds = pacienteIds,
+                            nutriologoIds = nutriologoIds,
+                            consultaIds = consultaIds
+                        )
+                    }
+
+                    Log.d("ProgressData", "Respuesta GC/MM recibida - Código: ${responseGcMm.code()}")
+
+                    if (responseGcMm.isSuccessful) {
+                        responseGcMm.body()?.let { progresoResponse ->
+                            Log.d("ProgressData", "Body recibido: $progresoResponse")
+
+                            if (progresoResponse.success) {
+                                Log.d("ProgressData", "Datos recibidos: ${progresoResponse.data}")
+                                calculateAndUpdateProgress(progresoResponse)
+                            } else {
+                                Log.e("ProgressData", "Respuesta no exitosa del servidor")
+                                binding.progressView.setProgress(0, true)
+                            }
+                        } ?: run {
+                            Log.e("ProgressData", "Body de respuesta es null")
+                            binding.progressView.setProgress(0, true)
+                        }
+                    } else {
+                        val errorBody = responseGcMm.errorBody()?.string()
+                        Log.e("ProgressData", "Error en la respuesta: ${responseGcMm.code()} - $errorBody")
+                        binding.progressView.setProgress(0, true)
+                    }
+                } else {
+                    Log.e("ProgressData", "Error al obtener consultas")
+                    binding.progressView.setProgress(0, true)
+                }
+            } catch (e: Exception) {
+                Log.e("ProgressData", "Excepción al obtener datos: ${e.message}", e)
+                binding.progressView.setProgress(0, true)
+            }
+        }
+    }
+
+    // FUNCIONES FALTANTES PARA EL CÁLCULO DE PROGRESO
+    private fun parseFloatValue(value: String?, fieldName: String): Float {
+        return try {
+            if (value.isNullOrBlank()) {
+                Log.w("ProgressData", "$fieldName está vacío o nulo")
+                0f
+            } else {
+                // Limpiar el valor eliminando caracteres no numéricos excepto punto y coma
+                val cleanValue = value.replace(Regex("[^0-9.,]"), "")
+                    .replace(",", ".") // Convertir comas a puntos para decimales
+
+                if (cleanValue.isBlank()) {
+                    Log.w("ProgressData", "$fieldName no contiene valores numéricos válidos: '$value'")
+                    0f
+                } else {
+                    val floatValue = cleanValue.toFloat()
+                    Log.d("ProgressData", "$fieldName: '$value' -> $floatValue")
+                    floatValue
+                }
+            }
+        } catch (e: NumberFormatException) {
+            Log.e("ProgressData", "Error al parsear $fieldName: '$value' - ${e.message}")
+            0f
+        }
+    }
+
+    private fun calculateProgressValue(gcValue: Float, mmValue: Float): Int {
+        return try {
+            Log.d("ProgressData", "Calculando progreso con GC: $gcValue, MM: $mmValue")
+
+            // Si ambos valores son 0, retornar 0
+            if (gcValue == 0f && mmValue == 0f) {
+                Log.w("ProgressData", "Ambos valores son 0")
+                return 0
+            }
+
+            // Calcular la diferencia (masa muscular - grasa corporal)
+            val diferencia = mmValue - gcValue
+            Log.d("ProgressData", "Diferencia (MM - GC): $diferencia")
+
+            // Normalizar a un rango de 0-100
+            val progressValue = when {
+                diferencia > 0 -> {
+                    // Si la masa muscular es mayor que la grasa
+                    // Mapear a un rango de 50-100 (ejemplo: diferencia de 0 = 50%, +10 = 100%)
+                    (50 + (diferencia * 5)).coerceAtMost(100f).toInt()
+                }
+                diferencia < 0 -> {
+                    // Si la grasa es mayor que la masa muscular
+                    // Mapear a un rango de 0-50 (ejemplo: diferencia de 0 = 50%, -10 = 0%)
+                    (50 + (diferencia * 5)).coerceAtLeast(0f).toInt()
+                }
+                else -> 50 // Si son iguales
+            }
+
+            Log.d("ProgressData", "Progreso final calculado: $progressValue")
+            progressValue
+
+        } catch (e: Exception) {
+            Log.e("ProgressData", "Error al calcular progreso: ${e.message}", e)
+            0 // Valor por defecto en caso de error
+        }
+    }
+
+    private fun calculateAndUpdateProgress(progresoData: MiProgresoResponse) {
+        Log.d("ProgressData", "Calculando progreso...")
+
+        // Obtener todas las consultas
+        val allConsultas = progresoData.data.flatMap { pacienteData ->
+            Log.d("ProgressData", "Paciente con ${pacienteData.consultas.size} consultas")
+            pacienteData.consultas
+        }
+
+        Log.d("ProgressData", "Total de consultas encontradas: ${allConsultas.size}")
+
+        if (allConsultas.isEmpty()) {
+            Log.w("ProgressData", "No hay consultas disponibles")
+            binding.progressView.setProgress(0, true)
+            return
+        }
+
+        // Obtener la consulta más reciente (asumiendo que consulta_id es incremental)
+        val latestConsulta = allConsultas.maxByOrNull { it.consulta_id } ?: allConsultas.last()
+
+        Log.d("ProgressData", "Consulta más reciente ID: ${latestConsulta.consulta_id}")
+        Log.d("ProgressData", "GC: '${latestConsulta.gc}', MM: '${latestConsulta.mm}'")
+
+        // Procesar valores con mejor manejo de errores
+        val gcValue = parseFloatValue(latestConsulta.gc, "GC")
+        val mmValue = parseFloatValue(latestConsulta.mm, "MM")
+
+        Log.d("ProgressData", "Valores procesados - GC: $gcValue, MM: $mmValue")
+
+        // Calcular el progreso
+        val progressValue = calculateProgressValue(gcValue, mmValue)
+
+        Log.d("ProgressData", "Progreso calculado: $progressValue%")
+
+        // Actualizar el CircularProgressView en el hilo principal
+        activity?.runOnUiThread {
+            try {
+                binding.progressView.setProgress(progressValue, true)
+                Log.d("ProgressData", "Progress actualizado en la UI: $progressValue%")
+            } catch (e: Exception) {
+                Log.e("ProgressData", "Error al actualizar UI: ${e.message}", e)
+            }
+        }
+    }
 
     private fun startNotificationPolling() {
         if (isPollingActive) return
@@ -152,18 +401,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAllPacienteIds(sharedPref: SharedPreferences): List<Int> {
-        // 1. Obtener el ID principal
-        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
-
-        // 2. Obtener IDs adicionales de SharedPreferences
-        val additionalIds = try {
-            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
-        } catch (e: ClassCastException) {
-            emptyList()
-        }
-
-        // 3. Combinar y eliminar duplicados
-        return (listOf(mainPacienteId) + additionalIds).distinct()
+        // Usar la función principal que ya tienes
+        return getPacienteIdsFromSharedPref()
     }
 
     private fun checkForNewNotifications(newCounts: Map<Int, Int>): Boolean {
@@ -179,7 +418,6 @@ class HomeFragment : Fragment() {
         }
         return false
     }
-
 
     private fun loadNotificationCount() {
         if (!isAdded || activity == null) return
@@ -247,8 +485,6 @@ class HomeFragment : Fragment() {
             e.printStackTrace()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -324,7 +560,6 @@ class HomeFragment : Fragment() {
         super.onPause()
         sliderHandler.removeCallbacks(sliderRunnable)
         stopNotificationPolling()
-
     }
 
     // Reinicia el desplazamiento automático cuando el fragmento vuelve a ser visible
@@ -337,6 +572,7 @@ class HomeFragment : Fragment() {
         }
         // Carga inmediata al volver
         loadNotificationCount()
+        fetchProgressData()
     }
 
     private fun toolbarConfig() {

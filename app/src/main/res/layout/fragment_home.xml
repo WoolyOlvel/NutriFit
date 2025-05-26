@@ -8,8 +8,6 @@
             name="handler"
             type="com.ascrib.nutrifit.ui.dashboard.HomeFragment" />
 
-
-
     </data>
 
     <ScrollView

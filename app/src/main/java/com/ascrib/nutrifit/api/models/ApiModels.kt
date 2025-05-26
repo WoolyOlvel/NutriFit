@@ -2,7 +2,9 @@ package com.ascrib.nutrifit.api.models
 
 import com.ascrib.nutrifit.model.Notificaciones
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 /**
  * Modelo para solicitudes de autenticación
@@ -337,7 +339,41 @@ data class ConsultaData(
     val motivo_consulta: String?,
     val fechaConsulta: String?,
     val nombreOriginal: String? = null,
-)
+    val fecha_creacion: String? = null,
+) {
+
+    val nombreCompleto: String
+        get() = "Nut. $nombre_nutriologo"
+
+    // Propiedad calculada para la fecha formateada
+    val fechaFormateada: String
+        get() = formatDate(fecha_creacion)
+
+    private fun formatDate(dateString: String?): String {
+        if (dateString.isNullOrEmpty()) return "Fecha no disponible"
+
+        return try {
+            // Primero intenta con formato ISO
+            try {
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val date = inputFormat.parse(dateString)
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+            } catch (e: Exception) {
+                // Si falla, intenta con otros formatos
+                try {
+                    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val date = inputFormat.parse(dateString)
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                } catch (e: Exception) {
+                    // Si todo falla, devuelve la fecha original
+                    dateString
+                }
+            }
+        } catch (e: Exception) {
+            dateString ?: "Fecha no disponible"
+        }
+    }
+}
 
 data class ConsultaResponse(
     val reservacion_id: Int,
@@ -381,6 +417,26 @@ data class NutriDesafiosResponse(
     val status: Int? = null,
     val estado: Int? = null,
     val fecha_creacion: String? = null,
+)
+
+data class MiProgresoResponse(
+    val success: Boolean,
+    val data: List<ConsultaProgreso>,
+    val message: String?
+)
+
+data class ConsultaProgreso(
+    val paciente_id: Int,
+    val nombre_paciente: String?,
+    val nutriologo_id: Int,
+    val nombre_nutriologo: String?,
+    val consultas: List<ConsultaGcMm>
+)
+
+data class ConsultaGcMm(
+    val consulta_id: Int,
+    val gc: String,
+    val mm: String
 )
 
 data class LoginRequest(

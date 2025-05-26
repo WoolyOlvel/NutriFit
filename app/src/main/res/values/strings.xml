@@ -61,7 +61,8 @@
     <string name="textCard4">Perfil De Salud</string>
 
     <string name="primeryCase">Peso (Kg)</string>
-    <string name="caseTwo">Sin Datos </string>
+    <string name="caseTwo">Grasa Corporal </string>
+    <string name="caseThree">Masa Muscular </string>
     <string name="caseTwoPorcen">201</string>
     <string name="caseTwoPorcen2">300</string>
     <string name="caseTwoPorcen3">320</string>
@@ -219,6 +220,7 @@
     <string name="titleDefNutri1">Los Más Recientes</string>
     <string name="titleDefNutri2">Memoramas</string>
 
+    <string name="mis_nutriologos">Mis Nutriologos</string>
     <string name="titleDefNutri3">Próximas A Publicar</string>
     <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
 
