@@ -4,6 +4,7 @@ import com.ascrib.nutrifit.api.models.ApiResponse
 import com.ascrib.nutrifit.api.models.AuthResponse
 import com.ascrib.nutrifit.api.models.ConsultaData
 import com.ascrib.nutrifit.api.models.ConsultaDetalleResponse
+import com.ascrib.nutrifit.api.models.ConsultaGraficas
 import com.ascrib.nutrifit.api.models.ConsultaResponse
 import com.ascrib.nutrifit.api.models.ConsultaResponse2
 import com.ascrib.nutrifit.api.models.DuplicarPacienteRequest
@@ -277,5 +278,31 @@ interface ApiService {
     ): Response<MiProgresoResponse>
 
     // == FIN MI PROGRESO
+
+
+    // === INICIO PERFIL SALUD
+
+    @GET("api/historial/consultas-por-paciente4")
+    suspend fun getConsultaPorPaciente4(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ConsultaResponse2>
+
+    @GET("api/historial/consultas-por-paciente5")
+    suspend fun getConsultaPorPaciente5(
+        @Query("pacienteIds[]") pacienteIds: List<Int>,
+        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+    ): Response<ConsultaGraficas>
+
+    // En tu ApiService.kt, actualiza este método:
+
+//    @GET("api/historial/consultas-por-paciente5")
+//    suspend fun getConsultaPorPaciente5(
+//        @Query("pacienteIds[]") pacienteIds: List<Int>,
+//        @Query("nutriologoIds[]") nutriologoIds: List<Int>
+//    ): Response<ConsultaGraficasResponse> // Cambiado para incluir el wrapper con success/data/message
+
+    // === FIN PERFIL SALUD
+
 
 }

@@ -2,6 +2,7 @@ package com.ascrib.nutrifit.ui.profile
 
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -61,7 +62,20 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
     private var selectedConsultaType: String? = null
     private var selectedPrecio: Double = 0.0
     private var selectedMotivo: String = ""
+    companion object {
+        var status = false
+        private var lastNotificationCount = 0
+        private var isInitialLoad = true
 
+        // Nueva lista para mantener los conteos por paciente
+        private val notificationCounts = mutableMapOf<Int, Int>()
+    }
+    private val notificacionRepository = NotificacionRepository()
+    private val notificationHandler = Handler(Looper.getMainLooper())
+    private var notificationRunnable: Runnable? = null
+    private val pollingInterval = 15000L // 15 segundos
+    private var isPollingActive = false
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +86,13 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             DataBindingUtil.inflate(inflater, R.layout.fragment_services, container, false)
 
         binding.handler = this
-
+        Statusbar.setStatusbarTheme(
+            requireContext(),
+            requireActivity().window,
+            R.color.lightGrey,
+            binding.root
+        )
+        mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil)
 
         toolbarConfig()
         setupCalendar()
@@ -86,6 +106,8 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         loadTiposConsulta()
         setupCheckboxListeners()
         setupTextWatchers()
+        startNotificationPolling()
+        loadNotificationCount()
     }
 
 
@@ -212,6 +234,26 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         }
     }
 
+    // Decorador para deshabilitar fines de semana (sábado y domingo)
+    inner class WeekendDisableDecorator : DayViewDecorator {
+        override fun shouldDecorate(day: CalendarDay): Boolean {
+            val calendar = Calendar.getInstance()
+            calendar.set(day.year, day.month - 1, day.day)
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            // Calendar.SATURDAY = 7, Calendar.SUNDAY = 1
+            return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+        }
+
+        override fun decorate(view: DayViewFacade) {
+            view.setDaysDisabled(true)
+            // Opcional: cambiar el color para indicar que están deshabilitados
+            view.addSpan(android.text.style.ForegroundColorSpan(
+                ContextCompat.getColor(requireContext(), android.R.color.darker_gray)
+            ))
+        }
+    }
+
+    //  función setupCalendar()
     private fun setupCalendar() {
         val today = CalendarDay.today()
         binding.calendarView.apply {
@@ -227,19 +269,44 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
 
             // Deshabilitar fechas anteriores
             addDecorator(PastDayDisableDecorator(today))
+
+            // NUEVO: Deshabilitar fines de semana
+            addDecorator(WeekendDisableDecorator())
         }
 
-        // Seleccionar la fecha actual y mostrarla
-        selectedDate = today
-        updateSelectedDateTimeDisplay()
+        // Seleccionar la fecha actual y mostrarla (solo si es día de semana)
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        if (dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY) {
+            selectedDate = today
+            updateSelectedDateTimeDisplay()
+        } else {
+            // Si hoy es fin de semana, no seleccionar ninguna fecha
+            selectedDate = null
+            binding.tvSelectedDatetime.text = "Selecciona una fecha (Lunes a Viernes)"
+        }
     }
 
+    // También modifica tu función onDateSelected para agregar validación adicional:
     override fun onDateSelected(
         widget: MaterialCalendarView,
         date: CalendarDay,
         selected: Boolean
     ) {
         if (selected) {
+            // Verificar que no sea fin de semana
+            val calendar = Calendar.getInstance()
+            calendar.set(date.year, date.month - 1, date.day)
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+                // Deseleccionar si es fin de semana
+                widget.setDateSelected(date, false)
+                Toast.makeText(context, "Solo se pueden seleccionar días de lunes a viernes", Toast.LENGTH_SHORT).show()
+                return
+            }
+
             selectedDate = date
             showTimePickerDialog()
         }
@@ -330,6 +397,9 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
 
                 menuInflater.inflate(R.menu.header_menu, menu)
+                menu.findItem(R.id.action_notification)?.let { menuItem ->
+                    NotificationBadgeUtils.setupBadge(requireActivity() as AppCompatActivity, menuItem)
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -575,4 +645,144 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             view.setDaysDisabled(true)
         }
     }
+
+    private fun startNotificationPolling() {
+        if (isPollingActive) return
+
+        isPollingActive = true
+        notificationRunnable = object : Runnable {
+            override fun run() {
+                loadNotificationCount()
+                notificationHandler.postDelayed(this, pollingInterval)
+            }
+        }
+        notificationHandler.post(notificationRunnable!!)
+    }
+
+    private fun stopNotificationPolling() {
+        isPollingActive = false
+        notificationRunnable?.let {
+            notificationHandler.removeCallbacks(it)
+        }
+    }
+
+    private fun checkForNewNotifications(newCounts: Map<Int, Int>): Boolean {
+        // Caso inicial (primera carga)
+        if (ServiceFragment.notificationCounts.isEmpty()) return false
+
+        // Verificar si algún paciente tiene más notificaciones que antes
+        for ((pacienteId, count) in newCounts) {
+            val previousCount = ServiceFragment.notificationCounts[pacienteId] ?: 0
+            if (count > previousCount) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun getAllPacienteIds(sharedPref: SharedPreferences): List<Int> {
+        // 1. Obtener el ID principal
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        // 2. Obtener IDs adicionales de SharedPreferences
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        // 3. Combinar y eliminar duplicados
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
+
+    private fun loadNotificationCount() {
+        if (!isAdded || activity == null) return
+
+        lifecycleScope.launch {
+            try {
+                val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+
+                // 1. Obtener todos los IDs de paciente
+                val pacienteIds = getAllPacienteIds(sharedPref)
+                if (pacienteIds.isEmpty()) return@launch
+
+                var totalCount = 0
+                val newCounts = mutableMapOf<Int, Int>()
+
+                // 2. Contar notificaciones para cada paciente
+                for (pacienteId in pacienteIds) {
+                    val count = withContext(Dispatchers.IO) {
+                        notificacionRepository.contarNotificacionesNoLeidas(pacienteId)
+                    }
+                    newCounts[pacienteId] = count
+                    totalCount += count
+                }
+
+                activity?.runOnUiThread {
+                    // 3. Verificar si hay nuevas notificaciones
+                    val hasNewNotifications = checkForNewNotifications(newCounts)
+
+                    // 4. Reproducir sonido si hay nuevas notificaciones
+                    if (hasNewNotifications && !ServiceFragment.isInitialLoad) {
+                        playNotificationSound()
+                    }
+
+                    // 5. Actualizar los conteos
+                    ServiceFragment.notificationCounts.clear()
+                    ServiceFragment.notificationCounts.putAll(newCounts)
+                    ServiceFragment.lastNotificationCount = totalCount
+                    ServiceFragment.isInitialLoad = false
+
+                    // 6. Actualizar el badge
+                    NotificationBadgeUtils.updateBadgeCount(totalCount)
+                    requireActivity().invalidateOptionsMenu()
+                }
+            } catch (e: Exception) {
+                // Reintentar más rápido si hay error
+                if (isPollingActive) {
+                    notificationHandler.postDelayed({ loadNotificationCount() }, 5000)
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Liberar recursos del MediaPlayer
+        stopNotificationPolling()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopNotificationPolling()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isPollingActive) {
+            startNotificationPolling()
+        }
+
+        // Carga inmediata de notificaciones cuando vuelve el fragmento
+        loadNotificationCount()
+    }
+
+    private fun playNotificationSound() {
+        try {
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil).apply {
+                    setOnCompletionListener {
+                        it.release()
+                        mediaPlayer = null
+                    }
+                }
+            }
+            mediaPlayer?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -374,8 +376,29 @@ class AppointmentDetailFragment : Fragment() {
         findNavController().navigate(R.id.serviceFragment, bundleOf("nutriologo_id" to nutriologoId))
     }
 
+
     fun onChatClicked(){
-        findNavController().navigate(R.id.global_chat_patient)
+        // Opción 1: Toast simple (recomendado para tu caso)
+//        Toast.makeText(
+//            context,
+//            "Esta sección se encuentra en mantenimiento. Disculpa las molestias.",
+//            Toast.LENGTH_LONG
+//        ).show()
+
+        // Opción 2: AlertDialog más elaborado (comentado)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Sección en Mantenimiento")
+            .setMessage("La sección de chat se encuentra temporalmente en mantenimiento. Estamos trabajando para mejorar tu experiencia.")
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton("Entendido") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+
+        // Navegación original comentada
+        // findNavController().navigate(R.id.global_chat_patient)
     }
 
     private fun showBottomSheetReply() {

@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.api.models
 
 import com.ascrib.nutrifit.model.Notificaciones
+import com.google.gson.annotations.SerializedName
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -433,11 +434,51 @@ data class ConsultaProgreso(
     val consultas: List<ConsultaGcMm>
 )
 
+
 data class ConsultaGcMm(
     val consulta_id: Int,
     val gc: String,
     val mm: String
 )
+
+data class ConsultaGraficas(
+    val success: Boolean,
+    val data: List<NutriologoConsultaData>,
+    val message: String?
+)
+
+data class NutriologoConsultaData(
+    @SerializedName("nutriologo_id") val nutriologo_id: Int,
+    @SerializedName("paciente_id") val pacienteId: Int,
+    val nombre_nutriologo: String?,
+    val foto_nutriologo: String?,
+    val consultas: List<ConsultaAntropometrica> // Cambiado a plural
+)
+
+data class ConsultaAntropometrica(
+    val consulta_id: Int,
+    val fecha_creacion: String?,
+    val paciente_id: Int,
+    val nombre_paciente: String?,
+    val foto_paciente: String?,
+    val tipo_consulta: String?,
+    val peso: String?,
+    val gc: String?,
+    val mm: String?,
+    val em: String?,
+    val proteina: String?,
+    val ec: String?,
+    val me: String?,
+    val gv: String?,
+    val pg: String?,
+    val gs: String?,
+    val meq: String?,
+    val bmr: String?,
+    val ac: String?,
+    val imc: String?
+)
+
+
 
 data class LoginRequest(
     val email: String,

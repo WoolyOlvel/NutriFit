@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.profile.MiPerfilSaludFragment" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_nutri_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_button"
+            android:background="@drawable/button_background"
+            android:paddingBottom="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar_dark_arrow" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Proteina (%)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Edad Corporal"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud2"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Masa Esquelética (Kg)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud3"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grasa Vísceral"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud4"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Masa Muscular (Kg)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud5"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pérdida De Grasa (Kg)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud6"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grasa Subcutanea (%)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud7"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Músculo Esquelético (%)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud8"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BMR (kcal)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud9"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grasa Corporal (%)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud10"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agua Corporal (%)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud11"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peso (Kg)"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud12"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="IMC"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud13"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/inner_spacing"
+                    android:backgroundTint="@color/white"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/section_spacing">
+
+                        <TextView
+                            android:id="@+id/titleTextView14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Edad Metabólica"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:layout_gravity="start"
+                            android:paddingBottom="10dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:background="@color/lightGrey" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartLineal_Salud14"
+                            android:layout_width="@dimen/_280sdp"
+                            android:layout_height="@dimen/_240sdp"
+                            android:layout_margin="@dimen/inner_spacing"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/section_spacing"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/graficaSubTexto"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_h6" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</layout>

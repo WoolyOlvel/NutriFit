@@ -2,6 +2,7 @@ package com.ascrib.nutrifit.ui.dashboard
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.WindowInsetsControllerCompat
@@ -52,15 +53,28 @@ class DashboardActivity : AppCompatActivity(), NavController.OnDestinationChange
     ) {
         when(destination.id){
             R.id.homeFragment,
-            R.id.chatFragment,
             R.id.scheduleFragment,
-            R.id.profileFragment
-             ->{
-                    binding.navigationDashboard.visibility = View.VISIBLE
-                } else -> {
-                    hideBottomBav()
-                }
+            R.id.profileFragment -> {
+                binding.navigationDashboard.visibility = View.VISIBLE
+            }
+            R.id.chatFragment -> {
+                // Inmediatamente regresar y mostrar diálogo
+                controller.popBackStack()
 
+                AlertDialog.Builder(this)
+                    .setTitle("Sección en Mantenimiento")
+                    .setMessage("La sección de chat se encuentra temporalmente en mantenimiento. Estamos trabajando para mejorar tu experiencia.")
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setPositiveButton("Entendido") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+
+                binding.navigationDashboard.visibility = View.VISIBLE
+            }
+            else -> {
+                hideBottomBav()
+            }
         }
     }
 

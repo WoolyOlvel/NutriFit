@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.ui.dashboard
 
 import android.content.SharedPreferences
+import android.icu.util.Calendar
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -32,7 +33,10 @@ import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologoAdapter
 import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
 import com.bumptech.glide.Glide
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -312,20 +316,51 @@ class ScheduleFragment : Fragment(), NutriologoHandler {
         }
     }
 
-    fun calendarSetup() { //Este no tocar por el momento
-        binding.calendarView.setOnTitleClickListener(View.OnClickListener {
-            if (status) {
-                binding.calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS)
-                    .commit()
-                status = false
-            } else {
-                binding.calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS)
-                    .commit()
-                status = true
+    fun calendarSetup() {
+        val calendarView = binding.calendarView
+        val today = CalendarDay.today()
+
+        // 1. Establecer la fecha actual seleccionada por defecto
+        calendarView.selectedDate = today
+
+        // 2. Deshabilitar fechas anteriores a hoy
+        calendarView.setOnDateChangedListener { widget, date, selected ->
+            if (date.year < today.year ||
+                (date.year == today.year && date.month < today.month) ||
+                (date.year == today.year && date.month == today.month && date.day < today.day)) {
+                widget.clearSelection()
+                widget.setDateSelected(today, true)
+            }
+        }
+
+        // 3. Deshabilitar sábados y domingos
+        calendarView.addDecorator(object : DayViewDecorator {
+            override fun shouldDecorate(day: CalendarDay): Boolean {
+                // Crear un Calendar instance para obtener el día de la semana
+                val cal = Calendar.getInstance()
+                cal.set(day.year, day.month - 1, day.day) // Calendar.Month es 0-based
+
+                val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+                return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+            }
+
+            override fun decorate(view: DayViewFacade) {
+                view.setDaysDisabled(true)
             }
         })
 
-        binding.calendarView.state().edit().isCacheCalendarPositionEnabled(true)
+        // Configuración del cambio de vista (mes/semana)
+        calendarView.setOnTitleClickListener {
+            if (status) {
+                calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit()
+                status = false
+            } else {
+                calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit()
+                status = true
+            }
+        }
+
+        calendarView.state().edit().isCacheCalendarPositionEnabled(true).commit()
     }
 
     private fun toolbarConfig() { //Este no tocar por el momento
