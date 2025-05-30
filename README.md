@@ -90,6 +90,8 @@ Sigue estos pasos para clonar y ejecutar el proyecto localmente:
 
 4. Abre el proyecto en Android Studio y selecciona **Build > Make Project** para compilarlo.
 
+5. En caso que se le presente inconveninetes, por favor de clonar unicamente la rama AlanPuc_Pruebas
+
 ---
 
 ## ⚙️ Configuración de conexión local a la base de datos
