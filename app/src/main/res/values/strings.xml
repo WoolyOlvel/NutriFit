@@ -1,4 +1,6 @@
 <resources>
+
+
     <string name="app_name">NutriFit</string>
     <string name="bienvenida_slider">¡Bienvenidos a NutriFit Planner!</string>
     <string name="bienvenida_slider_p">Tu plataforma integral para citas y planes nutricionales.</string>
@@ -8,8 +10,11 @@
     <string name="bienvenida_slider3_p">Nutrición basada en la evidencia.</string>
     <string name="todo">TODO</string>
 
+    <string name="default_notification_channel_id">default_channel_id</string>
+    <string name="default_notification_channel_name">Notificaciones</string>
+
     <string name="loginText">Bienvenido de nuevo</string>
-    <string name="FieldLogin1">Correo Electronico / Usuario</string>
+    <string name="FieldLogin1">Correo Electrónico</string>
     <string name="FieldLogin2">Contraseña</string>
     <string name="Check">Recuérdamelo</string>
     <string name="ButtonLogin">Iniciar Sesión</string>
@@ -19,12 +24,11 @@
     <string name="textBottomLoginAcc">Registrate Ahora</string>
 
     <string name="registerText">Únete a NutriFit Planner</string>
-    <string name="FieldRegisterText">Nombre completo</string>
-    <string name="FieldRegisterText2">Correo electrónico</string>
-    <string name="FieldUsuarioText3">Nombre de usuario</string>
-    <string name="FieldTelefonoText4">Número de teléfono</string>
+    <string name="FieldRegisterText">Nombre</string>
+    <string name="FieldRegisterText2">Apellidos</string>
+    <string name="FieldUsuarioText3">Correo Electrónico</string>
+    <string name="FieldTelefonoText4">Usuario</string>
     <string name="FieldContraseñaText5">Contraseña</string>
-    <string name="FieldConfrimContraseñaText6">Confirmar contraseña</string>
     <string name="ButtonRegisterField">Unirme</string>
     <string name="alternativa">O unete con</string>
     <string name="tieneCuenta">¿Ya tiene una cuenta unida?</string>
@@ -57,17 +61,21 @@
     <string name="textCard4">Perfil De Salud</string>
 
     <string name="primeryCase">Peso (Kg)</string>
-    <string name="caseTwo">Sin Datos </string>
+    <string name="caseTwo">Grasa Corporal </string>
+    <string name="caseThree">Masa Muscular </string>
     <string name="caseTwoPorcen">201</string>
     <string name="caseTwoPorcen2">300</string>
     <string name="caseTwoPorcen3">320</string>
     <string name="caseTwoPorcen4">420</string>
 
+    <string name="password_hint">Contraseña</string>
+    <string name="password_requirements">Requisitos de contraseña:</string>
+
     <string name="listAlimen">Lista de tus planes alimenticios</string>
 
-    <string name="consultasAhora">Reservaciones en progreso</string>
-    <string name="consultaProximas">Próximas Reservaciones</string>
-    <string name="consultaPasadas">Reservaciones Anteriores</string>
+    <string name="consultasAhora">Reservaciones En Espera</string>
+    <string name="consultaProximas">Reservaciones Confirmadas / En Progreso</string>
+    <string name="consultaPasadas">Reservaciones Concluidas</string>
     <string name="historialConsulta">Tu Historial Nutricional Personalizado</string>
 
     <string name="type_your_message">Escribe tu mensaje</string>
@@ -136,7 +144,9 @@
     <string name="exp">Experiencia</string>
     <string name="exp2">3 años</string>
     <string name="_20_33">20.33</string>
-    <string name="Esp">Espicialidad</string>
+    <string name="Esp">Perfil</string>
+    <string name="Esp3">Especialidad</string>
+
     <string name="Esp2">Autoinmune</string>
     <string name="b">B+</string>
 
@@ -210,15 +220,16 @@
         <item>8 PM</item>
     </string-array>
 
-    <string name="titleDefNutri1">Sopa de letras</string>
+    <string name="titleDefNutri1">Los Más Recientes</string>
     <string name="titleDefNutri2">Memoramas</string>
 
-    <string name="titleDefNutri3">Próximos</string>
+    <string name="mis_nutriologos">Mis Nutriologos</string>
+    <string name="titleDefNutri3">Próximas A Publicar</string>
     <string name="titleSubDef">Diviértete y Aprende con NutriFit</string>
 
-    <string name="correoProfile">LyrcaLumina@hotmail.com</string>
-    <string name="nameProfile">Alycra Lumina </string>
-    <string name="telephoneProfile">+52 9961025841</string>
+    <string name="correoProfile">Cargando...</string>
+    <string name="nameProfile">Cargando... </string>
+    <string name="telephoneProfile">Cargando...</string>
     <string name="myInformation">Mi Perfil</string>
 
     <string name="editProfile">Mi información</string>
@@ -226,6 +237,9 @@
     <string name="Nombres">Nombre</string>
     <string name="Apellidos">Apellidos</string>
     <string name="edad">Edad</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="localidad">Localidad</string>
+
     <string name="fechanac">Fecha Nacimiento</string>
     <string name="UsuarioName">Nombre Usuario</string>
     <string name="CorreoElec">Correo Electrónico</string>
@@ -243,19 +257,22 @@
 
 
 
-    <string name="send_message">Reservar Cita</string>
+    <string name="send_message">Reservar Consulta Por App</string>
+    <string name="send_message2">Reservar Consulta Presencial </string>
+
     <string name="service_price_240_consulted">Precio por la cita</string>
-    <string name="_45">100 USD</string>
-    <string name="_40">50 USD</string>
+    <string name="_45">585.00 MXN</string>
+    <string name="_46">600.00 MXN</string>
+    <string name="_40">292.00 MXN</string>
     <string name="rate_per_30_minutes">Tarifa por 1 hora</string>
-    <string name="rate_per_32_minutes">El especialista te contactará para coordinar el método de pago</string>
+    <string name="rate_per_32_minutes">El especialista se pondrá en contacto contigo para coordinar el método de pago y, si es necesario, proporcionarte la información sobre la clínica y su ubicación.</string>
     <string name="rate_per_20_minutes">Tarifa por 30 minutos</string>
-    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía mensajes y adjuntos, y describe el motivo de tu cita. Recibe la primera respuesta en un máximo de 2 horas.</string>
-    <string name="personal_call">Llamada Personal</string>
+    <string name="send_multiple_messages_attachments_get_first_reponse_within_4_hours">Envía tu mensaje detallando el motivo de tu cita y recibe una respuesta en un máximo de 2 horas. La comunicación será ágil y efectiva para garantizar una atención rápida y precisa.</string>
+    <string name="personal_call">Consulta Por Llamada</string>
     <string name="service_price_103_consulted">Precio del Servicio</string>
     <string name="available_time">Horario Disponible</string>
     <string name="_30_minutes_call_durations_get_first_reponse_within_30_minutes">Duración de la llamada: 30 minutos. </string>
-    <string name="save">Guardar</string>
+    <string name="save">Generar Cita</string>
     <string name="description_res">Motivo de la cita</string>
     <string name="description_consult">Consulta médica en línea con un especialista.</string>
     <string name="horario_consult">Horarios de reservaciones</string>
@@ -272,6 +289,8 @@
     <string name="horario2">Su próxima cita es</string>
 
     <string name="no_date_selected">No se ha seleccionado fecha y hora</string>
+
+    <string name="default_web_client_id">954683608340-ptu9sgm0it9abmssh951rnogs8p48t4f.apps.googleusercontent.com</string>
 
 
 </resources>

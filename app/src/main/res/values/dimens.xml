@@ -11,4 +11,6 @@
     <dimen name="section_spacing">@dimen/_10sdp</dimen>
     <dimen name="inner_spacing">@dimen/_5sdp</dimen>
     <dimen name="status_bar_spacing">@dimen/_20sdp</dimen>
+    <dimen name="badge_horizontal_offset">-24dp</dimen>
+    <dimen name="badge_vertical_offset">-24dp</dimen>
 </resources>

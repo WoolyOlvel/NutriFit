@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.planList.HistoryNutriListFragment" />
+
+        <variable
+            name="consulta"
+            type="com.ascrib.nutrifit.model.Consulta" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_spacing"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->handler.consultaClicked(consulta)}"
+            android:orientation="horizontal"
+            android:padding="@dimen/section_spacing">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/image_nutriologo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:imageUrl="@{consulta.foto}"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/userdummy"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/inner_spacing"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/inner_spacing">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_tipo_consulta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{consulta.tipo_consulta}"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_h6"
+                        tools:text="Consulta inicial" />
+
+                    <TextView
+                        android:id="@+id/text_status_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="@{consulta.estado_proximaConsulta}"
+                        android:textSize="@dimen/text_size_h6"
+                        tools:text="En progreso"
+                        tools:ignore="RelativeOverlap" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/text_nombre_nutriologo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:text="@{consulta.nombreOriginal}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_h5"
+                    android:textStyle="bold"
+                    tools:text="Dr. Juan Pérez"/>
+
+                <TextView
+                    android:id="@+id/fecha_consulta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{consulta.fecha_consulta}"
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h6"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

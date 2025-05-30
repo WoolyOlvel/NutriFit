@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797759450986",
+    "project_id": "nutrifit-planner",
+    "storage_bucket": "nutrifit-planner.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797759450986:android:45d0249826776655377f13",
+        "android_client_info": {
+          "package_name": "com.ascrib.nutrifit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDibEH9J74Hasne90uyPj9Pbbf6oAGtctU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -25,4 +25,7 @@
     <color name="teal_light">#A5E8E4</color>
     <color name="light_gray">#EEEEEE</color>
     <color name="teal_dark">#00857E</color>
+
+    <color name="unread_notification_bg">#F0F8FF</color>
+
 </resources>

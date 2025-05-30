@@ -73,12 +73,56 @@
     <fragment
         android:id="@+id/myPersonSaludFragment"
         android:name="com.ascrib.nutrifit.ui.profile.PerfilSaludFragment"
-        android:label="MyPersonalSalud"/>
+        android:label="MyPersonalSalud">
+        <action
+            android:id="@+id/action_myPersonSaludFragment_to_miperfilsaludFragment"
+            app:destination="@id/miPerfilSaludFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/miPerfilSaludFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.MiPerfilSaludFragment"
+        android:label="MiPerfilSaludFragment">
+        <argument
+            android:name="consultaId"
+            app:argType="integer" />
+        <argument
+            android:name="pacienteId"
+            app:argType="integer" />
+        <argument
+            android:name="nutriologoId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/myProgressFragment"
         android:name="com.ascrib.nutrifit.ui.profile.ProgressFragment"
-        android:label="MyProgress"/>
+        android:label="MyProgress">
+        <action
+            android:id="@+id/action_progressFragment_to_miProgresoFragment"
+            app:destination="@id/miProgresoFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/miProgresoFragment"
+        android:name="com.ascrib.nutrifit.ui.profile.MiProgresoFragment"
+        android:label="MiProgresoFragment">
+        <argument
+            android:name="consultaId"
+            app:argType="integer" />
+        <argument
+            android:name="pacienteId"
+            app:argType="integer" />
+        <argument
+            android:name="nutriologoId"
+            app:argType="integer" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/planListFragment"

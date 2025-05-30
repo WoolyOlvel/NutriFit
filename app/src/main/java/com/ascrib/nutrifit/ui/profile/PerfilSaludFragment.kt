@@ -1,6 +1,11 @@
 package com.ascrib.nutrifit.ui.profile
 import android.content.Context
+import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,17 +13,29 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ascrib.nutrifit.R
+import com.ascrib.nutrifit.api.ApiService
+import com.ascrib.nutrifit.api.RetrofitClient
+import com.ascrib.nutrifit.api.models.ConsultaData
+import com.ascrib.nutrifit.databinding.FragmentMyprogressBinding
 import com.ascrib.nutrifit.databinding.FragmentPerfilSaludBinding
+import com.ascrib.nutrifit.repository.NotificacionRepository
+import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologosAdapter
+import com.ascrib.nutrifit.ui.dashboard.adapter.NutriologosGAdapter
+import com.ascrib.nutrifit.util.Statusbar
 import com.ascrib.nutrifit.util.getStatusBarHeight
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
@@ -27,10 +44,30 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PerfilSaludFragment : Fragment() {
 
-    lateinit var binding: FragmentPerfilSaludBinding
+    private lateinit var binding: FragmentPerfilSaludBinding
+    private lateinit var sharedPref: SharedPreferences
+    private lateinit var apiService: ApiService
+    private lateinit var adapter: NutriologosGAdapter
+    companion object {
+        var status = false
+        private var lastNotificationCount = 0
+        private var isInitialLoad = true
+
+        // Nueva lista para mantener los conteos por paciente
+        private val notificationCounts = mutableMapOf<Int, Int>()
+    }
+    private val notificacionRepository = NotificacionRepository()
+    private val notificationHandler = Handler(Looper.getMainLooper())
+    private var notificationRunnable: Runnable? = null
+    private val pollingInterval = 15000L // 15 segundos
+    private var isPollingActive = false
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +75,16 @@ class PerfilSaludFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_perfil_salud, container, false)
+        sharedPref = requireActivity().getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        apiService = RetrofitClient.apiService
+        Statusbar.setStatusbarTheme(
+            requireContext(),
+            requireActivity().window,
+            R.color.lightGrey,
+            binding.root
+        )
+        mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil)
+        setupRecyclerView()
 
         toolbarConfig()
         return binding.root
@@ -45,8 +92,129 @@ class PerfilSaludFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadConsultas()
+        startNotificationPolling()
+        loadNotificationCount()
+    }
 
-        makePieChart()
+
+    private fun setupRecyclerView() {
+        adapter = NutriologosGAdapter(emptyList()) { consulta ->
+            onConsultaClicked(consulta)
+        }
+
+        binding.recyclerViewNutriologos.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewNutriologos.adapter = adapter
+    }
+
+    private fun loadConsultas() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val pacienteIds = getPacienteIdsFromSharedPref()
+                val nutriologoIds = getNutriologoIdsFromSharedPref()
+
+                if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
+                    showMessage("No se encontraron IDs de paciente o nutriólogo")
+                    return@launch
+                }
+
+                val response = apiService.getConsultaPorPaciente4(pacienteIds, nutriologoIds)
+
+                if (response.isSuccessful && response.body()?.success == true) {
+                    val consultas = response.body()?.data ?: emptyList()
+                    adapter = NutriologosGAdapter(consultas) { consulta ->
+                        onConsultaClicked(consulta)
+                    }
+                    binding.recyclerViewNutriologos.adapter = adapter
+                } else {
+                    showMessage("Error al obtener consultas: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                showMessage("Error: ${e.message}")
+            }
+        }
+    }
+
+    fun onConsultaClicked(consulta: ConsultaData) {
+        // Guardar los IDs necesarios en SharedPreferences o pasarlos como argumentos
+        sharedPref.edit().apply {
+            putInt("CONSULTA_ID", consulta.consulta_id)
+            putInt("PACIENTE_ID", consulta.paciente_id)
+            putInt("NUTRIOLOGO_ID", consulta.nutriologo_id)
+            apply()
+        }
+
+        findNavController().navigate(
+            R.id.action_myPersonSaludFragment_to_miperfilsaludFragment,
+            bundleOf(
+                "consultaId" to consulta.consulta_id,
+                "pacienteId" to consulta.paciente_id,
+                "nutriologoId" to consulta.nutriologo_id
+            )
+        )
+    }
+
+    private fun getPacienteIdsFromSharedPref(): List<Int> {
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
+
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
+
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
+
+    private fun getNutriologoIdsFromSharedPref(): List<Int> {
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        val ids = mutableListOf<Int>()
+
+        // 1. Obtener el ID principal del nutriólogo (guardado como Int)
+        val mainNutriologoId = sharedPref.getInt("nutriologo_id", 0)
+        if (mainNutriologoId != 0) {
+            ids.add(mainNutriologoId)
+        }
+
+        // 2. Intentar obtener como Set<String>
+        try {
+            val nutriologoIdsSet = sharedPref.getStringSet("user_id_nutriologo", null)
+            nutriologoIdsSet?.forEach {
+                try {
+                    ids.add(it.toInt())
+                } catch (e: NumberFormatException) {
+                    // Ignorar valores no numéricos
+                }
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, intentar otras formas
+        }
+
+        // 3. Intentar obtener como String individual
+        try {
+            val singleIdStr = sharedPref.getString("user_id_nutriologo", null)
+            singleIdStr?.toIntOrNull()?.let { ids.add(it) }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        // 4. Intentar obtener como Int individual (último recurso)
+        try {
+            val singleIdInt = sharedPref.getInt("user_id_nutriologo", 0)
+            if (singleIdInt != 0) {
+                ids.add(singleIdInt)
+            }
+        } catch (e: ClassCastException) {
+            // Si falla, continuar
+        }
+
+        return ids.distinct().also {
+            Log.d("NutriologoIds", "IDs obtenidos: $it")
+        }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun toolbarConfig() {
@@ -68,6 +236,9 @@ class PerfilSaludFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
                 menuInflater.inflate(R.menu.header_menu, menu)
+                menu.findItem(R.id.action_notification)?.let { menuItem ->
+                    NotificationBadgeUtils.setupBadge(requireActivity() as AppCompatActivity, menuItem)
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -85,305 +256,143 @@ class PerfilSaludFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun makePieChart() {
-        // Configurar el primer gráfico (proteína)
-        setupLineChart(binding.chartLinealSalud, "Proteína", 13f, 17f, "proteina")
-        loadLineChartData(
-            binding.chartLinealSalud,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Proteína",
-            R.color.teal,
-            R.color.teal_light
-        )
+    private fun startNotificationPolling() {
+        if (isPollingActive) return
 
-        // Configurar el segundo gráfico (edad corporal)
-        setupLineChart(binding.chartLinealSalud2, "Edad Corporal", 14f, 18f, "edad_corporal")
-        loadLineChartData(
-            binding.chartLinealSalud2,
-            getEdadCorporalData(),
-            getFormattedDates(),
-            "Edad Corporal",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud3, "Masa Esqueletico", 13f, 17f,"masa_esqueletico")
-        loadLineChartData(
-            binding.chartLinealSalud3,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Masa Esqueletico (Kg)",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud4, "Grasa Vísceral", 12f, 17f,"grasa_visceral")
-        loadLineChartData(
-            binding.chartLinealSalud4,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Grasa Vísceral",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud5, "Masa Muscular", 11f, 17f,"masa_muscular")
-        loadLineChartData(
-            binding.chartLinealSalud5,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Masa Muscular",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud6, "Perdida De Grasa", 13f, 17f,"perdida_grasa")
-        loadLineChartData(
-            binding.chartLinealSalud6,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Perdida De Grasa",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud7, "Grasa Subcutanea", 12f, 17f,"grasa_subcutanea")
-        loadLineChartData(
-            binding.chartLinealSalud7,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Grasa Subcutanea",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud8, "Músculo Esquelético", 12f, 17f,"musculo_esqueletico")
-        loadLineChartData(
-            binding.chartLinealSalud8,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Músculo Esquelético",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud9, "BMR", 14f, 17f,"bmr")
-        loadLineChartData(
-            binding.chartLinealSalud9,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "BMR",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud10, "Grasa Corporal", 12f, 17f,"grasa_corporal")
-        loadLineChartData(
-            binding.chartLinealSalud10,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Grasa Corporal",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud11, "Agua Corporal", 12f, 17f,"agua")
-        loadLineChartData(
-            binding.chartLinealSalud11,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Agua Corporal",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud12, "Peso", 12f, 17f,"peso")
-        loadLineChartData(
-            binding.chartLinealSalud12,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "Peso",
-            R.color.teal,
-            R.color.teal_light
-        )
-
-        setupLineChart(binding.chartLinealSalud13, "IMC", 12f, 17f,"imc")
-        loadLineChartData(
-            binding.chartLinealSalud13,
-            listOf(14.7f, 14.9f, 14.95f, 15.3f, 15.2f),
-            getFormattedDates(),
-            "IMC",
-            R.color.teal,
-            R.color.teal_light
-        )
-
+        isPollingActive = true
+        notificationRunnable = object : Runnable {
+            override fun run() {
+                loadNotificationCount()
+                notificationHandler.postDelayed(this, pollingInterval)
+            }
+        }
+        notificationHandler.post(notificationRunnable!!)
     }
 
-    private fun setupLineChart(lineChart: com.github.mikephil.charting.charts.LineChart, title: String, minY: Float, maxY: Float, chartType: String) {
-        // Disable description and legend
-        lineChart.description.isEnabled = false
-        lineChart.legend.isEnabled = false
-
-        // Remove chart border
-        lineChart.setDrawBorders(false)
-
-        // Set background color
-        lineChart.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.white))
-
-        // Configure X-axis
-        val xAxis = lineChart.xAxis
-        xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-        xAxis.setDrawAxisLine(true)
-        xAxis.granularity = 1f
-        xAxis.valueFormatter = IndexAxisValueFormatter(getFormattedDates())
-        xAxis.textColor = ContextCompat.getColor(requireContext(), R.color.black)
-        xAxis.textSize = 10f  // Adjust text size as needed
-
-        // Configure Y-axis
-        val yAxisLeft = lineChart.axisLeft
-        yAxisLeft.setDrawGridLines(true)
-        yAxisLeft.gridColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-        yAxisLeft.axisMinimum = minY // Different min values for different charts
-        yAxisLeft.axisMaximum = maxY // Different max values for different charts
-        yAxisLeft.granularity = 2f
-        yAxisLeft.textColor = ContextCompat.getColor(requireContext(), R.color.black)
-        yAxisLeft.textSize = 10f  // Adjust text size as needed
-
-        // Disable right Y-axis
-        lineChart.axisRight.isEnabled = false
-
-        // Enable touch gestures and highlighting
-        lineChart.setTouchEnabled(true)
-        lineChart.isDragEnabled = true  // Enable horizontal scrolling
-        lineChart.isScaleXEnabled = true  // Enable X-axis scaling
-        lineChart.isScaleYEnabled = true  // Enable Y-axis scaling
-        lineChart.setPinchZoom(true)  // Enable pinch zoom
-
-        // Set max visible entries (for horizontal scrolling)
-        lineChart.setVisibleXRangeMaximum(4f)  // Show 4 entries at a time
-
-        // Setup marker view for tooltip
-        val markerView = CustomMarkerView(requireContext(), R.layout.marker_view_layout, chartType)
-        lineChart.marker = markerView
-
-        // Enable highlighting
-        lineChart.isHighlightPerDragEnabled = true
-        lineChart.isHighlightPerTapEnabled = true
+    private fun stopNotificationPolling() {
+        isPollingActive = false
+        notificationRunnable?.let {
+            notificationHandler.removeCallbacks(it)
+        }
     }
 
-    private fun loadLineChartData(
-        lineChart: com.github.mikephil.charting.charts.LineChart,
-        values: List<Float>,
-        dates: List<String>,
-        label: String,
-        lineColor: Int,
-        fillColor: Int
-    ) {
-        val entries = values.mapIndexed { index, value -> Entry(index.toFloat(), value) }
+    private fun checkForNewNotifications(newCounts: Map<Int, Int>): Boolean {
+        // Caso inicial (primera carga)
+        if (PerfilSaludFragment.notificationCounts.isEmpty()) return false
 
-        val dataSet = LineDataSet(entries, label)
-
-        // Configure line appearance
-        dataSet.color = ContextCompat.getColor(requireContext(), lineColor)
-        dataSet.lineWidth = 2f
-
-        // Configure data points
-        dataSet.setDrawCircles(true)
-        dataSet.circleRadius = 4f
-        dataSet.setCircleColor(ContextCompat.getColor(requireContext(), lineColor))
-        dataSet.circleHoleColor = ContextCompat.getColor(requireContext(), android.R.color.white)
-        dataSet.circleHoleRadius = 2f
-
-        // Configure fill area
-        dataSet.setDrawFilled(true)
-        dataSet.fillAlpha = 50
-        dataSet.fillColor = ContextCompat.getColor(requireContext(), fillColor)
-
-        // Configure value text - dont show it directly on points
-        dataSet.setDrawValues(false)
-
-        // Enable highlighting of values
-        dataSet.highLightColor = ContextCompat.getColor(requireContext(), R.color.teal_dark)
-        dataSet.highlightLineWidth = 1.5f
-        dataSet.setDrawHighlightIndicators(true)
-        dataSet.enableDashedHighlightLine(10f, 5f, 0f)
-
-        // Create and set data
-        val lineData = LineData(dataSet)
-        lineChart.data = lineData
-
-        // Animate the chart
-        lineChart.animateX(1000)
-
-        // Refresh the chart
-        lineChart.invalidate()
-    }
-    // Formato de fechas en el eje X
-    private fun getFormattedDates(): List<String> {
-        return listOf("14/02", "21/02", "26/02", "03/03", "13/03")
+        // Verificar si algún paciente tiene más notificaciones que antes
+        for ((pacienteId, count) in newCounts) {
+            val previousCount = PerfilSaludFragment.notificationCounts[pacienteId] ?: 0
+            if (count > previousCount) {
+                return true
+            }
+        }
+        return false
     }
 
+    private fun getAllPacienteIds(sharedPref: SharedPreferences): List<Int> {
+        // 1. Obtener el ID principal
+        val mainPacienteId = sharedPref.getInt("Paciente_ID", 0).takeIf { it != 0 } ?: return emptyList()
 
+        // 2. Obtener IDs adicionales de SharedPreferences
+        val additionalIds = try {
+            sharedPref.getStringSet("paciente_ids", emptySet())?.mapNotNull { it.toIntOrNull() } ?: emptyList()
+        } catch (e: ClassCastException) {
+            emptyList()
+        }
 
-    class CustomMarkerView(context: Context, layoutResource: Int, private val chartType: String = "default") :
-        MarkerView(context, layoutResource) {
+        // 3. Combinar y eliminar duplicados
+        return (listOf(mainPacienteId) + additionalIds).distinct()
+    }
 
-        private val tvContent: TextView = findViewById(R.id.tvContent)
+    private fun loadNotificationCount() {
+        if (!isAdded || activity == null) return
 
-        // This method is called when a value is selected/highlighted
-        override fun refreshContent(e: Entry?, highlight: Highlight?) {
-            if (e != null) {
-                // Formatear el valor según el tipo de gráfico
-                when (chartType) {
-                    "edad_corporal" -> {
-                        // Para edad corporal, mostrar como entero
-                        tvContent.text = String.format("%d años", e.y.toInt())
+        lifecycleScope.launch {
+            try {
+                val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+
+                // 1. Obtener todos los IDs de paciente
+                val pacienteIds = getAllPacienteIds(sharedPref)
+                if (pacienteIds.isEmpty()) return@launch
+
+                var totalCount = 0
+                val newCounts = mutableMapOf<Int, Int>()
+
+                // 2. Contar notificaciones para cada paciente
+                for (pacienteId in pacienteIds) {
+                    val count = withContext(Dispatchers.IO) {
+                        notificacionRepository.contarNotificacionesNoLeidas(pacienteId)
                     }
-                    "proteina" -> {
-                        // Para proteína, mantener un decimal
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"masa_esqueletico" ->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"grasa_visceral"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }"masa_muscular"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"perdida_grasa"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"grasa_subcutanea"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"musculo_esqueletico"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"bmr"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }"grasa_corporal"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"agua"->{
-                        tvContent.text = String.format("%.1f%%", e.y)
-                    }"peso"->{
-                        tvContent.text = String.format("%.1f Kg", e.y.toDouble())
-                    }"imc"->{
-                        tvContent.text = String.format("%.1f ", e.y.toDouble())
-                    }else -> {
-                        // Formato predeterminado
-                        tvContent.text = String.format("%.1f", e.y)
+                    newCounts[pacienteId] = count
+                    totalCount += count
+                }
+
+                activity?.runOnUiThread {
+                    // 3. Verificar si hay nuevas notificaciones
+                    val hasNewNotifications = checkForNewNotifications(newCounts)
+
+                    // 4. Reproducir sonido si hay nuevas notificaciones
+                    if (hasNewNotifications && !PerfilSaludFragment.isInitialLoad) {
+                        playNotificationSound()
+                    }
+
+                    // 5. Actualizar los conteos
+                    PerfilSaludFragment.notificationCounts.clear()
+                    PerfilSaludFragment.notificationCounts.putAll(newCounts)
+                    PerfilSaludFragment.lastNotificationCount = totalCount
+                    PerfilSaludFragment.isInitialLoad = false
+
+                    // 6. Actualizar el badge
+                    NotificationBadgeUtils.updateBadgeCount(totalCount)
+                    requireActivity().invalidateOptionsMenu()
+                }
+            } catch (e: Exception) {
+                // Reintentar más rápido si hay error
+                if (isPollingActive) {
+                    notificationHandler.postDelayed({ loadNotificationCount() }, 5000)
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Liberar recursos del MediaPlayer
+        stopNotificationPolling()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopNotificationPolling()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isPollingActive) {
+            startNotificationPolling()
+        }
+
+        // Carga inmediata de notificaciones cuando vuelve el fragmento
+        loadNotificationCount()
+    }
+
+    private fun playNotificationSound() {
+        try {
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil).apply {
+                    setOnCompletionListener {
+                        it.release()
+                        mediaPlayer = null
                     }
                 }
             }
-            super.refreshContent(e, highlight)
-        }
-
-        // Offset to ensure the tooltip is drawn at the correct position
-        override fun getOffset(): MPPointF {
-            return MPPointF(-(width / 2f), -height.toFloat() - 10)
+            mediaPlayer?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
-
-    private fun getEdadCorporalData(): List<Float> {
-        return listOf(15.5f, 15.7f, 15.3f, 16.1f, 16.2f) // Datos de ejemplo para el segundo gráfico
-    }
-
 
 }

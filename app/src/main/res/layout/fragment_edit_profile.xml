@@ -63,9 +63,10 @@
                                 android:layout_height="match_parent"
                                 android:contentDescription="@string/todo"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/perfil_prueba2" />
+                                android:src="@drawable/userdummy" />
 
                             <TextView
+                                android:id="@+id/foto"
                                 android:layout_width="@dimen/_80sdp"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_alignParentBottom="true"
@@ -90,6 +91,7 @@
                         android:textStyle="bold"/>
 
                     <EditText
+                        android:id="@+id/nombre"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -112,6 +114,76 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/apellidos"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+                    <!-- Este es email -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/CorreoElec"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/numTelefono"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/telefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/UsuarioName"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/usuario"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -134,6 +206,7 @@
                         android:textStyle="bold"/>
 
                     <EditText
+                        android:id="@+id/edad"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -146,6 +219,54 @@
                         android:textSize="@dimen/text_size_h5"
                         tools:ignore="LabelFor" />
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/ciudad"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/ciudad"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/inner_spacing"
+                        android:text="@string/localidad"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/localidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:background="@drawable/background_radius"
+                        android:backgroundTint="@color/white"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingHorizontal="@dimen/section_spacing"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/text_size_h5"
+                        tools:ignore="LabelFor" />
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -156,57 +277,14 @@
                         android:textStyle="bold"/>
 
                     <EditText
+                        android:id="@+id/fecha_nacimiento"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
                         android:background="@drawable/background_radius"
                         android:backgroundTint="@color/white"
                         android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/UsuarioName"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/CorreoElec"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="textEmailAddress"
+                        android:inputType="date"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
@@ -222,47 +300,29 @@
                         android:textStyle="bold"/>
 
                     <RadioGroup
+                        android:id="@+id/genero"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/masculino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/gen1" />
 
                         <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/femenino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/gen2" />
 
                         <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/otros"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/gen_3" />
                     </RadioGroup>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/numTelefono"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_marginBottom="@dimen/inner_spacing"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:importantForAutofill="no"
-                        android:inputType="phone"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:textSize="@dimen/text_size_h5"
-                        tools:ignore="LabelFor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -274,6 +334,7 @@
                         android:textStyle="bold"/>
 
                     <EditText
+                        android:id="@+id/enfermedad"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"

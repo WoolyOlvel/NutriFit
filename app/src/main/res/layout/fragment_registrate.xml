@@ -17,6 +17,7 @@
 
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/layout_button"
@@ -61,6 +62,7 @@
                         android:textSize="@dimen/text_size_h5"/>
 
                     <EditText
+                        android:id="@+id/nombreEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -82,6 +84,7 @@
                         android:textSize="@dimen/text_size_h5"/>
 
                     <EditText
+                        android:id="@+id/apellidosEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -103,6 +106,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/emailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -124,6 +128,7 @@
                         android:textSize="@dimen/text_size_h5" />
 
                     <EditText
+                        android:id="@+id/usuarioEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/inner_spacing"
@@ -131,7 +136,6 @@
                         android:backgroundTint="@color/white"
                         android:importantForAutofill="no"
                         tools:ignore="LabelFor"
-                        android:inputType="phone"
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5" />
@@ -144,36 +148,41 @@
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h5" />
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordInputLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:importantForAutofill="no"
-                        tools:ignore="LabelFor"
-                        android:textSize="@dimen/text_size_h5" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/colorVariant"
+                        android:minHeight="@dimen/_35sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/passwordEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="@dimen/_35sdp"
+                            android:background="@drawable/background_radius"
+                            android:backgroundTint="@color/white"
+                            android:inputType="textPassword"
+                            android:paddingVertical="@dimen/section_spacing"
+                            android:paddingHorizontal="@dimen/section_spacing"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:importantForAutofill="no"
+                            tools:ignore="LabelFor"
+                            android:textSize="@dimen/text_size_h5" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/inner_spacing"
-                        android:text="@string/FieldConfrimContraseñaText6"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5" />
-
-                    <EditText
+                        android:id="@+id/passwordRequirements"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:background="@drawable/background_radius"
-                        android:backgroundTint="@color/white"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="@dimen/section_spacing"
-                        android:textColorHint="@color/grey"
-                        android:importantForAutofill="no"
-                        tools:ignore="LabelFor"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/inner_spacing"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:text="@string/password_requirements"
+                        android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h5" />
 
                     <com.google.android.material.button.MaterialButton
@@ -189,39 +198,6 @@
                         app:cornerRadius="@dimen/inner_spacing"
                         app:elevation="0dp"
                         app:backgroundTint="@color/colorPrimary"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginVertical="@dimen/inner_spacing"
-                        android:text="@string/alternativa"
-                        android:textColor="@color/colorVariant"
-                        android:textSize="@dimen/text_size_h5"
-                        android:textStyle="bold"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginVertical="@dimen/inner_spacing"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
-                            android:background="@color/white"
-                            android:contentDescription="TODO"
-                            android:src="@drawable/googlelogo"/>
-
-                        <ImageView
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
-                            android:layout_marginStart="@dimen/inner_spacing"
-                            android:contentDescription="@string/todo"
-                            android:src="@drawable/facebooklogo" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 

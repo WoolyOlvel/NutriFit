@@ -19,7 +19,7 @@ import com.ascrib.nutrifit.R
 import com.ascrib.nutrifit.databinding.FragmentHistoryListBinding
 import com.ascrib.nutrifit.handler.AppointmentHandler
 import com.ascrib.nutrifit.model.Appointment
-import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
+//import com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter
 import com.ascrib.nutrifit.util.getStatusBarHeight
 
 class HistoryFragment : Fragment(), AppointmentHandler {
@@ -27,7 +27,7 @@ class HistoryFragment : Fragment(), AppointmentHandler {
 
     lateinit var model: DashboardViewModel
 
-    lateinit var appointmentAdapter: AppointmentAdapter
+//    lateinit var appointmentAdapter: AppointmentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,7 @@ class HistoryFragment : Fragment(), AppointmentHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        makeAppointment()
+//        makeAppointment()
     }
 
     private fun toolbarConfig() {
@@ -89,23 +89,23 @@ class HistoryFragment : Fragment(), AppointmentHandler {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun makeAppointment() {
-        appointmentAdapter = AppointmentAdapter(model.getAppointment(), this)
-        binding.recyclerviewInProgress.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.recyclerviewNextConsults.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-
-        binding.recyclerviewPastConsults.apply {
-            adapter = appointmentAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-    }
+//    fun makeAppointment() {
+//        appointmentAdapter = AppointmentAdapter(model.getAppointment(), this)
+//        binding.recyclerviewInProgress.apply {
+//            adapter = appointmentAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//
+//        binding.recyclerviewNextConsults.apply {
+//            adapter = appointmentAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//
+//        binding.recyclerviewPastConsults.apply {
+//            adapter = appointmentAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//    }
 
     override fun appointmentClicked(appointment: Appointment) {
         findNavController().navigate(

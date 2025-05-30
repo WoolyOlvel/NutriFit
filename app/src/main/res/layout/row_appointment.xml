@@ -6,12 +6,12 @@
     <data>
         <variable
             name="handler"
-            type="com.ascrib.nutrifit.ui.dashboard.adapter.AppointmentAdapter" />
+            type="com.ascrib.nutrifit.ui.dashboard.adapter.NutriologoAdapter" />
 
         <variable
-            name="appointment"
-            type="com.ascrib.nutrifit.model.Appointment" />
-
+            name="nutriologo"
+            type="com.ascrib.nutrifit.model.Nutriologo" />
+        <import type="android.text.TextUtils" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->handler.onAppointmentClicked(appointment)}"
+            android:onClick="@{()->handler.onAppointmentClicked(nutriologo)}"
             android:orientation="horizontal"
             android:padding="@dimen/section_spacing">
 
@@ -37,7 +37,7 @@
                 app:cardCornerRadius="@dimen/_5sdp">
 
                 <ImageView
-                    imageLoad="@{appointment.image}"
+                    app:imageUrl="@{nutriologo.foto}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/todo"
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="@{appointment.type}"
+                        android:text="@{nutriologo.modalidad}"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/text_size_h6" />
 
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="@{appointment.status}"
+                        android:text="@{nutriologo.disponibilidad}"
                         android:textColor="@color/colorSecondary"
                         android:textSize="@dimen/text_size_h6"
                         tools:ignore="RelativeOverlap" />
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/_2sdp"
-                    android:text="@{appointment.name}"
+                    android:text="@{nutriologo.nombreCompleto}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_h5"
                     android:textStyle="bold" />
@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{appointment.time}"
+                    android:text="@{nutriologo.especialidad}"
                     android:textColor="@color/colorVariant"
                     android:textSize="@dimen/text_size_h6" />
 

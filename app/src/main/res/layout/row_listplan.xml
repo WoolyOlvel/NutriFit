@@ -5,11 +5,11 @@
     <data>
         <variable
             name="handler"
-            type="com.ascrib.nutrifit.ui.dashboard.adapter.PlanListAdapter" />
+            type="com.ascrib.nutrifit.ui.dashboard.adapter.PlanAlimenticioAdapter" />
 
         <variable
             name="lisPlan"
-            type="com.ascrib.nutrifit.model.PlanList" />
+            type="com.ascrib.nutrifit.model.PlanAlimenticio" />
 
     </data>
 
@@ -41,7 +41,8 @@
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <ImageView
-                        imageLoad="@{lisPlan.image}"
+                        android:id="@+id/foto_paciente"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/todo"
@@ -58,9 +59,10 @@
                     android:paddingHorizontal="@dimen/inner_spacing">
 
                     <TextView
+                        android:id="@+id/nombreCompleto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{lisPlan.name}"
+                        android:text="@{lisPlan.nombreCompleto}"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_h5"
                         android:textStyle="bold" />
@@ -71,36 +73,39 @@
                         android:paddingVertical="@dimen/_2sdp">
 
                         <TextView
-                            android:id="@+id/text_gender"
+                            android:id="@+id/especial"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{lisPlan.especial}"
                             android:layout_alignParentStart="true"
-                            android:text="@{lisPlan.tipo}"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/text_size_h6" />
-
-                        <TextView
-                            android:id="@+id/text_status_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/text_gender"
-                            android:text="@{lisPlan.tiempo}"
-                            android:layout_marginStart="@dimen/inner_spacing"
                             android:textColor="@color/colorSecondary"
                             android:textSize="@dimen/text_size_h6" />
 
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/telefono_nutriologo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_spacing"
                         android:gravity="center_vertical"
-                        android:text="@{lisPlan.phone}"
+                        android:text="@{lisPlan.lic}"
                         android:textColor="@color/colorVariant"
                         android:textSize="@dimen/text_size_h6"
-                        app:drawableStartCompat="@drawable/ic_call"
+                        app:drawableStartCompat="@drawable/ic_doctor"
                         app:drawableTint="@color/red" />
+
+                    <TextView
+                        android:id="@+id/fecha_consulta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/inner_spacing"
+                        android:gravity="center_vertical"
+                        android:text="@{lisPlan.fecha}"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h6"
+                        app:drawableStartCompat="@drawable/ic_calendar"
+                        />
                 </LinearLayout>
             </LinearLayout>
 

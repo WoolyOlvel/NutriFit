@@ -8,8 +8,6 @@
             name="handler"
             type="com.ascrib.nutrifit.ui.dashboard.HomeFragment" />
 
-
-
     </data>
 
     <ScrollView
@@ -45,15 +43,17 @@
                     app:cardCornerRadius="@dimen/_12sdp">
 
                     <ImageView
+                        android:id="@+id/foto"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/perfil_prueba2"/>
+                        android:src="@drawable/userdummy"/>
 
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/mensageWelcome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/inner_spacing"
@@ -76,7 +76,10 @@
                 android:backgroundTint="@color/white"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@null"
-                app:queryHint="Buscar..."/>
+                app:queryHint="Buscar..."
+                android:focusable="false"
+                android:clickable="true"
+                android:onClick="@{()->handler.onSearchClicked()}"/>
 
             <RelativeLayout
                 android:id="@+id/layout_progress"

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 
@@ -57,6 +58,9 @@ dependencies {
     implementation(libs.ssp.android)
 
     implementation(libs.glide)
+    implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.common)
+    implementation(libs.androidx.bluetooth)
     kapt("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.ripplebackground)
     implementation(libs.smoothbottombar)
@@ -67,9 +71,14 @@ dependencies {
     implementation(libs.materialcalendarview)
     implementation(libs.mpandroidchart)
 
-
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    implementation(libs.play.services.auth)
+    implementation(libs.facebook.login)
 }
