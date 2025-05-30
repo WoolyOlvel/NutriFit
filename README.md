@@ -4,6 +4,32 @@
 
 ---
 
+### Previsualización NutriFit Planner 
+
+## Inicio
+
+<img src="https://drive.google.com/uc?export=view&id=1LJFfq52c8IwTsMhK_fTl5ieOtHOl8QBB" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=10EXCsis4B8kR2S8p5bv74u8qIVhSsOxw" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=1Cro56OB5_8qEbEsVxzYSi1fblR893NBX" alt="Inicio" width="250" height="500"/>
+
+
+## Panel
+
+<img src="https://drive.google.com/uc?export=view&id=1Iu66iqYytbKdlIuQg4x4iGoGpTqrQZNe" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=1xX63B_21MgAgjr6Qh5HbsRs8FDWlaxLj" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=1ZnR53_IG6D2gQyNCmdV160PuKkyVVt4t" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=12sA6Bg895subH4j2GQVgqgMHaA71Ah91" alt="Inicio" width="250" height="500"/>
+
+<img src="https://drive.google.com/uc?export=view&id=17Gm-JEb79gB3W7z0JO18unsl-bC970ma" alt="Inicio" width="250" height="500"/>
+
+
+---
+
 ## Integrantes ISC 8A
 - Quintal Pech Carlos Daniel 7647
 - Puc Yam Alan Antony 7637
