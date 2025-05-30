@@ -15,13 +15,13 @@
 <img src="https://drive.google.com/uc?export=view&id=1Cro56OB5_8qEbEsVxzYSi1fblR893NBX" alt="Inicio" width="250" height="500"/>
 
 
-## Panel
+## Panel  
 
-<img src="https://drive.google.com/uc?export=view&id=1Iu66iqYytbKdlIuQg4x4iGoGpTqrQZNe" alt="Inicio" width="250" height="500"/>
+<img src="https://drive.google.com/uc?export=view&id=11eaHlPcYmGBO8fWBEjG04_jGYKxmOIed" alt="Inicio" width="250" height="500"/>
 
-<img src="https://drive.google.com/uc?export=view&id=1xX63B_21MgAgjr6Qh5HbsRs8FDWlaxLj" alt="Inicio" width="250" height="500"/>
+<img src="https://drive.google.com/uc?export=view&id=1kj8lFOgRMBn0izPtpC5BzZh2USMr-QPd" alt="Inicio" width="250" height="500"/>
 
-<img src="https://drive.google.com/uc?export=view&id=1ZnR53_IG6D2gQyNCmdV160PuKkyVVt4t" alt="Inicio" width="250" height="500"/>
+<img src="https://drive.google.com/uc?export=view&id=1OurRpyHbIcFF0eAH4QTwvf4jI0ALa1O6" alt="Inicio" width="250" height="500"/>
 
 <img src="https://drive.google.com/uc?export=view&id=12sA6Bg895subH4j2GQVgqgMHaA71Ah91" alt="Inicio" width="250" height="500"/>
 
