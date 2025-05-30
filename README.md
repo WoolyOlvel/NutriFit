@@ -1,6 +1,6 @@
 # NutriFit
 
-**NutriFit Planner**: Comprehensive Appointment and Nutritional Plans Platform
+**NutriFit Planner**:  Plataforma integral para planificación de citas y planes nutricionales.
 
 ---
 
@@ -12,7 +12,7 @@
 
 ---
 
-## Descripción
+## 📖 Descripción
 
 NutriFit es una plataforma para la planificación de citas y la creación de planes nutricionales personalizados. La aplicación permite a los usuarios llevar un seguimiento detallado de sus citas y objetivos alimenticios, con herramientas para planificar y ajustar sus dietas según sus necesidades.
 
@@ -20,14 +20,14 @@ NutriFit es una plataforma para la planificación de citas y la creación de pla
 
 ## Características
 
-- Planificación de citas nutricionales.
-- Creación y seguimiento de planes alimenticios personalizados.
-- Interfaz intuitiva para usuarios y profesionales de la salud.
-- Estadísticas detalladas sobre el progreso nutricional.
+- 📅 Planificación de citas nutricionales.
+- 🍎 Creación y seguimiento de planes alimenticios personalizados.
+- 👤 Interfaz intuitiva para usuarios y profesionales de la salud.
+- 📊 Estadísticas detalladas sobre el progreso nutricional.
 
 ---
 
-## Requisitos
+## 🛠️ Requisitos
 
 Antes de ejecutar el proyecto, asegúrate de tener las siguientes herramientas y versiones instaladas:
 
@@ -66,12 +66,61 @@ Sigue estos pasos para clonar y ejecutar el proyecto localmente:
 
 ---
 
-## Uso
+## ⚙️ Configuración de conexión local a la base de datos
 
-Después de la instalación, puedes ejecutar el proyecto en un dispositivo o emulador de Android desde Android Studio:
+Como este proyecto está en fase de prototipo, la conexión al servidor es local. Asegúrate de que el dispositivo móvil y la computadora que ejecuta el servidor web (NutriFit - Panel Administrativo) estén conectados a la misma red Wi-Fi.
 
-1. Selecciona el dispositivo/emulador.
-2. Haz clic en el botón **Run** (el icono de play) para iniciar la aplicación.
+### 🔧 Archivos a modificar
+Ubícate en la carpeta com.ascrib.nutrifit, y realiza los siguientes cambios:
+
+  ### 1. api/RetrofitClient.kt . Busca la línea:
+    
+   ```bash
+       private const val BASE_URL = "http://192.168.50.221:8000/"
+ ```
+🔁 Reemplaza 192.168.50.221 por tu dirección IPv4 local. Puedes obtenerla con:
+
+   ```bash
+       ipconfig   # En Windows
+ ```
+
+### 2. ui/dashboard/adapter/ReservacionesAdapter.kt
+Busca:
+
+```bash
+    val correctedUrl = fotoUrl.replace("http://127.0.0.1:8000", "http://192.168.50.221:8000")
+```
+🔁 Sustituye 192.168.50.221 por tu IPv4.
+
+### 3. ui/form/planList/PlanListFragment.kt
+Busca:
+   
+```bash
+    val correctedUrl = url.replace("127.0.0.1", "192.168.50.221")
+```
+🔁 Sustituye también aquí la dirección "192.168.50.221" por tu IPv4.
+
+### 4. res/xml/network_security_config.xml
+Agrega tu IPv4 a la lista de dominios permitidos para evitar errores de conexión por seguridad de Android.
+   Ejemplo:
+
+```bash
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.50.1</domain> <!-- Ejemplo existente -->
+        <domain includeSubdomains="true">TU_DIRECCION_IPV4</domain> <!-- Agrega esta línea -->
+    </domain-config>
+</network-security-config>
+```
+⚠️ Nota: Sustituye TU_DIRECCION_IPV4 por la IP obtenida con ipconfig.
+
+---
+
+## 📱 Ejecución
+
+- 1 Conecta tu celular o inicia un emulador.
+- 2 Asegúrate de estar en la misma red Wi-Fi que el backend.
+- 3 Haz clic en Run (ícono ▶️) en Android Studio.
 
 ---
 
@@ -79,9 +128,24 @@ Después de la instalación, puedes ejecutar el proyecto en un dispositivo o emu
 
 ¡Las contribuciones son bienvenidas! Si tienes alguna idea para mejorar el proyecto, por favor abre un **pull request** o un **issue**.
 
+---
+
 ## Contacto
 
 Para más información, no dudes en ponerte en contacto:
 
 - **Correo electrónico**: [puc-alan20@hotmail.com](puc-alan20@hotmail.com)
 - **GitHub**: [@WoolyOlvel](https://github.com/WoolyOlvel)
+  
+---
+
+## 📄 Licencia
+Este proyecto se encuentra bajo la licencia MIT.
+
+---
+
+## © Derechos de Autor
+NutriFit Planner es un producto desarrollado y propiedad intelectual de:
+### ASCRIB
+  - Fundador: Alan Puc Yam
+  - Todos los derechos reservados.
