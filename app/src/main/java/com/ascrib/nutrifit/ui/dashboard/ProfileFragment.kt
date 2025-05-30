@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -445,6 +446,40 @@ class ProfileFragment : Fragment() {
                 // Log.e("HomeFragment", "Error: ${e.message}")
             }
         }
+    }
+
+    fun onLogoutClicked() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Cerrar sesión")
+            .setMessage("¿Estás seguro de que quieres cerrar tu sesión?")
+            .setPositiveButton("Sí") { _, _ -> performLogout() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+    private fun performLogout() {
+        // 1. Limpiar SharedPreferences
+        val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
+        sharedPref.edit().apply {
+            remove("remember_token")
+            remove("user_id")
+            remove("user_name")
+            remove("user_lastname")
+            remove("user_email")
+            remove("user_rol_id")
+            remove("Paciente_ID")
+            apply()
+        }
+
+        // 2. Detener cualquier proceso en curso
+        stopNotificationPolling()
+        mediaPlayer?.release()
+        mediaPlayer = null
+
+        // 3. Navegar al login
+        findNavController().navigate(R.id.action_profileFragment_a_loginFragment)
+
+        // 4. Mostrar mensaje
+        Toast.makeText(requireContext(), "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show()
     }
 
     private fun toolbarConfig() {

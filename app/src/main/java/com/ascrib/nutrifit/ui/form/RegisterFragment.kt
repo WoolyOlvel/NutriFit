@@ -1,12 +1,20 @@
 package com.ascrib.nutrifit.ui.form
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -26,7 +34,12 @@ import retrofit2.HttpException
 class RegisterFragment : Fragment() {
 
     lateinit var binding: FragmentRegistrateBinding
-
+    private val passwordPatterns = listOf(
+        ".{8,}" to "Al menos 8 caracteres",
+        ".*[A-Z].*" to "Al menos una mayúscula",
+        ".*[a-z].*" to "Al menos una minúscula",
+        ".*\\d.*" to "Al menos un número"
+    )
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +57,7 @@ class RegisterFragment : Fragment() {
         binding.layoutForm.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
+        setupPasswordValidation()
     }
 
     private fun toolbarConfig() {
@@ -60,6 +74,50 @@ class RegisterFragment : Fragment() {
             setHasOptionsMenu(true)
         }
     }
+
+    private fun setupPasswordValidation() {
+        binding.passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // Hacer scroll automático al campo de contraseña
+                binding.root.findViewById<ScrollView>(R.id.scrollView).post {
+                    binding.root.findViewById<ScrollView>(R.id.scrollView).smoothScrollTo(0, binding.passwordEditText.bottom)
+                }
+            }
+        }
+
+        binding.passwordEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val password = s.toString()
+                updatePasswordRequirements(password)
+            }
+        })
+    }
+
+    private fun updatePasswordRequirements(password: String) {
+        val requirements = passwordPatterns.map { (pattern, message) ->
+            val color = if (password.matches(pattern.toRegex())) {
+                ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+            } else {
+                ContextCompat.getColor(requireContext(), R.color.grey)
+            }
+            SpannableString(message).apply {
+                setSpan(ForegroundColorSpan(color), 0, length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            }
+        }
+
+        val spannable = SpannableStringBuilder().apply {
+            requirements.forEachIndexed { index, requirement ->
+                append(requirement)
+                if (index < requirements.size - 1) append("\n")
+            }
+        }
+
+        binding.passwordRequirements.text = spannable
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {

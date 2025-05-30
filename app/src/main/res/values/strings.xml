@@ -14,7 +14,7 @@
     <string name="default_notification_channel_name">Notificaciones</string>
 
     <string name="loginText">Bienvenido de nuevo</string>
-    <string name="FieldLogin1">Correo Electronico / Usuario</string>
+    <string name="FieldLogin1">Correo Electrónico</string>
     <string name="FieldLogin2">Contraseña</string>
     <string name="Check">Recuérdamelo</string>
     <string name="ButtonLogin">Iniciar Sesión</string>
@@ -67,6 +67,9 @@
     <string name="caseTwoPorcen2">300</string>
     <string name="caseTwoPorcen3">320</string>
     <string name="caseTwoPorcen4">420</string>
+
+    <string name="password_hint">Contraseña</string>
+    <string name="password_requirements">Requisitos de contraseña:</string>
 
     <string name="listAlimen">Lista de tus planes alimenticios</string>
 

@@ -13,7 +13,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.updateLayoutParams
@@ -130,6 +133,17 @@ class HomeFragment : Fragment() {
         // Cargar contador de notificaciones
         startNotificationPolling()
         loadNotificationCount()
+        // Deshabilitar funcionalidad del SearchView
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Toast.makeText(requireContext(), "El buscador se encuentra en mantenimiento", Toast.LENGTH_SHORT).show()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
     }
 
     // FUNCIONES PARA OBTENER IDs - USAR ESTAS EN LUGAR DE LAS DUPLICADAS
@@ -573,6 +587,14 @@ class HomeFragment : Fragment() {
         // Carga inmediata al volver
         loadNotificationCount()
         fetchProgressData()
+    }
+
+    fun onSearchClicked() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Buscador no disponible")
+            .setMessage("Estamos trabajando para mejorar esta función. Estará disponible en futuras actualizaciones.")
+            .setPositiveButton("Entendido", null)
+            .show()
     }
 
     private fun toolbarConfig() {

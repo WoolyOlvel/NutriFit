@@ -76,7 +76,10 @@
                 android:backgroundTint="@color/white"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@null"
-                app:queryHint="Buscar..."/>
+                app:queryHint="Buscar..."
+                android:focusable="false"
+                android:clickable="true"
+                android:onClick="@{()->handler.onSearchClicked()}"/>
 
             <RelativeLayout
                 android:id="@+id/layout_progress"
