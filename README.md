@@ -11,7 +11,7 @@ Ahora ya no necesitas tener corriendo nuestro sistema NutriFit - Panel Administr
 
 Solamente Descarga la APK: 
 
-[![Descargar APK](https://img.shields.io/badge/Descargar-APK-green?style=for-the-badge&logo=android)](https://drive.google.com/uc?export=download&id=1LCbPg3A4oR2pkfifXUuP4AzXSL2BKIgI)
+[![Descargar APK](https://img.shields.io/badge/Descargar-APK-green?style=for-the-badge&logo=android)](https://drive.google.com/uc?export=download&id=1iAuAPX0vHnKGTtTjePfSMj-6fITkEI3r)
 
 👉 [https://nutrifitplanner.site/](https://nutrifitplanner.site/)
 
