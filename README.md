@@ -2,6 +2,21 @@
 
 **NutriFit Planner**:  Plataforma integral para planificación de citas y planes nutricionales.
 
+
+---
+
+## ¡Actualización!
+
+Ahora ya no necesitas tener corriendo nuestro sistema NutriFit - Panel Administrativo en su equipo, ahora contamos con conexión a servidores remotos!
+
+Solamente Descarga la APK: 
+
+[![Descargar APK](https://img.shields.io/badge/Descargar-APK-green?style=for-the-badge&logo=android)](https://drive.google.com/uc?export=download&id=1LCbPg3A4oR2pkfifXUuP4AzXSL2BKIgI)
+
+Y automaticamente se conectara a nuestros servidores de ultima tecnologia en ASCRIB.
+
+### Si no deseas utilizar el apk y quieres probar de forma local, entonces prosigue con los pasos de guía.
+
 ---
 
 ### Previsualización NutriFit Planner 
