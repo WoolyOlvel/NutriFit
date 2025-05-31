@@ -57,7 +57,9 @@ class RegisterFragment : Fragment() {
         binding.layoutForm.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             setMargins(0, activity?.getStatusBarHeight()!!.plus(10), 0, 0)
         }
+        setupKeyboardHandling()
         setupPasswordValidation()
+
     }
 
     private fun toolbarConfig() {
@@ -75,16 +77,106 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun setupPasswordValidation() {
-        binding.passwordEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // Hacer scroll automático al campo de contraseña
-                binding.root.findViewById<ScrollView>(R.id.scrollView).post {
-                    binding.root.findViewById<ScrollView>(R.id.scrollView).smoothScrollTo(0, binding.passwordEditText.bottom)
+    private fun setupKeyboardHandling() {
+        // 1. Listener para detectar cambios en el layout (cuando aparece/desaparece el teclado)
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            handleKeyboardVisibility()
+        }
+
+        // 2. Configurar el ScrollView para que sea más responsivo
+        binding.scrollView.apply {
+            isSmoothScrollingEnabled = true
+            isScrollbarFadingEnabled = false
+            scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+        }
+
+        // 3. Agregar listeners a todos los EditText para manejar el focus
+        setupAllEditTextListeners()
+    }
+
+    private fun handleKeyboardVisibility() {
+        val rootView = binding.root
+        val scrollView = binding.scrollView
+
+        // Calcular si el teclado está visible
+        val rect = android.graphics.Rect()
+        rootView.getWindowVisibleDisplayFrame(rect)
+        val screenHeight = rootView.height
+        val keypadHeight = screenHeight - rect.bottom
+
+        if (keypadHeight > screenHeight * 0.15) {
+            // Teclado está visible
+            onKeyboardShown(keypadHeight)
+        } else {
+            // Teclado está oculto
+            onKeyboardHidden()
+        }
+    }
+
+    private fun onKeyboardShown(keyboardHeight: Int) {
+        // Ajustar el ScrollView para que tenga espacio suficiente
+        binding.scrollView.apply {
+            setPadding(paddingLeft, paddingTop, paddingRight, keyboardHeight / 4)
+            post {
+                // Scroll hacia el campo enfocado si es necesario
+                val focusedView = activity?.currentFocus
+                focusedView?.let { view ->
+                    scrollToView(view)
                 }
             }
         }
+    }
 
+    private fun onKeyboardHidden() {
+        // Restablecer el padding del ScrollView
+        binding.scrollView.setPadding(
+            binding.scrollView.paddingLeft,
+            binding.scrollView.paddingTop,
+            binding.scrollView.paddingRight,
+            0
+        )
+    }
+
+    private fun setupAllEditTextListeners() {
+        val editTexts = listOf(
+            binding.nombreEditText,
+            binding.apellidosEditText,
+            binding.emailEditText,
+            binding.usuarioEditText,
+            binding.passwordEditText
+        )
+
+        editTexts.forEach { editText ->
+            editText.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    // Delay para asegurar que el teclado ya apareció
+                    view.postDelayed({
+                        scrollToView(view)
+                    }, 300)
+                }
+            }
+        }
+    }
+
+    private fun scrollToView(view: View) {
+        val scrollView = binding.scrollView
+        val scrollBounds = android.graphics.Rect()
+        scrollView.getHitRect(scrollBounds)
+
+        if (!view.getLocalVisibleRect(scrollBounds)) {
+            // La vista no está completamente visible, hacer scroll
+            val coords = IntArray(2)
+            view.getLocationInWindow(coords)
+
+            val scrollViewCoords = IntArray(2)
+            scrollView.getLocationInWindow(scrollViewCoords)
+
+            val scrollToY = coords[1] - scrollViewCoords[1] - 200 // Margen de 200px
+            scrollView.smoothScrollTo(0, scrollToY)
+        }
+    }
+
+    private fun setupPasswordValidation() {
         binding.passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
