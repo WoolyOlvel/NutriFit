@@ -327,7 +327,8 @@ class PlanListFragment : Fragment(), PlanAlimenticioHandler {
                     if (url.isNotBlank()) {
                         if (!isUrlAccessible(url)) {
                             // Reemplazar localhost por la IP del servidor
-                            val correctedUrl = url.replace("127.0.0.1", "192.168.50.221")
+                            val correctedUrl = url.replace("127.0.0.1", "nutrifitplanner.site")
+                                .replace("http://", "https://")
                             downloadFile(correctedUrl)
                         } else {
                             downloadFile(url)

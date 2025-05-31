@@ -59,6 +59,10 @@ class AppointmentDetailFragment : Fragment() {
 
         // Nueva lista para mantener los conteos por paciente
         private val notificationCounts = mutableMapOf<Int, Int>()
+
+        const val PREF_PROFILE_UPDATE_SHOWN = "profile_update_dialog_shown"
+        const val DIALOG_NOT_SHOWN = 0
+        const val DIALOG_SHOWN = 1
     }
 
     private lateinit var nutriologoAdapter: NutriologoAdapter
@@ -372,8 +376,31 @@ class AppointmentDetailFragment : Fragment() {
 
     fun onCallClicked() {
         val sharedPref = requireActivity().getSharedPreferences("user_data", AppCompatActivity.MODE_PRIVATE)
-        val nutriologoId = sharedPref.getInt("user_id_nutriologo", 0)
-        findNavController().navigate(R.id.serviceFragment, bundleOf("nutriologo_id" to nutriologoId))
+
+        // Verificar si ya se mostró el diálogo
+        val dialogStatus = sharedPref.getInt(PREF_PROFILE_UPDATE_SHOWN, DIALOG_NOT_SHOWN)
+
+        if (dialogStatus == DIALOG_NOT_SHOWN) {
+            // Mostrar diálogo de actualización de perfil
+            AlertDialog.Builder(requireContext())
+                .setTitle("Actualización requerida")
+                .setMessage("Debes actualizar todos tus datos en \"Mi Perfil\" para poder realizar reservaciones con el nutriólogo.")
+                .setPositiveButton("Entendido") { dialog, _ ->
+                    // Cambiar el estado a "mostrado"
+                    sharedPref.edit().putInt(PREF_PROFILE_UPDATE_SHOWN, DIALOG_SHOWN).apply()
+                    dialog.dismiss()
+
+                    // Navegar al servicio después de aceptar
+                    val nutriologoId = sharedPref.getInt("user_id_nutriologo", 0)
+                    findNavController().navigate(R.id.serviceFragment, bundleOf("nutriologo_id" to nutriologoId))
+                }
+                .setCancelable(false)
+                .show()
+        } else {
+            // Navegar directamente si ya se mostró el diálogo
+            val nutriologoId = sharedPref.getInt("user_id_nutriologo", 0)
+            findNavController().navigate(R.id.serviceFragment, bundleOf("nutriologo_id" to nutriologoId))
+        }
     }
 
 
@@ -420,6 +447,12 @@ class AppointmentDetailFragment : Fragment() {
     }
 
     fun onAnswerClicked() {
-        showBottomSheetReply()
+        AlertDialog.Builder(requireContext())
+            .setTitle("Sección en Mantenimiento")
+            .setMessage("Esta sección se encuentra en mantenimiento y en futuras versiones estará disponible.")
+            .setPositiveButton("Entendido") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

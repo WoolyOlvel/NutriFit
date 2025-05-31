@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/section_spacing"
+        android:backgroundTint="#f3f3f3"
+        android:visibility="gone"
+        app:cardElevation="0dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/section_spacing">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/inner_spacing"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/section_spacing"
+                android:paddingTop="@dimen/inner_spacing"
+                android:text="@string/review"
+                android:textColor="@color/colorVariant"
+                android:textSize="@dimen/text_size_h5"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/cal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/section_spacing"
+                android:background="@color/white" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:isIndicator="true"
+                android:progressTint="@color/orange"
+                android:rating="5"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_spacing"
+                android:background="@drawable/background_radius"
+                android:backgroundTint="@color/whiteGrey"
+                android:padding="@dimen/section_spacing"
+                android:onClick="@{()->handler.onAnswerClicked()}"
+                android:text="@string/comentary"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/text_size_h5"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
