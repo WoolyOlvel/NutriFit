@@ -162,53 +162,52 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             Pair(binding.checkboxPersonalCall, binding.cardConsultaPorLlamada)
         ).toMutableList()
 
-        // Configurar listeners
-        binding.checkboxSendMessage.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                selectedConsultaType = "Consulta Por App"
-                selectedPrecio = binding.totalPagoConsultaPorApp.text.toString()
-                    .replace("$", "").replace(" MXN", "").toDouble()
-                selectedMotivo = binding.motivoConsultaApp.text.toString()
-                hideOtherCards(binding.checkboxSendMessage)
+        // Configurar listeners para todos los checkboxes
+        checkboxCardPairs.forEach { (checkbox, card) ->
+            checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    // Cuando se marca un checkbox
+                    selectedConsultaType = when (buttonView.id) {
+                        R.id.checkbox_send_message -> "Consulta Por App"
+                        R.id.checkbox_send_message2 -> "Consulta Normal"
+                        R.id.checkbox_personal_call -> "Consulta Por Llamada"
+                        else -> ""
+                    }
+
+                    selectedPrecio = when (buttonView.id) {
+                        R.id.checkbox_send_message -> binding.totalPagoConsultaPorApp.text.toString()
+                            .replace("$", "").replace(" MXN", "").toDouble()
+                        R.id.checkbox_send_message2 -> binding.totalPagoConsultaNormal.text.toString()
+                            .replace("$", "").replace(" MXN", "").toDouble()
+                        R.id.checkbox_personal_call -> binding.totalPagoConsultaPorLlamada.text.toString()
+                            .replace("$", "").replace(" MXN", "").toDouble()
+                        else -> 0.0
+                    }
+
+                    selectedMotivo = when (buttonView.id) {
+                        R.id.checkbox_send_message -> binding.motivoConsultaApp.text.toString()
+                        R.id.checkbox_send_message2 -> binding.motivoConsultaPresencial.text.toString()
+                        R.id.checkbox_personal_call -> binding.motivoConsultaLlamada.text.toString()
+                        else -> ""
+                    }
+
+                    hideOtherCards(buttonView as CheckBox)
+                } else {
+                    // Cuando se desmarca un checkbox
+                    if (checkboxCardPairs.none { it.first.isChecked }) {
+                        showAllCards()
+                    }
+                }
             }
         }
-
-        binding.checkboxSendMessage2.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                selectedConsultaType = "Consulta Normal"
-                selectedPrecio = binding.totalPagoConsultaNormal.text.toString()
-                    .replace("$", "").replace(" MXN", "").toDouble()
-                selectedMotivo = binding.motivoConsultaPresencial.text.toString()
-                hideOtherCards(binding.checkboxSendMessage2)
-            }
-        }
-
-        binding.checkboxPersonalCall.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                selectedConsultaType = "Consulta Por Llamada"
-                selectedPrecio = binding.totalPagoConsultaPorLlamada.text.toString()
-                    .replace("$", "").replace(" MXN", "").toDouble()
-                selectedMotivo = binding.motivoConsultaLlamada.text.toString()
-                hideOtherCards(binding.checkboxPersonalCall)
-            }
-        }
-
-
-
-
     }
+
 
     private fun hideOtherCards(selectedCheckbox: CheckBox) {
         checkboxCardPairs.forEach { (checkbox, card) ->
             if (checkbox != selectedCheckbox) {
                 card.isVisible = false
-                checkbox.setOnCheckedChangeListener(null)
                 checkbox.isChecked = false
-                checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        hideOtherCards(buttonView as CheckBox)
-                    }
-                }
             } else {
                 card.isVisible = true
             }
@@ -228,9 +227,9 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
     }
 
     private fun showAllCards() {
-        for (pair in checkboxCardPairs) {
-            // Mostrar todos los cards
-            pair.second.isVisible = true
+        checkboxCardPairs.forEach { (checkbox, card) ->
+            card.isVisible = true
+            // No cambiamos el estado del checkbox aquí, solo mostramos los cards
         }
     }
 

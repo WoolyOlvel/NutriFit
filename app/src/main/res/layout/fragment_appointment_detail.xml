@@ -127,7 +127,11 @@
                                     android:text="@{nutriologo.ciudadEstado}"
                                     android:textColor="@color/grey"
                                     android:textSize="@dimen/text_size_h6"
-                                    app:drawableLeftCompat="@drawable/loc" />
+                                    app:drawableLeftCompat="@drawable/loc"
+                                    android:autoSizeTextType="uniform"
+                                    android:autoSizeMinTextSize="8sp"
+                                    android:autoSizeMaxTextSize="15sp"
+                                    android:autoSizeStepGranularity="1sp"/>
                             </LinearLayout>
 
                             <LinearLayout
