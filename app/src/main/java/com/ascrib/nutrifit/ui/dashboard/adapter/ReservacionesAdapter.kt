@@ -42,7 +42,9 @@ class ReservacionesAdapter(private val reservaciones: List<ConsultaData>) :
             // Cargar imagen del nutriólogo si está disponible
             reservacion.foto_nutriologo?.let { fotoUrl ->
                 // Reemplazar localhost por la IP correcta
-                val correctedUrl = fotoUrl.replace("http://127.0.0.1:8000", "http://192.168.50.221:8000")
+                val correctedUrl = fotoUrl.replace("http://127.0.0.1:8000", "nutrifitplanner.site")
+                    .replace("http://", "https://")
+
                 Glide.with(binding.root.context)
                     .load(correctedUrl)
                     .placeholder(R.drawable.userdummy)

@@ -421,7 +421,7 @@ class EditProfileFragment : Fragment() {
                         fechaNacimiento
                     )
 
-                    if (updatePacienteSuccess) {
+                    if (updatePacienteSuccess ) {
                         Toast.makeText(context, "Perfil actualizado exitosamente", Toast.LENGTH_SHORT).show()
                         findNavController().navigateUp()
                     } else {

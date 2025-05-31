@@ -137,7 +137,7 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
     private fun updatePrecios(tiposConsulta: List<TipoConsulta>) {
         tiposConsulta.forEach { tipo ->
             when (tipo.Nombre) {
-                "Consulta Por App " -> {
+                "Consulta Por App" -> {
                     binding.totalPagoConsultaPorApp.setText(formatPrecio(tipo.total_pago))
                 }
 
@@ -165,7 +165,7 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
         // Configurar listeners
         binding.checkboxSendMessage.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                selectedConsultaType = "Consulta Por App "
+                selectedConsultaType = "Consulta Por App"
                 selectedPrecio = binding.totalPagoConsultaPorApp.text.toString()
                     .replace("$", "").replace(" MXN", "").toDouble()
                 selectedMotivo = binding.motivoConsultaApp.text.toString()
@@ -525,22 +525,31 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
     }
 
     private fun showChangeNutriologoDialog(paciente: Paciente, email: String) {
+        if (!isAdded) return
+
         android.app.AlertDialog.Builder(requireContext())
             .setTitle("¿Continuar con otro nutriólogo?")
             .setMessage("Ya tienes una reservación con otro nutriólogo. ¿Deseas continuar con este nuevo nutriólogo?")
             .setPositiveButton("Sí") { _, _ ->
-                lifecycleScope.launch {
-                    // Duplicar paciente para el nuevo nutriólogo
+                // Usar viewLifecycleOwner para asegurar que la corrutina se cancele si el fragmento se destruye
+                viewLifecycleOwner.lifecycleScope.launch {
                     duplicatePacienteForNewNutriologo(paciente, email)
                 }
             }
             .setNegativeButton("No", null)
+            .setOnDismissListener {
+                // Limpiar recursos si es necesario
+            }
             .show()
     }
 
     @OptIn(UnstableApi::class)
     private suspend fun duplicatePacienteForNewNutriologo(paciente: Paciente, email: String) {
         try {
+            // Verificar si el fragmento está adjunto y visible
+            if (!isAdded || !isVisible || context == null) return
+
+
             // 1. Duplicar paciente para el nuevo nutriólogo
             val duplicateResponse = RetrofitClient.apiService.duplicarPaciente(
                 email = email,
@@ -548,7 +557,11 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             )
 
             if (!duplicateResponse.isSuccessful || duplicateResponse.body()?.paciente == null) {
-                Toast.makeText(context, "Error al duplicar paciente", Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    if (isAdded && isVisible && context != null) {
+                        Toast.makeText(requireContext(), "Error al duplicar paciente", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 return
             }
 
@@ -558,11 +571,19 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
             updateNutriologosListInPrefs(nutriologoId, nuevoPaciente.Paciente_ID ?: 0)
             proceedWithReservation(nuevoPaciente, email)
             // 3. Proceder con la reservación
-            proceedWithReservation(nuevoPaciente, email)
+            withContext(Dispatchers.Main) {
+                if (isAdded) {
+                    proceedWithReservation(nuevoPaciente, email)
+                }
+            }
         } catch (e: Exception) {
-            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                if (isAdded && isVisible && context != null) {
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
             Log.e(TAG, "Error en duplicatePacienteForNewNutriologo()", e)
-
         }
     }
 
@@ -597,7 +618,10 @@ class ServiceFragment : Fragment(), OnDateSelectedListener {
 
             if (reservacionResponse.isSuccessful) {
                 Toast.makeText(context, "Cita generada exitosamente", Toast.LENGTH_SHORT).show()
-                findNavController().navigateUp()
+                // Clear any pending operations
+                stopNotificationPolling()
+                // Navigate up
+                findNavController().popBackStack()
             } else {
                 Toast.makeText(context, "Error al crear reservación", Toast.LENGTH_SHORT).show()
             }
