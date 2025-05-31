@@ -13,6 +13,8 @@ Solamente Descarga la APK:
 
 [![Descargar APK](https://img.shields.io/badge/Descargar-APK-green?style=for-the-badge&logo=android)](https://drive.google.com/uc?export=download&id=1LCbPg3A4oR2pkfifXUuP4AzXSL2BKIgI)
 
+👉 [https://nutrifitplanner.site/](https://nutrifitplanner.site/)
+
 Y automaticamente se conectara a nuestros servidores de ultima tecnologia en ASCRIB.
 
 ### Si no deseas utilizar el apk y quieres probar de forma local, entonces prosigue con los pasos de guía.
