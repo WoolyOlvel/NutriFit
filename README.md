@@ -185,7 +185,7 @@ Para más información, no dudes en ponerte en contacto:
 ---
 
 ## 📄 Licencia
-Este proyecto se encuentra bajo la licencia MIT.
+Este software se proporciona únicamente con fines de visualización. No está permitido modificar, redistribuir ni reutilizar el código sin autorización expresa del autor.
 
 ---
 
