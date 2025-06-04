@@ -1,0 +1,45 @@
+LICENCIA DE USO RESTRINGIDO – NUTRIFIT PLANNER
+Titular de Derechos: ASCRIB
+Nombre del Proyecto: NutriFit Planner
+Fecha de emisión: 04/06/2025
+
+
+1. Derechos reservados
+Este software y todo su contenido, incluyendo pero no limitado a código fuente, estructura, diseño y documentación, es propiedad exclusiva de ASCRIB.
+Todos los derechos están reservados.
+
+2. Prohibiciones
+Está estrictamente prohibido, sin excepción:
+
+ - Modificar total o parcialmente el código fuente.
+
+ - Vender, revender o comercializar el software, directa o indirectamente.
+
+ - Reutilizar el código o fragmentos del mismo en cualquier otro proyecto o producto.
+
+ - Distribuir copias, ya sea de forma gratuita o con fines lucrativos.
+
+ - Realizar ingeniería inversa o intentar obtener el código fuente a partir de binarios, si los hubiera.
+
+3. Uso autorizado
+El software puede ser únicamente visualizado y utilizado con fines de evaluación o demostración interna, siempre que no implique ninguna modificación ni redistribución.
+No se otorgan licencias implícitas de ningún tipo. El uso del software no transfiere ningún derecho de propiedad.
+
+4. Sanciones por incumplimiento
+El uso indebido del software o el incumplimiento de cualquiera de los puntos establecidos en esta licencia dará lugar a acciones legales inmediatas por parte de ASCRIB.
+Esto incluye, pero no se limita a:
+
+- Demandas civiles por daños y perjuicios.
+
+- Denuncias penales por infracción de derechos de autor o uso no autorizado.
+
+- Notificaciones de infracción a plataformas de distribución (GitHub, GitLab, etc.).
+
+5. Reconocimiento
+El usuario reconoce haber leído, entendido y aceptado los términos y condiciones aquí establecidos.
+El simple acceso o uso del software implica la aceptación total de esta licencia.
+
+6. Contacto
+Para cualquier solicitud de autorización especial o licencia comercial, contactar a:
+📧 ASCRIB_CODE@outlook.com
+© 2025 ASCRIB. Todos los derechos reservados.
