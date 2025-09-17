@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">NutriFit</string>
+    <string name="app_name">NutriFit Local</string>
     <string name="bienvenida_slider">¡Bienvenidos a NutriFit Planner!</string>
     <string name="bienvenida_slider_p">Tu plataforma integral para citas y planes nutricionales.</string>
     <string name="bienvenida_slider2">NutriFit Planner. Tu aliado en nutrición y bienestar.</string>

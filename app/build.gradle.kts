@@ -22,6 +22,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            // ⚡ Esto hace que la app de debug se instale como distinta
+            applicationIdSuffix = ".local"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
