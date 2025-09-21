@@ -3,8 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/form_nav_graph"
-    app:startDestination="@id/bienvenidaFragment"
-    >
+    app:startDestination="@id/bienvenidaFragment">
+
+    <!-- Fragment de espera - AHORA ES EL INICIAL -->
+    <fragment
+        android:id="@+id/waitingFragment"
+        android:name="com.ascrib.nutrifit.ui.form.WaitingFragment"
+        android:label="WaitingFragment"
+        tools:layout="@layout/fragment_waiting">
+
+        <action
+            android:id="@+id/action_waitingFragment_to_bienvenidaFragment"
+            app:destination="@id/bienvenidaFragment"
+            app:popUpTo="@id/waitingFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+
+        <action
+            android:id="@+id/action_waitingFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/waitingFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/bienvenidaFragment"
@@ -28,15 +52,14 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
 
-
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ascrib.nutrifit.ui.form.LoginFragment"
         tools:layout="@layout/fragment_login"
-        android:label="LoginFragment"
-        >
+        android:label="LoginFragment">
+
         <action
             android:id="@+id/action_loginFragment_a_registerFragment"
             app:destination="@+id/registerFragment"
@@ -57,17 +80,13 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
 
-
-
-
     </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.ascrib.nutrifit.ui.form.RegisterFragment"
         tools:layout="@layout/fragment_registrate"
-        android:label="registerFragment"
-        >
+        android:label="registerFragment">
 
         <action
             android:id="@+id/action_registerFragment_a_loginFragment"
@@ -111,8 +130,7 @@
         android:id="@+id/fragmentContraOlvidada"
         android:name="com.ascrib.nutrifit.ui.form.OlvidoContra"
         tools:layout="@layout/fragment_olvidar_contra"
-        android:label="fragmentContraOlvidada"
-        >
+        android:label="fragmentContraOlvidada">
 
         <action
             android:id="@+id/action_olvidoContraFragment_a_cambioContraFragment"
@@ -131,6 +149,5 @@
         android:name="com.ascrib.nutrifit.ui.form.VerifyAccount"
         tools:layout="@layout/fragment_verificacion"
         android:label="verifcacionFragment"/>
-
 
 </navigation>

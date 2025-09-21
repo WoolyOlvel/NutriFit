@@ -29,50 +29,208 @@
                     android:id="@+id/toolbar"
                     layout="@layout/toolbar_dark_arrow" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/section_spacing"
-                    android:text="@string/consultasAhora"
-                    android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_in_progress"
+                <!-- Estado vacío general - se muestra cuando no hay ningún dato -->
+                <LinearLayout
+                    android:id="@+id/layout_empty_state_general"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/section_spacing" />
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_30sdp"
+                    android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/section_spacing"
-                    android:text="@string/consultaProximas"
-                    android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5" />
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:src="@drawable/ic_calendar_empty"
+                        android:alpha="0.6"
+                        android:layout_marginBottom="@dimen/_20sdp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_next_consults"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No tienes consultas registradas"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="@dimen/_10sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Realiza una reservación con un nutriólogo para ver tus consultas aquí"
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/section_spacing"
+                        android:textAlignment="center"
+                        android:alpha="0.7" />
+
+                </LinearLayout>
+
+                <!-- Contenido normal - se oculta cuando no hay datos -->
+                <LinearLayout
+                    android:id="@+id/layout_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/section_spacing" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/section_spacing"
-                    android:text="@string/consultaPasadas"
-                    android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5" />
+                    <!-- Sección Consultas Ahora -->
+                    <LinearLayout
+                        android:id="@+id/section_consultas_ahora"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_past_consults"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/section_spacing" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:text="@string/consultasAhora"
+                            android:textColor="@color/colorVariant"
+                            android:textSize="@dimen/text_size_h5"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_in_progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingHorizontal="@dimen/section_spacing" />
+
+                        <!-- Estado vacío para consultas en progreso -->
+                        <LinearLayout
+                            android:id="@+id/layout_empty_in_progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_20sdp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_clock"
+                                android:alpha="0.5"
+                                android:layout_marginBottom="@dimen/_10sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No tienes consultas en espera"
+                                android:textColor="@color/colorVariant"
+                                android:textSize="@dimen/section_spacing"
+                                android:alpha="0.7" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Sección Próximas Consultas -->
+                    <LinearLayout
+                        android:id="@+id/section_consultas_proximas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:text="@string/consultaProximas"
+                            android:textColor="@color/colorVariant"
+                            android:textSize="@dimen/text_size_h5" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_next_consults"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingHorizontal="@dimen/section_spacing" />
+
+                        <!-- Estado vacío para próximas consultas -->
+                        <LinearLayout
+                            android:id="@+id/layout_empty_next_consults"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_20sdp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_calendar_plus"
+                                android:alpha="0.5"
+                                android:layout_marginBottom="@dimen/_10sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No tienes próximas consultas programadas"
+                                android:textColor="@color/colorVariant"
+                                android:textSize="@dimen/section_spacing"
+                                android:alpha="0.7" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Sección Consultas Pasadas -->
+                    <LinearLayout
+                        android:id="@+id/section_consultas_pasadas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/section_spacing"
+                            android:text="@string/consultaPasadas"
+                            android:textColor="@color/colorVariant"
+                            android:textSize="@dimen/text_size_h5" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_past_consults"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:paddingHorizontal="@dimen/section_spacing" />
+
+                        <!-- Estado vacío para consultas pasadas -->
+                        <LinearLayout
+                            android:id="@+id/layout_empty_past_consults"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_20sdp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:src="@drawable/ic_history"
+                                android:alpha="0.5"
+                                android:layout_marginBottom="@dimen/_10sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No tienes consultas concluidas"
+                                android:textColor="@color/colorVariant"
+                                android:textSize="@dimen/section_spacing"
+                                android:alpha="0.7" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -97,6 +255,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </layout>

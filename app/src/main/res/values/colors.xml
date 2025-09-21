@@ -27,5 +27,8 @@
     <color name="teal_dark">#00857E</color>
 
     <color name="unread_notification_bg">#F0F8FF</color>
-
+    <color name="empty_state_text_primary">#2C3E50</color>
+    <color name="empty_state_text_secondary">#7F8C8D</color>
+    <color name="empty_state_icon_tint">#3498DB</color>
+    <color name="empty_state_button">#E74C3C</color>
 </resources>

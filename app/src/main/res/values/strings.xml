@@ -292,5 +292,18 @@
 
     <string name="default_web_client_id">954683608340-ptu9sgm0it9abmssh951rnogs8p48t4f.apps.googleusercontent.com</string>
 
+    <string name="no_reservations_title">No hay reservaciones aún</string>
+    <string name="no_reservations_message">Aún no has generado ninguna reservación con un nutriólogo. Cuando lo hagas, aparecerán aquí.</string>
+    <string name="empty_reservations">Estado vacío de reservaciones</string>
+    <string name="empty_nutrition_title">¡Aún no tienes historial nutricional!</string>
+    <string name="empty_nutrition_subtitle">Agenda tu primera cita con un nutriólogo para comenzar tu seguimiento personalizado</string>
+    <string name="btn_schedule_first_appointment">Agendar Primera Cita</string>
+    <string name="nutrition_history_title">Historial Nutricional</string>
 
+    <string name="no_consultas_progreso">No tienes consultas en progreso</string>
+    <string name="no_consultas_proximas">No tienes próximas consultas</string>
+    <string name="no_consultas_pasadas">No tienes consultas pasadas</string>
+    <string name="no_consultas_general">Aún no tienes consultas</string>
+    <string name="no_consultas_subtitle">Realiza tu primera reservación con un nutriólogo para comenzar</string>
+    <string name="empty_state">Estado vacío</string>
 </resources>

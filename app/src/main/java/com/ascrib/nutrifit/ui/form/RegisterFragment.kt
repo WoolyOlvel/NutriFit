@@ -1,5 +1,6 @@
 package com.ascrib.nutrifit.ui.form
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -78,20 +79,94 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupKeyboardHandling() {
-        // 1. Listener para detectar cambios en el layout (cuando aparece/desaparece el teclado)
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            handleKeyboardVisibility()
-        }
-
-        // 2. Configurar el ScrollView para que sea más responsivo
+        // Configurar el ScrollView
         binding.scrollView.apply {
             isSmoothScrollingEnabled = true
             isScrollbarFadingEnabled = false
             scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
         }
 
-        // 3. Agregar listeners a todos los EditText para manejar el focus
-        setupAllEditTextListeners()
+        // Agregar listener para detectar cambios en el layout
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            checkKeyboardVisibility()
+        }
+
+        // Configurar focus listeners para todos los EditText
+        setupEditTextFocusListeners()
+    }
+
+    private fun checkKeyboardVisibility() {
+        val rootView = binding.root
+        val rect = Rect()
+        rootView.getWindowVisibleDisplayFrame(rect)
+
+        val screenHeight = rootView.rootView.height
+        val keyboardHeight = screenHeight - rect.bottom
+
+        // Consideramos que el teclado está visible si ocupa más del 15% de la pantalla
+        val keyboardVisible = keyboardHeight > screenHeight * 0.15
+
+        if (keyboardVisible) {
+            adjustForKeyboard(keyboardHeight)
+        } else {
+            resetScrollView()
+        }
+    }
+
+    private fun adjustForKeyboard(keyboardHeight: Int) {
+        // Ajustar el padding inferior del ScrollView
+        binding.scrollView.setPadding(
+            binding.scrollView.paddingLeft,
+            binding.scrollView.paddingTop,
+            binding.scrollView.paddingRight,
+            keyboardHeight
+        )
+
+        // Hacer scroll al campo enfocado
+        val focusedView = activity?.currentFocus
+        focusedView?.let { view ->
+            scrollToFocusedView(view)
+        }
+    }
+
+    private fun resetScrollView() {
+        binding.scrollView.setPadding(
+            binding.scrollView.paddingLeft,
+            binding.scrollView.paddingTop,
+            binding.scrollView.paddingRight,
+            0
+        )
+    }
+
+    private fun setupEditTextFocusListeners() {
+        val editTexts = listOf(
+            binding.nombreEditText,
+            binding.apellidosEditText,
+            binding.emailEditText,
+            binding.usuarioEditText,
+            binding.passwordEditText
+        )
+
+        editTexts.forEach { editText ->
+            editText.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    // Pequeño delay para asegurar que el teclado ya está mostrándose
+                    view.postDelayed({
+                        scrollToFocusedView(view)
+                    }, 100)
+                }
+            }
+        }
+    }
+
+    private fun scrollToFocusedView(view: View) {
+        val scrollView = binding.scrollView
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+
+        val scrollToY = location[1] - 150 // Margen de 150px desde la parte superior
+
+        scrollView.smoothScrollTo(0, scrollToY)
     }
 
     private fun handleKeyboardVisibility() {
