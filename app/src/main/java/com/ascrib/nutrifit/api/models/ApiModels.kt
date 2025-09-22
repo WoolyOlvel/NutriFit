@@ -395,7 +395,8 @@ data class ConsultaDetalleResponse(
     val consulta_id: Int?,
     val reservacion: ReservacionData?,
     val tipo_consulta: TipoConsulta?,
-    val foto_nutriologo: String?
+    val foto_nutriologo: String?,
+    val foto_paciente: String?
 )
 
 data class PlanAlimenticioResponse(

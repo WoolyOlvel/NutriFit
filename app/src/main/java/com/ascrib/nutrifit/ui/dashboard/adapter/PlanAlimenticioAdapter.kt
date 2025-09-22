@@ -1,6 +1,7 @@
 package com.ascrib.nutrifit.ui.dashboard.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,8 +14,10 @@ import com.ascrib.nutrifit.util.loadImage
 import com.bumptech.glide.Glide
 
 class PlanAlimenticioAdapter(
-    private val handler: PlanAlimenticioHandler
+    private val handler: PlanAlimenticioHandler,
+    private val onDataStateChanged: (isEmpty: Boolean) -> Unit
 ) : ListAdapter<PlanAlimenticio, PlanAlimenticioAdapter.PlanAlimenticioViewHolder>(DiffCallback()) {
+
     private val maxItems = 20 // Límite de 20 items
     private val items = mutableListOf<PlanAlimenticio>()
 
@@ -24,14 +27,15 @@ class PlanAlimenticioAdapter(
         }
         items.add(newItem)
         submitList(items.toList()) // Notifica al adaptador del cambio
+        onDataStateChanged(items.isEmpty())
     }
 
     fun submitLimitedList(newList: List<PlanAlimenticio>) {
         items.clear()
         items.addAll(newList.takeLast(maxItems)) // Solo guarda los últimos 20
         submitList(items.toList())
+        onDataStateChanged(items.isEmpty())
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanAlimenticioViewHolder {
         val binding = RowListplanBinding.inflate(

@@ -99,12 +99,15 @@ class PlanListDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Mostrar los datos de la consulta si existe
+
+
         consultaId?.let {
             loadConsultaById(it)
-        }
-        loadFotoPaciente()
-        startNotificationPolling()
 
+        }
+        //loadFotoPaciente()
+
+        startNotificationPolling()
         // Solo consulta las notificaciones sin reproducir sonido en la primera carga
         // después de la creación de la vista
         loadNotificationCount()
@@ -122,13 +125,24 @@ class PlanListDetailFragment : Fragment() {
                 )
 
                 if (response.isSuccessful && response.body()?.success == true) {
-                    response.body()?.data?.consulta?.let { consulta ->
-                        loadConsultaDetails(consulta)
+                    response.body()?.data?.let { data ->
+                        // Cargar la foto del paciente si está disponible
+                        data.foto_paciente?.let { fotoPaciente ->
+                            Glide.with(this@PlanListDetailFragment)
+                                .load(fotoPaciente)
+                                .placeholder(R.drawable.userdummy)
+                                .error(R.drawable.userdummy)
+                                .into(binding.foto)
+                        }
+
+                        // Cargar los detalles de la consulta
+                        data.consulta?.let { consulta ->
+                            loadConsultaDetails(consulta)
+                        }
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                // Manejar error adecuadamente
             }
         }
     }
@@ -149,13 +163,7 @@ class PlanListDetailFragment : Fragment() {
         // Configurar los datos en las vistas
         binding.apply {
             // Datos del paciente
-            if (!consulta.foto_paciente.isNullOrEmpty()) {
-                Glide.with(this@PlanListDetailFragment)
-                    .load(consulta.foto_paciente) // Usamos el campo foto que viene del endpoint
-                    .placeholder(R.drawable.userdummy) // Imagen por defecto
-                    .error(R.drawable.userdummy) // Imagen si hay error
-                    .into(foto)
-            }
+
             nombreCompleto.text = "${consulta.nombre_paciente ?: ""} ${consulta.apellidos ?: ""}"
             genero.text = consulta.genero ?: ""
             fechaNacimiento.text = formatFechaNacimiento(consulta.fecha_nacimiento)

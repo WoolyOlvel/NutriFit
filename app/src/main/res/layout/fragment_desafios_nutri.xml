@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -29,13 +30,14 @@
                     android:id="@+id/toolbar"
                     layout="@layout/toolbar_dark_arrow" />
 
+                <!-- Primera sección: Desafíos Activos (siempre visible) -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/section_spacing"
                     android:text="@string/titleDefNutri1"
                     android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5"/>
+                    android:textSize="@dimen/text_size_h5" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_in_progress"
@@ -44,11 +46,9 @@
                     android:nestedScrollingEnabled="false"
                     android:paddingHorizontal="@dimen/section_spacing" />
 
-
-
-
-
+                <!-- Segunda sección: Próximos Desafíos (con estado vacío) -->
                 <TextView
+                    android:id="@+id/title_upcoming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/section_spacing"
@@ -56,12 +56,53 @@
                     android:textColor="@color/colorVariant"
                     android:textSize="@dimen/text_size_h5" />
 
+                <!-- Estado vacío para próximos desafíos -->
+                <LinearLayout
+                    android:id="@+id/layout_empty_upcoming"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/section_spacing"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginBottom="@dimen/inner_spacing"
+                        android:contentDescription="Próximamente"
+                        android:src="@drawable/ic_upcoming"
+                        app:tint="@color/colorVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="Próximamente"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_h5"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Estamos preparando nuevos desafíos\nque pronto estarán disponibles para ti."
+                        android:textColor="@color/colorVariant"
+                        android:textSize="@dimen/text_size_h6"
+                        android:lineSpacingExtra="@dimen/_2sdp" />
+
+                </LinearLayout>
+
+                <!-- RecyclerView para próximos desafíos -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_past_consults"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/section_spacing" />
+                    android:paddingHorizontal="@dimen/section_spacing"
+                    android:visibility="visible" />
 
             </LinearLayout>
 
@@ -83,6 +124,7 @@
                 android:text="@string/titleSubDef"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_h6" />
+
         </LinearLayout>
 
     </RelativeLayout>

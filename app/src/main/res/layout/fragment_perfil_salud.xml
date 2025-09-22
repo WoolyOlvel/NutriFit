@@ -15,12 +15,80 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ScrollView
+        <!-- Sección de estado vacío -->
+        <LinearLayout
+            android:id="@+id/layout_empty_state"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/layout_button"
             android:background="@drawable/button_background"
-            android:paddingBottom="@dimen/_10sdp">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/section_spacing"
+            android:visibility="visible">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_dark_arrow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginBottom="@dimen/section_spacing"
+                    android:contentDescription="Sin datos de consulta"
+                    android:src="@drawable/ic_doctor"
+                    app:tint="@color/colorVariant" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/inner_spacing"
+                    android:gravity="center"
+                    android:text="Sin Consultas Disponibles"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_h4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="No hay consultas registradas para mostrar\ntu progreso de salud.\nContacta con tu nutriólogo para programar una consulta."
+                    android:textColor="@color/colorVariant"
+                    android:textSize="@dimen/text_size_h6"
+                    android:lineSpacingExtra="@dimen/_2sdp" />
+
+                <!-- Indicador de carga animado -->
+                <ProgressBar
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ScrollView con contenido normal -->
+        <ScrollView
+            android:id="@+id/scroll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_button"
+            android:background="@drawable/button_background"
+            android:paddingBottom="@dimen/_10sdp"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,9 +96,8 @@
                 android:orientation="vertical">
 
                 <include
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbar_content"
                     layout="@layout/toolbar_dark_arrow" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,7 +105,7 @@
                     android:padding="@dimen/section_spacing"
                     android:text="@string/mis_nutriologos"
                     android:textColor="@color/colorVariant"
-                    android:textSize="@dimen/text_size_h5"/>
+                    android:textSize="@dimen/text_size_h5" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewNutriologos"
@@ -67,12 +134,10 @@
                 android:text="Todo su progreso, se mostrará aquí."
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_h6"/>
+                android:textSize="@dimen/text_size_h6" />
 
         </LinearLayout>
 
-
     </RelativeLayout>
-
 
 </layout>

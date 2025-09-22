@@ -288,6 +288,7 @@
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
+                        android:hint="AAAA-MM-DD"
                         tools:ignore="LabelFor" />
 
                     <TextView
@@ -345,6 +346,7 @@
                         android:paddingHorizontal="@dimen/section_spacing"
                         android:textColorHint="@color/grey"
                         android:textSize="@dimen/text_size_h5"
+                        android:hint="Por ejemplo: Artritis, Cancer"
                         tools:ignore="LabelFor" />
 
 

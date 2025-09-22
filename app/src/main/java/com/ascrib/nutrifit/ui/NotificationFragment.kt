@@ -73,6 +73,18 @@ class NotificationFragment : Fragment() {
         }
     }
 
+    private fun toggleEmptyState(isEmpty: Boolean) {
+        if (isEmpty) {
+            // Mostrar pantalla vacía, ocultar RecyclerView
+            binding.layoutEmptyState.visibility = View.VISIBLE
+            binding.recyclerviewNotification.visibility = View.GONE
+        } else {
+            // Mostrar RecyclerView, ocultar pantalla vacía
+            binding.layoutEmptyState.visibility = View.GONE
+            binding.recyclerviewNotification.visibility = View.VISIBLE
+        }
+    }
+
     private fun setupRecyclerView() {
         notificacionesAdapter = NotificacionesAdapter(emptyList()) { notificacion ->
             markNotificationAsRead(notificacion.id, notificacion.patientId ?: 0)
@@ -107,7 +119,8 @@ class NotificationFragment : Fragment() {
     private fun loadNotifications() {
         val pacienteIds = getAllPacienteIds().distinct() // Asegurarse de no tener duplicados
         if (pacienteIds.isEmpty()) {
-            showToast("No se encontraron IDs de paciente")
+            //showToast("No se encontraron IDs de paciente")
+            toggleEmptyState(true)
             return
         }
 
@@ -129,7 +142,8 @@ class NotificationFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showToast("Error al cargar notificaciones: ${e.message}")
+                    //showToast("Error al cargar notificaciones: ${e.message}")
+                    toggleEmptyState(true) // Mostrar estado vacío en caso de error
                 }
             }
         }
@@ -138,7 +152,8 @@ class NotificationFragment : Fragment() {
     private suspend fun processNotifications(allNotifications: List<NotificacionData>, pacienteIds: List<Int>) {
         if (allNotifications.isEmpty()) {
             notificacionesAdapter.updateList(emptyList())
-            showToast("No hay notificaciones")
+            //showToast("No hay notificaciones")
+            toggleEmptyState(true) // Mostrar estado vacío
             return
         }
 
@@ -170,6 +185,12 @@ class NotificationFragment : Fragment() {
         val notificacionesNoLeidas = notificacionesProcesadas
             .filter { it.status_movil != 1 && it.estado_movil != 0 }
             .sortedByDescending { it.id }
+        // Controlar visibilidad según si hay notificaciones o no
+        if (notificacionesNoLeidas.isEmpty()) {
+            toggleEmptyState(true) // Mostrar estado vacío
+        } else {
+            toggleEmptyState(false) // Mostrar contenido
+        }
 
         notificacionesAdapter.updateList(notificacionesNoLeidas)
         loadUnreadNotificationsCount()
@@ -287,6 +308,7 @@ class NotificationFragment : Fragment() {
                     loadNotifications()
                     loadUnreadNotificationsCount()
                     showToast("Todas las notificaciones marcadas como leídas")
+                    toggleEmptyState(true)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -306,6 +328,7 @@ class NotificationFragment : Fragment() {
                 }
                 withContext(Dispatchers.Main) {
                     notificacionesAdapter.updateList(emptyList())
+                    toggleEmptyState(true)
                     loadNotifications()
                     loadUnreadNotificationsCount()
                     showToast("Notificaciones eliminadas")

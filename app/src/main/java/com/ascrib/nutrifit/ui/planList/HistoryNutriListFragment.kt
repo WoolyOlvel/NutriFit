@@ -88,7 +88,8 @@ class HistoryNutriListFragment : Fragment(), ConsultaHandler {
         // Inicializar con listas vacías para evitar el error "No adapter attached"
         setupRecyclers(emptyList(), emptyList(), emptyList())
         mediaPlayer = MediaPlayer.create(context, R.raw.notificacion_movil)
-
+        // Mostrar estado vacío inicial
+        showEmptyState()
         toolbarConfig()
         return binding.root
     }
@@ -103,6 +104,32 @@ class HistoryNutriListFragment : Fragment(), ConsultaHandler {
         loadNotificationCount()
     }
 
+    private fun showEmptyState() {
+        binding.layoutEmptyStateGeneral.visibility = View.VISIBLE
+        binding.layoutContent.visibility = View.GONE
+    }
+
+    private fun hideEmptyState() {
+        binding.layoutEmptyStateGeneral.visibility = View.GONE
+        binding.layoutContent.visibility = View.VISIBLE
+    }
+
+    private fun updateSectionVisibility(
+        sectionLayout: View,
+        recyclerView: androidx.recyclerview.widget.RecyclerView,
+        emptyLayout: View,
+        hasData: Boolean
+    ) {
+        if (hasData) {
+            sectionLayout.visibility = View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
+            emptyLayout.visibility = View.GONE
+        } else {
+            sectionLayout.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            emptyLayout.visibility = View.VISIBLE
+        }
+    }
 
     private fun loadConsultas() {
         lifecycleScope.launch {
@@ -112,7 +139,13 @@ class HistoryNutriListFragment : Fragment(), ConsultaHandler {
                 val nutriologoIds = getNutriologoIdsFromSharedPref()
                 //val consultaIds = getConsultaIdsFromSharedPref()
 
-                if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) return@launch
+                if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
+                    // Si no hay IDs, mostrar estado vacío
+                    activity?.runOnUiThread {
+                        showEmptyState()
+                    }
+                    return@launch
+                }
 
                 val response = RetrofitClient.apiService.getConsultasPorPaciente(
                     pacienteIds = pacienteIds,
@@ -146,21 +179,59 @@ class HistoryNutriListFragment : Fragment(), ConsultaHandler {
                         )
                     }
 
+                    // Filtrar consultas por estado
+                    val consultasEnProgreso = consultas.filter { it.estado_proximaConsulta == "4" }
+                    val consultasProximas = consultas.filter { it.estado_proximaConsulta == "1" }
+                    val consultasPasadas = consultas.filter { it.estado_proximaConsulta == "3" }
+
                     activity?.runOnUiThread {
-                        (binding.recyclerviewInProgress.adapter as? ConsultaAdapter)?.updateData(
-                            consultas.filter { it.estado_proximaConsulta == "4" }
-                        )
-                        (binding.recyclerviewNextConsults.adapter as? ConsultaAdapter)?.updateData(
-                            consultas.filter { it.estado_proximaConsulta == "1" }
-                        )
-                        (binding.recyclerviewPastConsults.adapter as? ConsultaAdapter)?.updateData(
-                            consultas.filter { it.estado_proximaConsulta == "3" }
-                        )
+                        // Verificar si hay algún dato
+                        val hasAnyData = consultasEnProgreso.isNotEmpty() ||
+                                consultasProximas.isNotEmpty() ||
+                                consultasPasadas.isNotEmpty()
+                        if (hasAnyData) {
+                            hideEmptyState()
+                            // Actualizar adapters
+                            (binding.recyclerviewInProgress.adapter as? ConsultaAdapter)?.updateData(consultasEnProgreso)
+                            (binding.recyclerviewNextConsults.adapter as? ConsultaAdapter)?.updateData(consultasProximas)
+                            (binding.recyclerviewPastConsults.adapter as? ConsultaAdapter)?.updateData(consultasPasadas)
+                            // Manejar visibilidad de secciones individuales
+                            updateSectionVisibility(
+                                binding.sectionConsultasAhora,
+                                binding.recyclerviewInProgress,
+                                binding.layoutEmptyInProgress,
+                                consultasEnProgreso.isNotEmpty()
+                            )
+
+                            updateSectionVisibility(
+                                binding.sectionConsultasProximas,
+                                binding.recyclerviewNextConsults,
+                                binding.layoutEmptyNextConsults,
+                                consultasProximas.isNotEmpty()
+                            )
+
+                            updateSectionVisibility(
+                                binding.sectionConsultasPasadas,
+                                binding.recyclerviewPastConsults,
+                                binding.layoutEmptyPastConsults,
+                                consultasPasadas.isNotEmpty()
+                            )
+                        } else {
+                            showEmptyState()
+                        }
+                    }
+                }else {
+                    // Si la respuesta no es exitosa, mostrar estado vacío
+                    activity?.runOnUiThread {
+                        showEmptyState()
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 // Manejar error adecuadamente
+                activity?.runOnUiThread {
+                    showEmptyState()
+                }
             }
         }
     }

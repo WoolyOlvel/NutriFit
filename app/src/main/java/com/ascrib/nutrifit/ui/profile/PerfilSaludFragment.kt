@@ -115,6 +115,7 @@ class PerfilSaludFragment : Fragment() {
 
                 if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
                     showMessage("No se encontraron IDs de paciente o nutriólogo")
+                    toggleEmptyState(true) // Mostrar estado vacío
                     return@launch
                 }
 
@@ -122,18 +123,39 @@ class PerfilSaludFragment : Fragment() {
 
                 if (response.isSuccessful && response.body()?.success == true) {
                     val consultas = response.body()?.data ?: emptyList()
-                    adapter = NutriologosGAdapter(consultas) { consulta ->
-                        onConsultaClicked(consulta)
+
+                    if (consultas.isEmpty()) {
+                        toggleEmptyState(true) // Mostrar estado vacío
+                    } else {
+                        adapter = NutriologosGAdapter(consultas) { consulta ->
+                            onConsultaClicked(consulta)
+                        }
+                        binding.recyclerViewNutriologos.adapter = adapter
+                        toggleEmptyState(false) // Mostrar contenido
                     }
-                    binding.recyclerViewNutriologos.adapter = adapter
                 } else {
                     showMessage("Error al obtener consultas: ${response.message()}")
+                    toggleEmptyState(true) // Mostrar estado vacío en caso de error
                 }
             } catch (e: Exception) {
                 showMessage("Error: ${e.message}")
+                toggleEmptyState(true) // Mostrar estado vacío en caso de excepción
             }
         }
     }
+
+    private fun toggleEmptyState(isEmpty: Boolean) {
+        if (isEmpty) {
+            // Mostrar pantalla vacía, ocultar contenido
+            binding.layoutEmptyState.visibility = View.VISIBLE
+            binding.scrollContent.visibility = View.GONE
+        } else {
+            // Mostrar contenido, ocultar pantalla vacía
+            binding.layoutEmptyState.visibility = View.GONE
+            binding.scrollContent.visibility = View.VISIBLE
+        }
+    }
+
 
     fun onConsultaClicked(consulta: ConsultaData) {
         // Guardar los IDs necesarios en SharedPreferences o pasarlos como argumentos

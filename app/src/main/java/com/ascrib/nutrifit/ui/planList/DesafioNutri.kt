@@ -89,6 +89,19 @@ class DesafioNutri : Fragment(), NutriDesafiosHandler {
         loadNotificationCount()
     }
 
+    private fun toggleUpcomingEmptyState(isEmpty: Boolean) {
+        if (isEmpty) {
+            // Mostrar estado vacío para próximos desafíos, ocultar RecyclerView
+            binding.layoutEmptyUpcoming.visibility = View.VISIBLE
+            binding.recyclerviewPastConsults.visibility = View.GONE
+        } else {
+            // Mostrar RecyclerView de próximos desafíos, ocultar estado vacío
+            binding.layoutEmptyUpcoming.visibility = View.GONE
+            binding.recyclerviewPastConsults.visibility = View.VISIBLE
+        }
+    }
+
+
     private fun startNotificationPolling() {
         if (isPollingActive) return
 
@@ -274,15 +287,26 @@ class DesafioNutri : Fragment(), NutriDesafiosHandler {
                         it.status == 2 && it.estado == 1
                     }
 
-                    // Actualizar los adaptadores con las listas filtradas
+                    // Actualizar el adapter de desafíos activos (siempre tiene datos según tu empresa)
                     inProgressAdapter = NutriDesafiosAdapter(inProgress, this@DesafioNutri)
-                    upcomingAdapter = NutriDesafiosAdapter(upcoming, this@DesafioNutri)
-
                     binding.recyclerviewInProgress.adapter = inProgressAdapter
-                    binding.recyclerviewPastConsults.adapter = upcomingAdapter
+
+                    // Manejar próximos desafíos con estado vacío
+                    if (upcoming.isEmpty()) {
+                        toggleUpcomingEmptyState(true) // Mostrar estado vacío
+                    } else {
+                        upcomingAdapter = NutriDesafiosAdapter(upcoming, this@DesafioNutri)
+                        binding.recyclerviewPastConsults.adapter = upcomingAdapter
+                        toggleUpcomingEmptyState(false) // Mostrar contenido
+                    }
+                } else {
+                    // En caso de error en la respuesta, mostrar estado vacío para próximos
+                    toggleUpcomingEmptyState(true)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+                // En caso de excepción, mostrar estado vacío para próximos
+                toggleUpcomingEmptyState(true)
             }
         }
     }

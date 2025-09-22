@@ -104,10 +104,27 @@ class PlanListFragment : Fragment(), PlanAlimenticioHandler {
     }
 
     private fun setupRecyclerView() {
-        adapter = PlanAlimenticioAdapter(this)
+        adapter = PlanAlimenticioAdapter(
+            handler = this, // tu PlanAlimenticioHandler
+            onDataStateChanged = { isEmpty ->
+                toggleEmptyState(isEmpty)
+            }
+        )
         binding.recyclerviewPatient.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@PlanListFragment.adapter
+        }
+    }
+
+    private fun toggleEmptyState(isEmpty: Boolean) {
+        if (isEmpty) {
+            // Mostrar pantalla vacía, ocultar RecyclerView
+            binding.layoutEmptyState.visibility = View.VISIBLE
+            binding.recyclerviewPatient.visibility = View.GONE
+        } else {
+            // Mostrar RecyclerView, ocultar pantalla vacía
+            binding.layoutEmptyState.visibility = View.GONE
+            binding.recyclerviewPatient.visibility = View.VISIBLE
         }
     }
 
@@ -255,7 +272,7 @@ class PlanListFragment : Fragment(), PlanAlimenticioHandler {
         val nutriologoIds = getNutriologoIdsFromSharedPref()
 
         if (pacienteIds.isEmpty() || nutriologoIds.isEmpty()) {
-            Toast.makeText(requireContext(), "No se encontraron pacientes o nutriólogos", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "No se encontraron pacientes o nutriólogos", Toast.LENGTH_SHORT).show()
             return
         }
 
