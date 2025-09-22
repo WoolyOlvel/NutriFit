@@ -2,6 +2,7 @@ package com.ascrib.nutrifit.api
 
 import com.ascrib.nutrifit.api.models.ApiResponse
 import com.ascrib.nutrifit.api.models.AuthResponse
+import com.ascrib.nutrifit.api.models.BetaCheckResponse
 import com.ascrib.nutrifit.api.models.ConsultaData
 import com.ascrib.nutrifit.api.models.ConsultaDetalleResponse
 import com.ascrib.nutrifit.api.models.ConsultaGraficas
@@ -304,5 +305,12 @@ interface ApiService {
 
     // === FIN PERFIL SALUD
 
+    //BETA
+    @GET("api/beta/check")
+    suspend fun checkBetaAccess(
+        @Query("device_id") deviceId: String,
+        @Query("platform") platform: String = "mobile"
+    ): Response<BetaCheckResponse>
+    //FIN BETA
 
 }

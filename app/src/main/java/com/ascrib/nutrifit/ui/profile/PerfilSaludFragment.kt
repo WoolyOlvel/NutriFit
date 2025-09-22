@@ -236,7 +236,7 @@ class PerfilSaludFragment : Fragment() {
     }
 
     private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun toolbarConfig() {

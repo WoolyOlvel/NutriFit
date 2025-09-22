@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-   >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -13,16 +13,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/splash_background"
-        tools:context=".MainActivity"
-        >
+        tools:context=".MainActivity">
 
+        <!-- Logo principal centrado -->
         <ImageView
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_centerInParent="true"
             android:src="@drawable/logowhite"
-            android:contentDescription="TODO"/>
+            android:contentDescription="Logo principal de la aplicación"/>
 
+        <!-- Contenedor para el texto FROM y logo de Ascrib en la parte inferior -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Texto "FROM" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FROM"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Logo de Ascrib Company -->
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logoascrib"
+                android:scaleType="fitCenter"
+                android:contentDescription="Logo de Ascrib Company"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>

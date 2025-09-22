@@ -510,3 +510,27 @@ data class RoleResponse(
     val id: Int,
     val nombre: String
 )
+
+//BETA
+
+data class BetaCheckRequest(
+    val device_id: String,
+    val platform: String = "mobile"
+)
+
+data class BetaCheckResponse(
+    val estado: Int,
+    val plataforma: String
+) {
+    companion object {
+        const val ESTADO_WAITING = 0
+        const val ESTADO_ACTIVE = 1
+        const val ESTADO_FINISHED = 2
+        const val ESTADO_OFICIAL = 3
+    }
+
+    fun isWaiting() = estado == ESTADO_WAITING
+    fun isActive() = estado == ESTADO_ACTIVE
+    fun isFinished() = estado == ESTADO_FINISHED
+    fun isOficial() = estado == ESTADO_OFICIAL
+}
