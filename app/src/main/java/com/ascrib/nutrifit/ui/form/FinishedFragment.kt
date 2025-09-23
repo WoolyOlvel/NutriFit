@@ -2,6 +2,8 @@ package com.ascrib.nutrifit.ui.form
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,8 @@ import com.ascrib.nutrifit.databinding.FragmentFinishedBinding
 class FinishedFragment : Fragment() {
 
     private lateinit var binding: FragmentFinishedBinding
+    private val facebookUrl = "https://www.facebook.com/profile.php?id=61579250167756"
+    private val instagramUrl = "https://www.instagram.com/ascrib_company/"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +34,60 @@ class FinishedFragment : Fragment() {
 
         // Configurar animaciones similares al waiting fragment
         setupAnimations()
+        setupSocialMediaClicks()
+
+    }
+
+    private fun setupSocialMediaClicks() {
+        // Configurar clic para Facebook (si decides agregar el onClick en el XML)
+        binding.root.findViewById<View>(R.id.facebook_icon)?.setOnClickListener {
+            onSocialMediaClick(0) // Facebook
+        }
+
+        // El icono de Instagram ya tiene el onClick en el XML, pero por si acaso lo configuramos también
+        binding.root.findViewById<View>(R.id.instagram_icon)?.setOnClickListener {
+            onSocialMediaClick(1) // Instagram
+        }
+    }
+
+    // Función para manejar los clics de redes sociales
+    fun onSocialMediaClick(platform: Int) {
+        val url = when (platform) {
+            0 -> facebookUrl
+            1 -> instagramUrl
+            else -> return
+        }
+
+        openSocialMediaUrl(url)
+    }
+
+    private fun openSocialMediaUrl(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            // Verificar si hay una aplicación que pueda manejar la intent
+            if (intent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(intent)
+            } else {
+                // Si no hay aplicación, abrir en el navegador
+                val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(webIntent)
+            }
+        } catch (e: Exception) {
+            // Manejar error (por ejemplo, si no hay navegador)
+            e.printStackTrace()
+
+        }
+    }
+
+    // Función específica para Facebook
+    fun onFacebookClick() {
+        openSocialMediaUrl(facebookUrl)
+    }
+
+    // Función específica para Instagram
+    fun onInstagramClick() {
+        openSocialMediaUrl(instagramUrl)
     }
 
     private fun setupAnimations() {

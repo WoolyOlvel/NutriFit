@@ -314,7 +314,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/_16sdp"
-
                     android:paddingHorizontal="@dimen/_20sdp">
 
                     <TextView
@@ -351,7 +350,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:orientation="vertical"
                     android:gravity="center|bottom">
 
@@ -359,7 +358,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:gravity="center"
                         android:layout_marginBottom="@dimen/_16sdp">
 
@@ -368,7 +367,42 @@
                             android:layout_height="wrap_content"
                             android:text="Síguenos para más actualizaciones"
                             android:textColor="@color/whiteGrey"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginBottom="@dimen/_12sdp" />
+
+                        <!-- Social Media Icons -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <!-- Facebook Icon -->
+                            <ImageView
+                                android:id="@+id/facebook_icon"
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:src="@drawable/facebooklogo"
+                                android:contentDescription="Facebook"
+                                android:layout_marginHorizontal="@dimen/_8sdp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:onClick="@{() -> handler.onSocialMediaClick(0)}"/>
+
+                            <!-- Instagram Icon -->
+                            <ImageView
+                                android:id="@+id/instagram_icon"
+                                android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"
+                                android:src="@drawable/instagram"
+                                android:contentDescription="Instagram"
+                                android:layout_marginHorizontal="@dimen/_8sdp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:onClick="@{() -> handler.onSocialMediaClick(1)}" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

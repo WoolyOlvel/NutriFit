@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="handler"
+            type="com.ascrib.nutrifit.ui.form.FinishedFragment" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,8 +73,7 @@
                             android:layout_height="@dimen/_80sdp"
                             android:layout_gravity="center"
                             android:src="@drawable/logo"
-                            android:contentDescription="Beta Finalizada"
-                            />
+                            android:contentDescription="Beta Finalizada" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -213,26 +218,69 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.8"
                     android:orientation="vertical"
                     android:gravity="center|bottom">
 
-                    <!-- Social Media or Contact Info -->
+                    <!-- Social Media Section -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:gravity="center"
                         android:layout_marginBottom="@dimen/_16sdp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="¡Gracias por participar en nuestra beta!"
+                            android:text="¡Síguenos en nuestras redes sociales!"
                             android:textColor="@color/whiteGrey"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginBottom="@dimen/_12sdp" />
+
+                        <!-- Social Media Icons -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <!-- Facebook Icon -->
+                            <ImageView
+                                android:id="@+id/facebook_icon"
+                                android:layout_width="@dimen/_28sdp"
+                                android:layout_height="@dimen/_28sdp"
+                                android:src="@drawable/facebooklogo"
+                                android:contentDescription="Facebook"
+                                android:layout_marginHorizontal="@dimen/_12sdp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:onClick="@{() -> handler.onFacebookClick()}" />
+
+                            <!-- Instagram Icon -->
+                            <ImageView
+                                android:id="@+id/instagram_icon"
+                                android:layout_width="@dimen/_32sdp"
+                                android:layout_height="@dimen/_32sdp"
+                                android:src="@drawable/instagram"
+                                android:contentDescription="Instagram"
+                                android:layout_marginHorizontal="@dimen/_12sdp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:onClick="@{() -> handler.onInstagramClick()}" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
+                    <!-- Thank you message -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¡Gracias por participar en nuestra beta!"
+                        android:textColor="@color/whiteGrey"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_12sdp" />
 
                     <!-- Company Info -->
                     <TextView

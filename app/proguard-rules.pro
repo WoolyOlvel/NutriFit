@@ -19,3 +19,29 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Mantener clases de modelos Gson (si los usas)
+-keep class com.ascrib.nutrifit.models.** { *; }
+
+# Mantener anotaciones de Gson
+-keepattributes *Annotation*
+
+# Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** { *; }
+
+# Retrofit + OkHttp + Logging Interceptor
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# Mantener clases parcelables
+-keepclassmembers class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# DataBinding / ViewBinding
+-keep class * extends androidx.databinding.ViewDataBinding { *; }
+-keep class * extends androidx.databinding.BaseObservable { *; }
+-keepclassmembers class * {
+    public <init>(...);
+}
